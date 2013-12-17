@@ -35,13 +35,24 @@ Matlab/Simulink
 Estimated Timeline of Design/Construction/Programming
 -----------------------------------------------------
 - Moving robot 
+- Object identification
 - Finalized Design
+- SLAM Working
 - Leave base, identify an object, then return to base
-- Storage system
-- Manipulation system
-- 
+- Grasp and store object
+- Identify an object, grasp and store, return to base
+- Go, Identify, grasp, move, identify..., return  
+- Fully working robot
 
 Team Name Ideas 
 ---------------
-
+- Squirrel Mafia
+- Mighty Morphing Flower Arrangers  
+- RRRPI 
+- R3PIO
+- Return of the R Robot
+- Rock Raiders
+- The Sampler      
+- Free Samples
+   
 
