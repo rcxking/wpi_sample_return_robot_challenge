@@ -1,0 +1,47 @@
+December 16th 2013 Initial Meeting
+----------------------------------
+
+Funding from RPI; Maybe from Harris?
+
+To-Do:
+------
+Create a Wiki Page for our robot team - Micah/Ying 
+Link to Github Educational Account - Bryant
+Officially register for Robot Competition - Brayden
+
+Fill out Team Bio/Registration - Everyone
+
+Different Robot Tasks
+---------------------
+Hardware - Micah, Bryant, Will, Jed, Shuai
+Movement/Mapping - Bryant, Ying, Jed, Brayden, Shuai
+Object Identification - Will, Jed, Brayden
+Grasp Acquisition - Shuai, Ying, Jed, Micah
+	- Pre-grasp
+	- Approach
+	- Post-grasp 
+Storage Mechanisms
+	- Rotating Bins
+	- Vacuum sealing
+End Effectors
+	- Pincers
+Software Overhead - Micah, Brayden, Bryant
+
+Software Architecture
+---------------------
+Matlab/Simulink
+***ROS***
+
+Estimated Timeline of Design/Construction/Programming
+-----------------------------------------------------
+- Moving robot 
+- Finalized Design
+- Leave base, identify an object, then return to base
+- Storage system
+- Manipulation system
+- 
+
+Team Name Ideas 
+---------------
+
+
