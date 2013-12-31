@@ -1,0 +1,122 @@
+\title{Sample Return Robot Challenge 2014 \\ Design Proposal}
+\author{Team: RPIRR (Rensselaer Polytechnic Institute Rock Raiders)}
+\date{\today}
+\documentclass{paper}
+
+%% Packages
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage[labelfont=bf]{caption}
+\usepackage{colortbl}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage[ 	colorlinks = true,
+            		linkcolor = blue,
+            		urlcolor  = blue,
+            		citecolor = blue,
+           		anchorcolor = blue]{hyperref}
+\usepackage{pifont}
+\usepackage{setspace}
+\usepackage{sidecap}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usetikzlibrary{arrows,fadings,positioning,shapes,snakes}
+\usepackage{titlesec}
+\usepackage{url}
+\usepackage{wrapfig}
+\usepackage{xcolor}
+
+
+
+%% Useful commands
+\newcommand{\tab}{\hspace*{2em}}
+\newcommand \todo[1]{\textcolor{red}{[#1]}}
+\newcommand \robotName{Lucy} 		% Edit here to change robot name
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+
+
+%%%%%%%%%%%%%%%%%%
+% Overview
+\section*{Overview of design}
+
+	This document contains a brief overview of our design goals as well as relevant descriptions of materials and preliminary design choices.  As this is our first year participating, we will be trying to keep our design straight forward.  ``\robotName" will be a four-wheeled mobile robot with a 1-DOF gripper attached to a 3-DOF arm, bins for separating retrieved objects, multiple cameras, and autonomous controls build in ROS.  
+
+\begin{figure}[h]
+\centering
+\todo{Insert image}
+\caption{A sketchup of \robotName. }
+\label{fig:robotMockup}
+\end{figure}
+
+%%%%%%%%%%%
+\subsection*{Hardware}
+
+	% Communication protocols and frequencies used.
+	The only communication we anticipate implementing is a wireless kill-switch.  For this we will use X-Bee for its range and ease of use.  
+
+	% Sensors for localization, navigation, obstacle avoidance, and sample id
+	\robotName\text{ }will be equipped with three cameras: 
+\begin{itemize}
+	\item A high-definition color camera for long range perception, 
+	\item A Kinect for point cloud data and SLAM refinement at medium range
+	\item A low-definition camera mounted near the gripper for use during grasping.
+\end{itemize}
+All three of these cameras will contribute to object and sample identification.  
+
+	Navigation, including localization and obstacle avoidance, will involve the very popular SLAM approach.  In particular, we will utilize the ROS library \todo{Felix's library}.  Additionally, sonar range sensors \todo{suggestion for other sensors?} will be utilized at the perimeter of \robotName\text{ } for improved collision avoidance.  
+
+	\todo{Motors, wheels, other hardware details}
+
+%%%%%%%%%%%
+\subsection*{Safety features}
+
+	% Wireless kill switch / on-board E-Stop
+
+	% Hazardous materials compliance (battery?)
+
+
+
+%%%%%%%%%%%
+\subsection*{Software}
+
+	We will use ROS as our software platform since it offers many useful libraries, in particular SLAM, SIFT, and PCL to name a few \todo{name some others that aren't vision related}.    
+
+
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
