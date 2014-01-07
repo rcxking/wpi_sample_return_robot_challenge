@@ -34,7 +34,7 @@
 %% Useful commands
 \newcommand{\tab}{\hspace*{2em}}
 \newcommand \todo[1]{\textcolor{red}{[#1]}}
-\newcommand \robotName{Lucy} 		% Edit here to change robot name
+\newcommand \robotName{Rockie} 		% Edit here to change robot name
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -46,11 +46,12 @@
 % Overview
 \section*{Overview of design}
 
-	This document contains a brief overview of our design goals as well as relevant descriptions of materials and preliminary design choices.  As this is our first year participating, we will be trying to keep our design straight forward.  ``\robotName" will be a four-wheeled mobile robot with a 1-DOF gripper attached to a 3-DOF arm, bins for separating retrieved objects, multiple cameras, and autonomous controls build in ROS.  
+	This document contains a brief overview of our design goals as well as relevant descriptions of materials and preliminary design choices.  As this is our first year participating, we will be trying to keep our design straight forward.  ``\robotName" will be a four-wheeled mobile robot with 1-DOF mandibles.  Objects will all be stored in the hull, separated by cloth or plastic dividers.   An on board computer running ROS will control the autonomous sensing, roving, and object acquisition.   
+%attached to a 3-DOF arm, bins for separating retrieved objects, multiple cameras, and autonomous controls built in ROS.  
 
 \begin{figure}[h]
 \centering
-\todo{Insert image}
+\includegraphics[width=0.7\textwidth]{fig/design.jpg}
 \caption{A sketchup of \robotName. }
 \label{fig:robotMockup}
 \end{figure}
@@ -59,18 +60,18 @@
 \subsection*{Hardware}
 
 	% Communication protocols and frequencies used.
-	The only communication we anticipate implementing is a wireless kill-switch.  For this we will use X-Bee for its range and ease of use.  
+	The only communication we anticipate implementing is a wireless kill-switch.  For this, we will use an XBee PRO at 2.4 GHz, since it has excellent range and is easy to use.
 
 	% Sensors for localization, navigation, obstacle avoidance, and sample id
-	\robotName\text{ }will be equipped with three cameras: 
+	\robotName\text{ }will be equipped with at least two cameras: 
 \begin{itemize}
 	\item A high-definition color camera for long range perception, 
 	\item A Kinect for point cloud data and SLAM refinement at medium range
-	\item A low-definition camera mounted near the gripper for use during grasping.
+	%\item A low-definition camera mounted near the gripper for use during grasping.
 \end{itemize}
-All three of these cameras will contribute to object and sample identification.  
+All cameras may contribute to object and sample identification.  
 
-	Navigation, including localization and obstacle avoidance, will involve the very popular SLAM approach.  In particular, we will utilize the ROS library \todo{Felix's library}.  Additionally, sonar range sensors \todo{suggestion for other sensors?} will be utilized at the perimeter of \robotName\text{ } for improved collision avoidance.  
+	Navigation, including localization and obstacle avoidance, will involve the very popular SLAM approach.  In particular, we will utilize the rgbdslam ROS package.  
 
 	\todo{Motors, wheels, other hardware details}
 
