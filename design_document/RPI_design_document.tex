@@ -1,4 +1,4 @@
-\title{Sample Return Robot Challenge 2014 \\ Design Proposal}
+\title{\vspace{-25mm}Sample Return Robot Challenge 2014 \\ Design Proposal}
 \author{Team: RPIRR (Rensselaer Polytechnic Institute Rock Raiders)}
 \date{\today}
 \documentclass{paper}
@@ -51,43 +51,58 @@
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.7\textwidth]{fig/design.jpg}
+\includegraphics[width=0.65\textwidth]{fig/robot_assemble_scoop.JPG} \\ 
+\includegraphics[width=0.65\textwidth]{fig/robot_assemble_scoop_2.JPG} \\
+\includegraphics[width=0.65\textwidth]{fig/robot_assemble_scoop_4.JPG}
 \caption{A sketchup of \robotName. }
-\label{fig:robotMockup}
+\label{fig:sketchup}
 \end{figure}
 
 %%%%%%%%%%%
-\subsection*{Hardware}
+\subsection*{Hardware and electronics}
 
 	% Communication protocols and frequencies used.
-	The only communication we anticipate implementing is a wireless kill-switch.  For this, we will use an XBee PRO at 2.4 GHz, since it has excellent range and is easy to use.
+	The only communication we anticipate implementing is a wireless pause switch.  For this, we will use an XBee PRO at 2.4 GHz, since it has excellent range and is easy to use.
 
 	% Sensors for localization, navigation, obstacle avoidance, and sample id
 	\robotName\text{ }will be equipped with at least two cameras: 
 \begin{itemize}
-	\item A high-definition color camera for long range perception, 
+	\item A high-definition color camera for long range perception (mounted on the pole in Figure~\ref{fig:sketchup})
 	\item A Kinect for point cloud data and SLAM refinement at medium range
 	%\item A low-definition camera mounted near the gripper for use during grasping.
 \end{itemize}
-All cameras may contribute to object and sample identification.  
-
+All cameras will be able to contribute to object and sample identification.  
 	Navigation, including localization and obstacle avoidance, will involve the very popular SLAM approach.  In particular, we will utilize the rgbdslam ROS package.  
 
-	\todo{Motors, wheels, other hardware details}
+
+%%%%%%%%%%%
+% Electronics
+	The following is a list of electronic components we will use in addition to the cameras:
+\begin{itemize}
+	\item Laptop running ROS
+	\item 2x geared 12V DC motor with H bridges
+	\item Arduino as motor controller
+	\item Deep-cycle lead-acid battery and voltage regulator
+	\item High torque servo or small DC motor for mandibles 
+\end{itemize}
+We are currently deciding between methods of how to store acquired objects without contamination.  Our approach will likely involve scooping the object onto the front of the hull onto sheets of plastic.  Each sheet can be drawn up or folded over to make contain it and make room for the next object.  
+
+
 
 %%%%%%%%%%%
 \subsection*{Safety features}
 
 	% Wireless kill switch / on-board E-Stop
-
+	\robotName \ will have a master power switch, mechanical e-stop, and wireless pause switch in accordance with rules R18 and R19.  \robotName \ will also have a safety light to display its state.  Currently, we do not plan to provide power to the home beacon.  
 	% Hazardous materials compliance (battery?)
+	\robotName \ will contain no hazardous materials as per rule R17.  
 
 
 
 %%%%%%%%%%%
 \subsection*{Software}
 
-	We will use ROS as our software platform since it offers many useful libraries, in particular SLAM, SIFT, and PCL to name a few \todo{name some others that aren't vision related}.    
+	We will use ROS as our software platform since it offers many useful libraries, in particular SLAM, SIFT, and PCL to name a few.     
 
 
 
