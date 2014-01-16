@@ -1,0 +1,17 @@
+<package>
+  <description brief="conroller_main">
+
+     conroller_main
+
+  </description>
+  <author>carser</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/conroller_main</url>
+  <depend package="std_msgs"/>
+  <depend package="rospy"/>
+  <depend package="roscpp"/>
+
+</package>
+
+
