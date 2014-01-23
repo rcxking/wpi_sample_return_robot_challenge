@@ -1,0 +1,68 @@
+January 22nd, 2014 Meeting Notes
+--------------------------------
+
+Meetings: Wednesdays 5:30 PM weekly
+
+Team registration completed.
+
+Robot Design
+------------
+Prioritize scoop design over arms.
+
+Budget
+------
+We have no budget.  Possibly grant money? 
+
+Need to make a Bill of Materials to make a budget estimate.
+
+Items to Buy
+------------
+
+Processors:
+Jeff's Old Laptop
+
+Motors:
+2 DC Motors w/encoders
+Servo Motors for Grippers
+1 Scoop DC Motor w/ Limit Switches
+
+Wheels:
+2 Big Wheels
+	- Holo Aluminum Tube w/ Weld?
+	- Lawnmower wheels - $10/piece
+	- Carriage Wheels
+2 Small Wheels
+	- 
+
+Power Sources:
+Battery
+	- 20 Amp/Hours
+	- Li-Poly or Lead Acid?	
+Voltage Regulator/Power Board
+
+Bagging System:
+1+ DC Motor
+Few more servos
+Beaglebone Black
+
+Chassis:
+Wires - 22 Gauge Wires (at least 3 colors)
+ABS Plastic 
+Sheet Metal + Wood
+
+Sensors:
+Kinect or Lidar
+High Definition Camera
+Object Camera 
+Lidar
+Voltage sensor (for returning before critical power levels)
+Camera Servo
+Mast for camera
+
+Scheduling
+----------
+
+
+
+
+
