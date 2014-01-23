@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "kinect_sensor")
+set(kinect_sensor_MAINTAINER "bryant <bryant@todo.todo>")
+set(kinect_sensor_DEPRECATED "")
+set(kinect_sensor_VERSION "0.0.0")
+set(kinect_sensor_BUILD_DEPENDS "roscpp" "rospy" "std_msgs")
+set(kinect_sensor_RUN_DEPENDS "roscpp" "rospy" "std_msgs")
+set(kinect_sensor_BUILDTOOL_DEPENDS "catkin")

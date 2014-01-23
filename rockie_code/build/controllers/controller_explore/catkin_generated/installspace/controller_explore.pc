@@ -1,0 +1,8 @@
+prefix=/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/install
+
+Name: controller_explore
+Description: Description of controller_explore
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/install/lib 
+Requires: 

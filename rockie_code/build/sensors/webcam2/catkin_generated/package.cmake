@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "webcam2")
+set(webcam2_MAINTAINER "bryant <bryant@todo.todo>")
+set(webcam2_DEPRECATED "")
+set(webcam2_VERSION "0.0.0")
+set(webcam2_BUILD_DEPENDS "roscpp" "rospy" "std_msgs")
+set(webcam2_RUN_DEPENDS "roscpp" "rospy" "std_msgs")
+set(webcam2_BUILDTOOL_DEPENDS "catkin")

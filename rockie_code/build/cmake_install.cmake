@@ -85,6 +85,14 @@ ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unsp
 IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   INCLUDE("/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/gtest/cmake_install.cmake")
+  INCLUDE("/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_egress/cmake_install.cmake")
+  INCLUDE("/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_explore/cmake_install.cmake")
+  INCLUDE("/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_grasp/cmake_install.cmake")
+  INCLUDE("/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_ingress/cmake_install.cmake")
+  INCLUDE("/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_main/cmake_install.cmake")
+  INCLUDE("/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/sensors/kinect_sensor/cmake_install.cmake")
+  INCLUDE("/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/sensors/webcam1/cmake_install.cmake")
+  INCLUDE("/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/sensors/webcam2/cmake_install.cmake")
 
 ENDIF(NOT CMAKE_INSTALL_LOCAL_ONLY)
 

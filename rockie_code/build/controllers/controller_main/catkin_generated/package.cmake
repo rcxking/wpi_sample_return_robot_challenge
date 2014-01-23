@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "controller_main")
+set(controller_main_MAINTAINER "bryant <bryant@todo.todo>")
+set(controller_main_DEPRECATED "")
+set(controller_main_VERSION "0.0.0")
+set(controller_main_BUILD_DEPENDS "roscpp" "rospy" "std_msgs")
+set(controller_main_RUN_DEPENDS "roscpp" "rospy" "std_msgs")
+set(controller_main_BUILDTOOL_DEPENDS "catkin")

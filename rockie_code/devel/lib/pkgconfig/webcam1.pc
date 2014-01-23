@@ -1,0 +1,8 @@
+prefix=/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/devel
+
+Name: webcam1
+Description: Description of webcam1
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/devel/lib 
+Requires: 

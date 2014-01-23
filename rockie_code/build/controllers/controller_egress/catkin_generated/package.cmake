@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "controller_egress")
+set(controller_egress_MAINTAINER "bryant <bryant@todo.todo>")
+set(controller_egress_DEPRECATED "")
+set(controller_egress_VERSION "0.0.0")
+set(controller_egress_BUILD_DEPENDS "roscpp" "rospy" "std_msgs")
+set(controller_egress_RUN_DEPENDS "roscpp" "rospy" "std_msgs")
+set(controller_egress_BUILDTOOL_DEPENDS "catkin")
