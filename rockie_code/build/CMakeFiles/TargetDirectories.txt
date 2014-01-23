@@ -1,0 +1,6 @@
+/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/CMakeFiles/clean_test_results.dir
+/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/CMakeFiles/doxygen.dir
+/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/gtest/CMakeFiles/gtest.dir
+/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/gtest/CMakeFiles/gtest_main.dir
+/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/CMakeFiles/run_tests.dir
+/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/CMakeFiles/tests.dir
