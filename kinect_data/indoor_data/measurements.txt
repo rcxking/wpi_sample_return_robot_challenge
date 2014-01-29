@@ -1,0 +1,5 @@
+Viable Distance from kinect sensor:
+14 Feet
+
+At 14 feet, side-to-side view of 9 feet
+
