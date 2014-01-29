@@ -1,0 +1,61 @@
+January 29th Meeting Notes
+--------------------------
+
+Milestones:
+- Moving Robot  
+- Object Identification
+- Finalized Design
+- SLAM Working
+- Leave base, identify object, return
+- "Grasp" and store object
+- Leave, identify, "grasp", store, return
+- Go, identify, grasp, move, identify, grasp, ... return
+- Fully working robot
+- Competition (Jun 9th - 14th)
+
+Budget Status:
+- May have grant money from Jeff
+- $3000 estimate for robot
+- Brayden willing to put own money into robot
+- If complete first stage of competition, get +$5000  
+   
+Hardware Design - Completed by Monday February 10th
+- Solidworks design  
+
+Moving Robot - Completed by Satuday March 1st
+
+Object Identification - Completed by Saturday March 1st
+- 3 packages (SIFT algorithm/SURF) - independent of ROS
+- OpenNI dependent?
+- Texture/Color dependency
+- Acquire samples of objects to collect
+- SIFT algorithm
+
+- Precached Items (cylinder with hook on it)
+- Tennis ball
+- hockey puck - Bryant donate
+- cylinder (20 cm long)
+- Intermediate:
+    - unicolored spherical object 20 - 60 mm.
+    - rock painted block
+    - wooden cube 8 - 10 cm.
+- Hard:
+    - metal objects (3 engravings)  
+
+Basic SLAM Working - Completed by Saturday March 1st
+- RT SLAM 
+- Several ROS libraries / relies on PCL   
+- Preferred to use ROS libraries for SLAM
+- Look around for cheap LIDARS
+
+Electronics Working - Completed by Saturday March 15th
+
+Go, Grasp, Return - Completed by Tuesday April 1st
+Go, Identify, Grasp, Store, Return - Completed by Tuesday April 8th
+Fully working robot - Completed by Saturday April 26th
+ 
+Ying - Jed - Will - Object Identification
+Brayden - Bryant - SLAM - LIDAR
+Will - Power specificiations
+Micah - Shuai - Landon - Structural Design
+
