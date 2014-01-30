@@ -31,14 +31,11 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
-# The program to use to edit the cache.
-CMAKE_EDIT_COMMAND = /usr/bin/ccmake
-
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/src
+CMAKE_SOURCE_DIR = /home/bryant/wpi_sample_return_robot_challenge/rockie_code/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build
+CMAKE_BINARY_DIR = /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build
 
 # Utility rule file for tests.
 
@@ -60,6 +57,6 @@ CMakeFiles/tests.dir/clean:
 .PHONY : CMakeFiles/tests.dir/clean
 
 CMakeFiles/tests.dir/depend:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/src /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/src /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/CMakeFiles/tests.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/bryant/wpi_sample_return_robot_challenge/rockie_code/src /home/bryant/wpi_sample_return_robot_challenge/rockie_code/src /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/CMakeFiles/tests.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/tests.dir/depend
 

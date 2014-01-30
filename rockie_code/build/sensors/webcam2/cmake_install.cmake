@@ -1,8 +1,8 @@
-# Install script for directory: /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/src/sensors/webcam2
+# Install script for directory: /home/bryant/wpi_sample_return_robot_challenge/rockie_code/src/sensors/webcam2
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  SET(CMAKE_INSTALL_PREFIX "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/install")
+  SET(CMAKE_INSTALL_PREFIX "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install")
 ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
 STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -33,17 +33,17 @@ IF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/sensors/webcam2/catkin_generated/installspace/webcam2.pc")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/sensors/webcam2/catkin_generated/installspace/webcam2.pc")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/webcam2/cmake" TYPE FILE FILES
-    "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/sensors/webcam2/catkin_generated/installspace/webcam2Config.cmake"
-    "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/sensors/webcam2/catkin_generated/installspace/webcam2Config-version.cmake"
+    "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/sensors/webcam2/catkin_generated/installspace/webcam2Config.cmake"
+    "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/sensors/webcam2/catkin_generated/installspace/webcam2Config-version.cmake"
     )
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/webcam2" TYPE FILE FILES "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/src/sensors/webcam2/package.xml")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/webcam2" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/src/sensors/webcam2/package.xml")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 

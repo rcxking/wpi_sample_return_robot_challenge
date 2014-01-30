@@ -1,8 +1,8 @@
-# Install script for directory: /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/src/controllers/controller_egress
+# Install script for directory: /home/bryant/wpi_sample_return_robot_challenge/rockie_code/src/controllers/controller_egress
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  SET(CMAKE_INSTALL_PREFIX "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/install")
+  SET(CMAKE_INSTALL_PREFIX "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install")
 ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
 STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -33,17 +33,17 @@ IF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_egress/catkin_generated/installspace/controller_egress.pc")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_egress/catkin_generated/installspace/controller_egress.pc")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/controller_egress/cmake" TYPE FILE FILES
-    "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_egress/catkin_generated/installspace/controller_egressConfig.cmake"
-    "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_egress/catkin_generated/installspace/controller_egressConfig-version.cmake"
+    "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_egress/catkin_generated/installspace/controller_egressConfig.cmake"
+    "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_egress/catkin_generated/installspace/controller_egressConfig-version.cmake"
     )
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/controller_egress" TYPE FILE FILES "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/src/controllers/controller_egress/package.xml")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/controller_egress" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/src/controllers/controller_egress/package.xml")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 

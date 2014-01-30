@@ -35,22 +35,19 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
-# The program to use to edit the cache.
-CMAKE_EDIT_COMMAND = /usr/bin/ccmake
-
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/src
+CMAKE_SOURCE_DIR = /home/bryant/wpi_sample_return_robot_challenge/rockie_code/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build
+CMAKE_BINARY_DIR = /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build
 
 #=============================================================================
 # Targets provided globally by CMake.
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running interactive CMake command-line interface..."
+	/usr/bin/cmake -i .
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -120,14 +117,14 @@ test/fast: test
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/CMakeFiles /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_egress/CMakeFiles/progress.marks
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/CMakeFiles 0
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/CMakeFiles /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_egress/CMakeFiles/progress.marks
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/clean
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/clean
 .PHONY : clean
 
 # The main clean target
@@ -136,22 +133,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/preinstall
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/preinstall
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 controllers/controller_egress/CMakeFiles/roscpp_generate_messages_cpp.dir/rule:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
 .PHONY : controllers/controller_egress/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
 
 # Convenience name for target.
@@ -160,12 +157,12 @@ roscpp_generate_messages_cpp: controllers/controller_egress/CMakeFiles/roscpp_ge
 
 # fast build rule for target.
 roscpp_generate_messages_cpp/fast:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f controllers/controller_egress/CMakeFiles/roscpp_generate_messages_cpp.dir/build.make controllers/controller_egress/CMakeFiles/roscpp_generate_messages_cpp.dir/build
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f controllers/controller_egress/CMakeFiles/roscpp_generate_messages_cpp.dir/build.make controllers/controller_egress/CMakeFiles/roscpp_generate_messages_cpp.dir/build
 .PHONY : roscpp_generate_messages_cpp/fast
 
 # Convenience name for target.
 controllers/controller_egress/CMakeFiles/roscpp_generate_messages_lisp.dir/rule:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
 .PHONY : controllers/controller_egress/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
@@ -174,12 +171,12 @@ roscpp_generate_messages_lisp: controllers/controller_egress/CMakeFiles/roscpp_g
 
 # fast build rule for target.
 roscpp_generate_messages_lisp/fast:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f controllers/controller_egress/CMakeFiles/roscpp_generate_messages_lisp.dir/build.make controllers/controller_egress/CMakeFiles/roscpp_generate_messages_lisp.dir/build
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f controllers/controller_egress/CMakeFiles/roscpp_generate_messages_lisp.dir/build.make controllers/controller_egress/CMakeFiles/roscpp_generate_messages_lisp.dir/build
 .PHONY : roscpp_generate_messages_lisp/fast
 
 # Convenience name for target.
 controllers/controller_egress/CMakeFiles/roscpp_generate_messages_py.dir/rule:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/CMakeFiles/roscpp_generate_messages_py.dir/rule
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/CMakeFiles/roscpp_generate_messages_py.dir/rule
 .PHONY : controllers/controller_egress/CMakeFiles/roscpp_generate_messages_py.dir/rule
 
 # Convenience name for target.
@@ -188,12 +185,12 @@ roscpp_generate_messages_py: controllers/controller_egress/CMakeFiles/roscpp_gen
 
 # fast build rule for target.
 roscpp_generate_messages_py/fast:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f controllers/controller_egress/CMakeFiles/roscpp_generate_messages_py.dir/build.make controllers/controller_egress/CMakeFiles/roscpp_generate_messages_py.dir/build
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f controllers/controller_egress/CMakeFiles/roscpp_generate_messages_py.dir/build.make controllers/controller_egress/CMakeFiles/roscpp_generate_messages_py.dir/build
 .PHONY : roscpp_generate_messages_py/fast
 
 # Convenience name for target.
 controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
 .PHONY : controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
 
 # Convenience name for target.
@@ -202,12 +199,12 @@ rosgraph_msgs_generate_messages_cpp: controllers/controller_egress/CMakeFiles/ro
 
 # fast build rule for target.
 rosgraph_msgs_generate_messages_cpp/fast:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
 .PHONY : rosgraph_msgs_generate_messages_cpp/fast
 
 # Convenience name for target.
 controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
 .PHONY : controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
@@ -216,12 +213,12 @@ rosgraph_msgs_generate_messages_lisp: controllers/controller_egress/CMakeFiles/r
 
 # fast build rule for target.
 rosgraph_msgs_generate_messages_lisp/fast:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build.make controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build.make controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build
 .PHONY : rosgraph_msgs_generate_messages_lisp/fast
 
 # Convenience name for target.
 controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
 .PHONY : controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
 
 # Convenience name for target.
@@ -230,12 +227,12 @@ rosgraph_msgs_generate_messages_py: controllers/controller_egress/CMakeFiles/ros
 
 # fast build rule for target.
 rosgraph_msgs_generate_messages_py/fast:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build.make controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build.make controllers/controller_egress/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build
 .PHONY : rosgraph_msgs_generate_messages_py/fast
 
 # Convenience name for target.
 controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
 .PHONY : controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
 
 # Convenience name for target.
@@ -244,12 +241,12 @@ std_msgs_generate_messages_cpp: controllers/controller_egress/CMakeFiles/std_msg
 
 # fast build rule for target.
 std_msgs_generate_messages_cpp/fast:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
 .PHONY : std_msgs_generate_messages_cpp/fast
 
 # Convenience name for target.
 controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
 .PHONY : controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
@@ -258,12 +255,12 @@ std_msgs_generate_messages_lisp: controllers/controller_egress/CMakeFiles/std_ms
 
 # fast build rule for target.
 std_msgs_generate_messages_lisp/fast:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
 .PHONY : std_msgs_generate_messages_lisp/fast
 
 # Convenience name for target.
 controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_py.dir/rule:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_py.dir/rule
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f CMakeFiles/Makefile2 controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_py.dir/rule
 .PHONY : controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_py.dir/rule
 
 # Convenience name for target.
@@ -272,7 +269,7 @@ std_msgs_generate_messages_py: controllers/controller_egress/CMakeFiles/std_msgs
 
 # fast build rule for target.
 std_msgs_generate_messages_py/fast:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_py.dir/build.make controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_py.dir/build
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(MAKE) -f controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_py.dir/build.make controllers/controller_egress/CMakeFiles/std_msgs_generate_messages_py.dir/build
 .PHONY : std_msgs_generate_messages_py/fast
 
 # Help Target
@@ -308,6 +305,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/bryant/wpi_sample_return_robot_challenge/rockie_code/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

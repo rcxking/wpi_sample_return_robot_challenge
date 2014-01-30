@@ -1,8 +1,8 @@
-# Install script for directory: /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/src/sensors/kinect_sensor
+# Install script for directory: /home/bryant/wpi_sample_return_robot_challenge/rockie_code/src/sensors/kinect_sensor
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  SET(CMAKE_INSTALL_PREFIX "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/install")
+  SET(CMAKE_INSTALL_PREFIX "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install")
 ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
 STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -33,17 +33,17 @@ IF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/sensors/kinect_sensor/catkin_generated/installspace/kinect_sensor.pc")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/sensors/kinect_sensor/catkin_generated/installspace/kinect_sensor.pc")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/kinect_sensor/cmake" TYPE FILE FILES
-    "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/sensors/kinect_sensor/catkin_generated/installspace/kinect_sensorConfig.cmake"
-    "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/sensors/kinect_sensor/catkin_generated/installspace/kinect_sensorConfig-version.cmake"
+    "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/sensors/kinect_sensor/catkin_generated/installspace/kinect_sensorConfig.cmake"
+    "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/sensors/kinect_sensor/catkin_generated/installspace/kinect_sensorConfig-version.cmake"
     )
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/kinect_sensor" TYPE FILE FILES "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/src/sensors/kinect_sensor/package.xml")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/kinect_sensor" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/src/sensors/kinect_sensor/package.xml")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 

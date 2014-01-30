@@ -1,8 +1,8 @@
-# Install script for directory: /home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/src
+# Install script for directory: /home/bryant/wpi_sample_return_robot_challenge/rockie_code/src
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  SET(CMAKE_INSTALL_PREFIX "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/install")
+  SET(CMAKE_INSTALL_PREFIX "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install")
 ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
 STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -34,44 +34,44 @@ ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CPACK_ABSOLUTE_DESTINATION_FILES
-   "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/install/.catkin")
-FILE(INSTALL DESTINATION "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/install" TYPE FILE FILES "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/catkin_generated/installspace/.catkin")
+   "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install/.catkin")
+FILE(INSTALL DESTINATION "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/catkin_generated/installspace/.catkin")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CPACK_ABSOLUTE_DESTINATION_FILES
-   "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/install/_setup_util.py")
-FILE(INSTALL DESTINATION "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/install" TYPE PROGRAM FILES "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/catkin_generated/installspace/_setup_util.py")
+   "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install/_setup_util.py")
+FILE(INSTALL DESTINATION "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install" TYPE PROGRAM FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/catkin_generated/installspace/_setup_util.py")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CPACK_ABSOLUTE_DESTINATION_FILES
-   "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/install/env.sh")
-FILE(INSTALL DESTINATION "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/install" TYPE PROGRAM FILES "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/catkin_generated/installspace/env.sh")
+   "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install/env.sh")
+FILE(INSTALL DESTINATION "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install" TYPE PROGRAM FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/catkin_generated/installspace/env.sh")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CPACK_ABSOLUTE_DESTINATION_FILES
-   "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/install/setup.bash")
-FILE(INSTALL DESTINATION "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/install" TYPE FILE FILES "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/catkin_generated/installspace/setup.bash")
+   "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install/setup.bash")
+FILE(INSTALL DESTINATION "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/catkin_generated/installspace/setup.bash")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CPACK_ABSOLUTE_DESTINATION_FILES
-   "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/install/setup.sh")
-FILE(INSTALL DESTINATION "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/install" TYPE FILE FILES "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/catkin_generated/installspace/setup.sh")
+   "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install/setup.sh")
+FILE(INSTALL DESTINATION "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/catkin_generated/installspace/setup.sh")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CPACK_ABSOLUTE_DESTINATION_FILES
-   "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/install/setup.zsh")
-FILE(INSTALL DESTINATION "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/install" TYPE FILE FILES "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/catkin_generated/installspace/setup.zsh")
+   "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install/setup.zsh")
+FILE(INSTALL DESTINATION "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/catkin_generated/installspace/setup.zsh")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CPACK_ABSOLUTE_DESTINATION_FILES
-   "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/install/.rosinstall")
-FILE(INSTALL DESTINATION "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/install" TYPE FILE FILES "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/catkin_generated/installspace/.rosinstall")
+   "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install/.rosinstall")
+FILE(INSTALL DESTINATION "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/catkin_generated/installspace/.rosinstall")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
@@ -84,15 +84,15 @@ ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unsp
 
 IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  INCLUDE("/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/gtest/cmake_install.cmake")
-  INCLUDE("/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_egress/cmake_install.cmake")
-  INCLUDE("/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_explore/cmake_install.cmake")
-  INCLUDE("/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_grasp/cmake_install.cmake")
-  INCLUDE("/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_ingress/cmake_install.cmake")
-  INCLUDE("/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_main/cmake_install.cmake")
-  INCLUDE("/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/sensors/kinect_sensor/cmake_install.cmake")
-  INCLUDE("/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/sensors/webcam1/cmake_install.cmake")
-  INCLUDE("/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/sensors/webcam2/cmake_install.cmake")
+  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/gtest/cmake_install.cmake")
+  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_egress/cmake_install.cmake")
+  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_explore/cmake_install.cmake")
+  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_grasp/cmake_install.cmake")
+  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_ingress/cmake_install.cmake")
+  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/controllers/controller_main/cmake_install.cmake")
+  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/sensors/lidar/cmake_install.cmake")
+  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/sensors/webcam1/cmake_install.cmake")
+  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/sensors/webcam2/cmake_install.cmake")
 
 ENDIF(NOT CMAKE_INSTALL_LOCAL_ONLY)
 
@@ -102,7 +102,7 @@ ELSE(CMAKE_INSTALL_COMPONENT)
   SET(CMAKE_INSTALL_MANIFEST "install_manifest.txt")
 ENDIF(CMAKE_INSTALL_COMPONENT)
 
-FILE(WRITE "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/${CMAKE_INSTALL_MANIFEST}" "")
+FILE(WRITE "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/${CMAKE_INSTALL_MANIFEST}" "")
 FOREACH(file ${CMAKE_INSTALL_MANIFEST_FILES})
-  FILE(APPEND "/home/bryant/Documents/wpi_sample_return_robot_challenge/rockie_code/build/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
+  FILE(APPEND "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
 ENDFOREACH(file)
