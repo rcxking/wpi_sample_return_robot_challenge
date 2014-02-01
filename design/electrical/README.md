@@ -11,6 +11,6 @@ A 7805 5V voltage regulator like the one seen [here](https://www.sparkfun.com/pr
 
 Current Source
 --------------
-(MOSFETs)[https://www.sparkfun.com/products/10213] will be used to provide a current source for the motors, and Darlington transistors will provide a current source for the sensors, microcontroller and computer.
+[MOSFET](https://www.sparkfun.com/products/10213) will be used to provide a current source for the motors, and Darlington transistors will provide a current source for the sensors, microcontroller and computer.
 
 
