@@ -5,7 +5,7 @@ Batteries
 ---------
 Rockie has 8 li-ion batteries such as [these](https://www.sparkfun.com/products/8483). They are arranged in series, and are voltage regulated seperately (5V for the BeagleBone and Raspberry Pi, 12V for the motors)
 
-Voltage Regulators
+Voltage Regulators for Sensors, Computer, and Microcontroller
 -----------------
 A LM2679 as seen [here](http://www.digikey.com/product-detail/en/LM2679T-5.0%2FNOPB/LM2679T-5.0%2FNOPB-ND/363836) will provide a constant 5V power supply directly from the batteries to the BeagleBone and Raspberry Pi. This will help isolate the motor power from the computer power.
 
@@ -13,7 +13,7 @@ A LM2679 as seen [here](http://www.digikey.com/product-detail/en/LM2679T-5.0%2FN
 
 > This is very true - I was thinking about using the 7805 just to get a steady 5V, and use a small current from the 7805 to drive a Darlington transistor current source to source the actual power. However, I think you're right, it'll just be easier to just get a more efficient voltage regulator like you suggested. The LM2679 looks pretty good. -Will
 
-Current Source
+Motor Drivers
 --------------
 A Sabertooth motor-driver found [here](http://www.robotshop.com/en/dimension-engineering-sabertooth-2x25.html) will supply 12V up to 25A for the drive motors, which should be enough.
 
