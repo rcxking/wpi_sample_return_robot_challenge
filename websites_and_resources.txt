@@ -1,0 +1,31 @@
+This is a list of robotics links that may be useful to our project.
+
+Last Updated: 2/2/14 - 12:23 PM
+
+Software and Libraries
+----------------------
+http://www.openni.org/ - OpenNI 
+http://www.pointclouds.org/ - Point Cloud Library
+http://itseez.com/ - OpenCV Computer Vision Library 
+
+Electrical Components Stores
+----------------------------
+http://www.jameco.com/ - Jameco Electrical
+http://www.mouser.com/ - Mouser Electrical Components
+http://www.newark.com/ - Newark Components
+http://www.solarbotics.com/ - Solarbotics
+http://www.adafruit.com/ - Adafruit Industries
+http://www.servocity.com/ - Servo City
+http://www.pololu.com/ - Pololu Robotics Components
+http://www.trossenrobotics.com/ - Trossen Robotics
+http://www.arrickrobotics.com/ - Arrick Robotics
+http://www.robotshop.com/en/ - Robot Shop 
+http://acroname.com/ - Acroname Robotics
+http://banebots.com/ - Banebots Mechanical and Motors
+http://maxbotix.com/ - Maxbotix Rangefinder Sensors
+http://www.ati-ia.com - ATI Force and Torque Sensors
+
+LIDAR Information
+-----------------
+http://letsmakerobots.com/node/24259 - $40 LIDAR from a WiiMote
+   
