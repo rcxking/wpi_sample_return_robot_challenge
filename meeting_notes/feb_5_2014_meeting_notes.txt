@@ -1,0 +1,33 @@
+2/5/14
+------
+
+Budget:
++$1250 - CS Department
++$3000 - Harris
++$2000 - Dean
+-$3000 - Entrance Fee
+------
+Total Left: $3250.00
+
+- Account set up with Pam
+- Preferred List of vendors 
+- Provide Name, Company Name
+- Possible donation from alumni?  
+
+Mechanical Updates:
+- metal and plastic chassis
+- use a rubber hook with string and beads in conjunction with rails for bagging mechanism
+- linear actuators are selected 
+
+SLAM Updates:
+- ROS for MATLAB
+RatSLAM - Monocular, ROS Package
+OpenSeqSLAM - Takes sequence of images, matches images regardless of lighting (MATLAB)
+RobotVision - Monocular, C++ Range and Bearing SLAM
+tinySLAM - Laser Slam with SICK LIDAR and < 200 lines of C code
+- looking into software architecture for SLAM system
+
+Bodine Motors:
+- Highly likely of purchasing Bodine 6021 motors - $155.79 / motor
+
+    
