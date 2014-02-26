@@ -1,0 +1,31 @@
+2/26/14 Meeting Notes
+---------------------
+
+- Orders are coming in.
+
+Landon Update:
+- scoop concept completed
+- modeled linear actuator
+
+Will Update:
+- camera based SLAM/OpenCV
+- Stereo Camera Setup?
+
+Ying Update:
+- setup bridge between OpenCV and ROS
+- C++ Preferred Language 
+
+Jed Update:
+- SURF Vision Algorithm 
+- Lower error rate for SURF
+
+Micah Update:
+- Encoders/Couplings  
+
+Shuai Update:
+- Wheel/Motors built on SolidWorks
+
+Brayden Update:
+- SLAM Packages
+
+
