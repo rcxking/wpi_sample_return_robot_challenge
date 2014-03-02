@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<sdf version="1.4">
+  <world name="default">
+    <gui>
+      <camera name="default-camera">
+        <pose>0 0 10  0 0 0</pose>
+      </camera>
+    </gui>
+    <scene>      
+      <sky>
+        <clouds>
+          <speed>1</speed>
+        </clouds>
+      </sky>
+    </scene>>
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <model name="land">
+      <pose>0 0 0  0 0 0</pose>
+      <static>true</static>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>
+                file://meshes/land/ChannelledLand.dae
+              </uri>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>
