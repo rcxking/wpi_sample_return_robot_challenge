@@ -24,7 +24,7 @@
           <geometry>
             <mesh>
               <uri>
-                file://meshes/land/ChannelledLand.dae
+                file://meshes/land2/landscape2.dae
               </uri>
             </mesh>
           </geometry>
