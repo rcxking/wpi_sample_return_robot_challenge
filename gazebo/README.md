@@ -1,9 +1,17 @@
 Running Sample Return Gazebo Sim
 ================================
 
-This is a brief how-to for getting Gazebo up and running with the test world we have here.
+This is a brief how-to for getting Gazebo up and running with the test world located in this directory.
 
 Prerequisites
 -------------
 
-Unfortunately, in order to see the graphics rendered by Gazebo correctly, you'll need to install ubuntu 12.04 or 13.10 as a dual boot.
+- Non-Virtual machine Ubuntu (you can do it on VMware or Virtualbox, but a few things wont render correctly)
+- Blender (download from blender.org)
+- Gazebo (follow install instructions from gazebosim.org)
+
+Runing the World
+----------------
+
+To run the world in gazebo, type this at the terminal:
+    gazebo landscape.world
