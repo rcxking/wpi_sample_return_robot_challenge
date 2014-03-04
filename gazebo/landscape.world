@@ -81,6 +81,12 @@
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
     <model name='husky'>
+      <include>
+        <uri>
+          model://stereo_camera
+        </uri>
+        <pose>0 0 0 0 0 0</pose>
+      </include>
       <pose>8.15817 -3.31395 5.248 0.01146 -0.051114 3.03412</pose>
       <link name='base_link'>
         <collision name='collision'>
