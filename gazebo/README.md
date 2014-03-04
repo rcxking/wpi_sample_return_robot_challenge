@@ -29,3 +29,7 @@ The test world is a small, 100 meter X 100 meter world, with a few trees and arc
 
 Most of the environment is imported from blender as a mesh (COLLADA) file. You can view the blender environment by opening blender/landscape2.blend in blender.
 
+Gazebo plugins to allow ROS interface (TODO)
+--------------------------------------
+
+Code and libraries to control the husky via a gazebo model plugin are located [here](https://github.com/husky/husky_simulator). The code for the sensor plugin is somewhere on the gazebo bitbucket site...[here](https://bitbucket.org/osrf/gazebo)
