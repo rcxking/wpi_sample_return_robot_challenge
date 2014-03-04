@@ -525,7 +525,7 @@
         <uri>
           model://stereo_camera
         </uri>
-        <pose>0 0 0 0 0 0</pose>
+        <pose>0 0 .3 0 0 0</pose>
       </include>
       <joint name="stereo_camera_joint" type="revolute">
         <child>stereocamera::link</child>
