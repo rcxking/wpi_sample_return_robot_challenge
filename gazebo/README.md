@@ -8,19 +8,34 @@ Prerequisites
 
 - Non-Virtual machine Ubuntu (you can do it on VMware or Virtualbox, but a few things wont render correctly)
 - Blender (download from blender.org)
-- Gazebo (follow install instructions from gazebosim.org)
+- Full desktop installation of ROS Hydro (http://wiki.ros.org/ROS/Installation)
 
 
 Running the World
 ----------------
 
-To run the world in gazebo, type this at the terminal:
+To run the world in gazebo, start roscore in a terminal:
 
 ```shell
-gazebo landscape.world
+roscore
 ```
 
-To visualize the stereo camera output, click on "Windows -> Topic Visualization", and select the stereo camera item.
+and then in a seperate terminal, type this command to run gazebo with ros wrappers:
+
+```shell
+rosrun gazebo_ros gazebo landscape.world
+```
+
+To visualize the stereo camera output, open a new terminal and type
+
+```shell
+rqt
+```
+
+On the menu, select "Plugins -> Visualization -> Image View". This will allow you to select and visualize the left and right cameras.
+
+You can also view the images in gazebo by selecting "Window -> Topic Visualization" and selecting the stereo camera topic.:w
+
 
 About the test World
 --------------------
@@ -29,7 +44,7 @@ The test world is a small, 100 meter X 100 meter world, with a few trees and arc
 
 Most of the environment is imported from blender as a mesh (COLLADA) file. You can view the blender environment by opening blender/landscape2.blend in blender.
 
-Gazebo plugins to allow ROS interface (TODO)
+Controlling Robot through ROS (TODO)
 --------------------------------------
 
-Code and libraries to control the husky via a gazebo model plugin are located [here](https://github.com/husky/husky_simulator). The code for the sensor plugin is somewhere on the gazebo bitbucket site...[here](https://bitbucket.org/osrf/gazebo)
+
