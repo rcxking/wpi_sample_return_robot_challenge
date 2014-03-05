@@ -1,14 +1,22 @@
 Running Sample Return Gazebo Sim
 ================================
 
-This is a brief how-to for getting Gazebo up and running with the test world located in this directory.
+This is a brief how-to for getting the test environment up and running with the test world located in this directory.
 
 Prerequisites
 -------------
 
-- Non-Virtual machine Ubuntu (you can do it on VMware or Virtualbox, but a few things wont render correctly)
+- Non-Virtual machine Ubuntu 12.04 (you can do it on VMware or Virtualbox, but a few things wont render correctly)
 - Blender (download from blender.org)
 - Full desktop installation of ROS Hydro (http://wiki.ros.org/ROS/Installation)
+
+
+About the test World
+--------------------
+
+The test world is a small, 100 meter X 100 meter world, with a few trees and architectural features that are similar to the wpi sample return test grounds. There is also a Clearpath Husky robot, with a stereo camera on top. All of this is located in landscape.world.
+
+Most of the environment is imported from blender as a mesh (COLLADA) file. You can view the blender environment by opening blender/landscape2.blend in blender.
 
 
 Running the World
@@ -23,26 +31,39 @@ roscore
 and then in a seperate terminal, type this command to run gazebo with ros wrappers:
 
 ```shell
+cd wpi_sample_return_robot_challenge/gazebo
 rosrun gazebo_ros gazebo landscape.world
 ```
 
-To visualize the stereo camera output, open a new terminal and type
+You can also view the camera feeds in gazebo by selecting "Window -> Topic Visualization" and selecting the stereo camera topic.
+
+
+Viewing stereo camera output, and disparity map (depth info)
+-------------------------------------------------------------
+
+The Husky robot in the simulation is equipped with a stereo camera. We can use the ros package [stereo_image_proc](http://wiki.ros.org/stereo_image_proc) to derive depth information from the stereo cameras.
+
+Ensure that roscore is running. Then, if you haven't already started gazebo, do so (you only need the gazebo server to run)
 
 ```shell
-rqt
+cd wpi_sample_return_robot_challenge/gazebo
+rosrun gazebo_ros gzserver landscape.world
 ```
 
-On the menu, select "Plugins -> Visualization -> Image View". This will allow you to select and visualize the left and right cameras.
+Now start the stereo processing node in a new terminal (TODO: change topic namespace for cameras)
 
-You can also view the images in gazebo by selecting "Window -> Topic Visualization" and selecting the stereo camera topic.:w
+```shell
+ROS_NAMESPACE=rrbot/camera1 rosrun stereo_image_proc stereo_image_proc
+```
 
+We can now visualize the camera output and the disparity map (color-coded to show depth info). In a new terminal, type
 
-About the test World
---------------------
+```shell
+rosrun image_view stereo_view stereo:=rrbot/camera1 image:=image_rect_color
+```
 
-The test world is a small, 100 meter X 100 meter world, with a few trees and architectural features that are similar to the wpi sample return test grounds. There is also a Clearpath Husky robot, with a stereo camera on top. All of this is located in landscape.world.
+This should pop up three windows: a left and right camera feed, and a disparity map showing depth.
 
-Most of the environment is imported from blender as a mesh (COLLADA) file. You can view the blender environment by opening blender/landscape2.blend in blender.
 
 Controlling Robot through ROS (TODO)
 --------------------------------------
