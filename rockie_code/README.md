@@ -1,5 +1,6 @@
 ROS Packages we're using
 ------------------------
+> TODO: Can we just copy the PR2 code for their stereo camera setup?
 
 - [image_view](http://wiki.ros.org/image_view): for viewing output from cameras
 - [stereo_image_proc](http://wiki.ros.org/stereo_image_proc): To generate point cloud data from stereo cameras, and generate a disparity image. TODO: Consider [image_pipeline](http://wiki.ros.org/image_pipeline) as a more complete alternative?
