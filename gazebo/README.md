@@ -38,7 +38,7 @@ rosrun gazebo_ros gazebo landscape.world
 You can also view the camera feeds in gazebo by selecting "Window -> Topic Visualization" and selecting the stereo camera topic.
 
 
-Viewing stereo camera output, and disparity map (depth info)
+Viewing stereo camera output, disparity map, and point cloud (depth info)
 -------------------------------------------------------------
 
 The Husky robot in the simulation is equipped with a stereo camera. We can use the ros package [stereo_image_proc](http://wiki.ros.org/stereo_image_proc) to derive depth information from the stereo cameras.
@@ -64,6 +64,17 @@ rosrun image_view stereo_view stereo:=rrbot/camera1 image:=image_rect_color
 
 This should pop up three windows: a left and right camera feed, and a disparity map showing depth.
 
+###Visualizing the Point Cloud
+
+To visualize the point cloud, start rviz:
+
+```shell
+rosrun rviz rviz
+```
+
+When rviz opens, find the "Panels" display (the left-most panel). select "Add" near the bottom of the panel. In the modal dialog that pops-up, select the "By Topic" tab. Select the /rrbot/camera1/points2 topic.
+
+Also, in the Display panel, change the "Fixed Frame" setting from "map" to "camera_link" to give rviz the origin point for the point cloud data. After you do this, you should be able to see the point cloud data visualized in the rviz viewer.
 
 Controlling Robot through ROS (TODO)
 --------------------------------------
