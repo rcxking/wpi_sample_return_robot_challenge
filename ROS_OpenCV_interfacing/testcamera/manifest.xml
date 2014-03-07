@@ -1,0 +1,20 @@
+<package>
+  <description brief="testcamera">
+
+     testcamera
+
+  </description>
+  <author>ying</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/testcamera</url>
+  <depend package="image_transport"/>
+  <depend package="roscpp"/>
+  <depend package="std_msgs"/>
+  <depend package="opencv2"/>
+  <depend package="cv_bridge"/>
+  <depend package="uvc_camera"/>
+
+</package>
+
+
