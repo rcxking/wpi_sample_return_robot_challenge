@@ -37,14 +37,14 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>file://meshes/land/landscape.dae</uri>
+              <uri>model://landscape.dae</uri>
             </mesh>
           </geometry>
         </visual>
         <collision name='collision-land'>
           <geometry>
             <mesh>
-              <uri>file://meshes/land/landscape.dae</uri>
+              <uri>model://landscape.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -119,7 +119,7 @@
     <pose>0 0 0 0 -0 0</pose>
     <geometry>
       <mesh>
-        <uri>file://meshes/husky/base_link.stl</uri>
+        <uri>model://base_link.stl</uri>
       </mesh>
     </geometry>
     <material>
@@ -133,7 +133,7 @@
     <pose>0 0 0 0 -0 0</pose>
     <geometry>
       <mesh>
-        <uri>file://meshes/husky/top_plate.stl</uri>
+        <uri>model://top_plate.stl</uri>
       </mesh>
     </geometry>
     <material>
@@ -147,7 +147,7 @@
     <pose>0.47 0 0.091 0 -0 0</pose>
     <geometry>
       <mesh>
-        <uri>file://meshes/husky/bumper.stl</uri>
+        <uri>model://bumper.stl</uri>
       </mesh>
     </geometry>
     <material>
@@ -161,7 +161,7 @@
     <pose>-0.47 0 0.091 0 -0 3.141</pose>
     <geometry>
       <mesh>
-        <uri>file://meshes/husky/bumper.stl</uri>
+        <uri>model://bumper.stl</uri>
       </mesh>
     </geometry>
     <material>
@@ -175,7 +175,7 @@
     <pose>0.272 0 0.245 0 -0 0</pose>
     <geometry>
       <mesh>
-        <uri>file://meshes/husky/user_rail.stl</uri>
+        <uri>model://user_rail.stl</uri>
       </mesh>
     </geometry>
     <material>
@@ -235,7 +235,7 @@
     <pose>0 0 0 -3.14159 0 0</pose>
     <geometry>
       <mesh>
-        <uri>file://meshes/husky/wheel.stl</uri>
+        <uri>model://wheel.stl</uri>
       </mesh>
     </geometry>
     <material>
@@ -314,7 +314,7 @@
     <pose>0 0 0 -3.14159 0 0</pose>
     <geometry>
       <mesh>
-        <uri>file://meshes/husky/wheel.stl</uri>
+        <uri>model://wheel.stl</uri>
       </mesh>
     </geometry>
     <material>
@@ -393,7 +393,7 @@
     <pose>0 0 0 -3.14159 0 0</pose>
     <geometry>
       <mesh>
-        <uri>file://meshes/husky/wheel.stl</uri>
+        <uri>model://wheel.stl</uri>
       </mesh>
     </geometry>
     <material>
@@ -472,7 +472,7 @@
     <pose>0 0 0 -3.14159 0 0</pose>
     <geometry>
       <mesh>
-        <uri>file://meshes/husky/wheel.stl</uri>
+        <uri>model://wheel.stl</uri>
       </mesh>
     </geometry>
     <material>
