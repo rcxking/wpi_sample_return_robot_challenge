@@ -9,6 +9,8 @@ Prerequisites
 - Non-Virtual machine Ubuntu 12.04 (you can do it on VMware or Virtualbox, but a few things wont render correctly)
 - Blender (download from blender.org)
 - Full desktop installation of ROS Hydro (http://wiki.ros.org/ROS/Installation)
+  - For gazebo in Groovy you need gazebo_ros_pkgs (http://gazebosim.org/wiki/Tutorials/1.9/Installing_gazebo_ros_Packages)
+     - It took a few tries, was sluggish running and crashes sometimes, but that could just be my computer.
 
 
 About the test World
