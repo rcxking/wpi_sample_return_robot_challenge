@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+  <launch>
+    <!--Start gazebo, for testing, comment out for reality-->
+    <node name="gazebo" type="gazebo" pkg="gazebo_ros" args="~/Code/wpi-sample-return-robot-challenge/gazebo/landscape.world" />
+
+    <!--Start stereo processing node-->
+    <node ns="/rrbot/camera1" name="stereo_image_proc" pkg="stereo_image_proc" type="stereo_image_proc"/>
+
+    <!--Start visual odometry-->
+    <node name="viso2_ros" type="stereo_odometer" pkg="viso2_ros" args="stereo:=/rrbot1/camera1 image:=image_rect" />
+
+    <!--Generate octomap from point cloud, transformed by odometry-->
+    <node name="octomap" type="octomap_server_node" pkg="octomap_server" args="_frame_id:=odom" />
+
+  </launch>
