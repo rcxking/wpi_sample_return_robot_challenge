@@ -559,8 +559,8 @@
           <pose>0 0.2 0 0 0 0</pose>
           <horizontal_fov>1.047</horizontal_fov>
           <image>
-            <width>320</width>
-            <height>240</height>
+            <width>1080</width>
+            <height>720</height>
           </image>
           <clip>
             <near>0.1</near>
@@ -572,8 +572,8 @@
           <pose>0 -0.2 0 0 0 0</pose>
           <horizontal_fov>1.047</horizontal_fov>
           <image>
-            <width>320</width>
-            <height>240</height>
+            <width>1080</width>
+            <height>720</height>
           </image>
           <clip>
             <near>0.1</near>
@@ -586,7 +586,7 @@
         <cameraName>rrbot/camera1</cameraName>
         <imageTopicName>image_raw</imageTopicName>
         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-        <frameName>camera_link</frameName>
+        <frameName>base_link</frameName>
         <hackBaseline>0.07</hackBaseline>
         <distortionK1>0.0</distortionK1>
         <distortionK2>0.0</distortionK2>
