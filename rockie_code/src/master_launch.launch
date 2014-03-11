@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
   <launch>
     <!--Start gazebo, for testing, comment out for reality-->
-    <node name="gazebo" type="gazebo" pkg="gazebo_ros" args="~/Code/wpi-sample-return-robot-challenge/gazebo/landscape.world" />
+    <node name="gazebo" type="gzserver" pkg="gazebo_ros" args="$(env HOME)/Code/wpi-sample-return-robot-challenge/gazebo/landscape.world" />
 
     <!--Start stereo processing node-->
     <node ns="/rrbot/camera1" name="stereo_image_proc" pkg="stereo_image_proc" type="stereo_image_proc"/>
