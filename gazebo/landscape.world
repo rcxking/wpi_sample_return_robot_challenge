@@ -601,10 +601,10 @@
         <parent>base_link</parent>
         <axis>
           <xyz>0 0 1</xyz>
-          <limit>
+          <!--limit>
             <upper>0</upper>
             <lower>0</lower>
-          </limit>
+          </limit-->
   </axis></lower></upper></limit></xyz></axis>
 </joint>
 
