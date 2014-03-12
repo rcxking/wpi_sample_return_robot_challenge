@@ -85,7 +85,10 @@ ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unsp
 IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   INCLUDE("/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/gtest/cmake_install.cmake")
+  INCLUDE("/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/libviso2/cmake_install.cmake")
   INCLUDE("/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/tf_robot/cmake_install.cmake")
+  INCLUDE("/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/viso2/cmake_install.cmake")
+  INCLUDE("/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/viso2_ros/cmake_install.cmake")
 
 ENDIF(NOT CMAKE_INSTALL_LOCAL_ONLY)
 

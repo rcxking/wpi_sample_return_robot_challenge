@@ -5,4 +5,7 @@
 # This file includes the relevent testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.
 SUBDIRS(gtest)
+SUBDIRS(libviso2)
 SUBDIRS(tf_robot)
+SUBDIRS(viso2)
+SUBDIRS(viso2_ros)
