@@ -1,10 +1,19 @@
+<?xml version="1.0"?>
 <launch>
-  <node pkg="gazebo_ros" type="gzserver" name="gzserver" args="landscape.world" />
+
+  <!--I dont know why, but i just cant get this to work...-->
+  <!--node pkg="gazebo_ros" type="gzserver" name="gzserver" args="landscape.world">
+    <env name="GAZEBO_MODEL_PATH" value="/home/will/Code/wpi-sample-return-robot-challenge/gazebo/models/" />
+    <env name="GAZEBO_RESOURCE_PATH" value="/home/will/Code/wpi-sample-return-robot-challenge/gazebo/" />
+
+  </node-->
 
   <node ns="/rrbot/camera1" pkg="stereo_image_proc" type="stereo_image_proc" name="stereo_image_proc" />
 
   <node pkg="viso2_ros" type="stereo_odometer" name="stereo_odometer" args="stereo:=/rrbot/camera1 image:=image_rect" />
 
   <node pkg="octomap_server" type="octomap_server_node" name="octomap_server_node" args="cloud_in:=/rrbot/camera1/points2 _frame_id:=odom" />
+
+  <node pkg="rviz" type="rviz" name="rviz" />
 
 </launch>
