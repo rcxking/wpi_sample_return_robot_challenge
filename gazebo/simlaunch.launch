@@ -10,7 +10,10 @@
 
   <node ns="/rrbot/camera1" pkg="stereo_image_proc" type="stereo_image_proc" name="stereo_image_proc" />
 
-  <node pkg="viso2_ros" type="stereo_odometer" name="stereo_odometer" args="stereo:=/rrbot/camera1 image:=image_rect" />
+  <node pkg="viso2_ros" type="stereo_odometer" name="stereo_odometer" args="stereo:=/rrbot/camera1 image:=image_rect _ref_frame_change_method:=2" />
+
+  <!--node pkg="fovis_ros" type="fovis_stereo_odometer" name="stereo_odometer" args="stereo:=/rrbot/camera1 image:=image_rect" /-->
+
 
   <node pkg="octomap_server" type="octomap_server_node" name="octomap_server_node" args="cloud_in:=/rrbot/camera1/points2 _frame_id:=odom" />
 
