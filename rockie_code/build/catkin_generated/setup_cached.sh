@@ -7,5 +7,5 @@
 # new environment variables
 
 # modified environment variables
+export LD_LIBRARY_PATH="/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib:/opt/ros/hydro/lib:/home/will/Code/wpi-sample-return-robot-challenge/gazebo/husky_plugin/lib"
 export PWD="/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build"
-export ROS_PACKAGE_PATH="/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src:/opt/ros/hydro/share:/opt/ros/hydro/stacks"
