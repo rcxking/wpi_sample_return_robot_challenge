@@ -27,9 +27,9 @@ Most of the environment is imported from blender as a mesh (COLLADA) file. You c
 Running the World
 ----------------
 First make sure you have build the husky_plugin package and teleop_husky package. If not, cd to those two packages and type:
-'''shell
+```shell
 make
-'''
+```
 
 To run the world in gazebo, start roscore in a terminal:
 
@@ -47,9 +47,9 @@ rosrun gazebo_ros gazebo landscape.world
 You can also view the camera feeds in gazebo by selecting "Window -> Topic Visualization" and selecting the stereo camera topic.
 
 To teleop husky, start a seperate terminal, type this command:
-'''shell
+```shell
 rosrun teleop_husky husky_teleop
-'''
+```
 
 Then you should be able to move husky around in gazebo world using 'A', 'S', 'D', 'F'.
 
