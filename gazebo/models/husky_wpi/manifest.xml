@@ -1,0 +1,14 @@
+<package>
+  <description brief="husky_wpi">
+
+     husky_wpi
+
+  </description>
+  <author>Shuai</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/husky_wpi</url>
+
+</package>
+
+
