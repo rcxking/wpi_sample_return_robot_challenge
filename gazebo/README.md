@@ -11,6 +11,9 @@ Prerequisites
 - Full desktop installation of ROS Hydro (http://wiki.ros.org/ROS/Installation)
   - For gazebo in Groovy you need gazebo_ros_pkgs (http://gazebosim.org/wiki/Tutorials/1.9/Installing_gazebo_ros_Packages)
      - It took a few tries, was sluggish running and crashes sometimes, but that could just be my computer.
+- Put the following two lines into your .bashrc script
+  - export LD_LIBRARY_PATH=your_git_repo_path/gazebo/husky_plugin/lib:$LD_LIBRARY_PATH
+  - export GAZEBO_MODEL_PATH=your_git_repo_path/gazebo/models:$GAZEBO_MODEL_PATH
 
 
 About the test World
@@ -23,6 +26,10 @@ Most of the environment is imported from blender as a mesh (COLLADA) file. You c
 
 Running the World
 ----------------
+First make sure you have build the husky_plugin package and teleop_husky package. If not, cd to those two packages and type:
+'''shell
+make
+'''
 
 To run the world in gazebo, start roscore in a terminal:
 
@@ -39,6 +46,12 @@ rosrun gazebo_ros gazebo landscape.world
 
 You can also view the camera feeds in gazebo by selecting "Window -> Topic Visualization" and selecting the stereo camera topic.
 
+To teleop husky, start a seperate terminal, type this command:
+'''shell
+rosrun teleop_husky husky_teleop
+'''
+
+Then you should be able to move husky around in gazebo world using 'A', 'S', 'D', 'F'.
 
 Viewing stereo camera output, disparity map, and point cloud (depth info)
 -------------------------------------------------------------
