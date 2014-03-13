@@ -1,0 +1,15 @@
+<!-- This file demonstrates the use of SIFT features for online SLAM with a Kinect.
+     The openni driver has to be started seperately -->
+<launch>
+  <node pkg="rgbdslam" type="rgbdslam" name="rgbdslam" cwd="node" required="true" output="log"> 
+    <!-- Input data settings-->
+<param name="config/camera_info_topic"                value="/rrbot/camera1/camera_info" />
+<param name="config/wide_topic"                value="/rrbot/camera1/left/image_mono" />
+<param name="config/wide_cloud_topic"                value="/rrbot/camera1/points2" />
+
+    <param name="config/feature_detector_type"         value="SURF"/><!-- If SIFTGPU is enabled in CMakeLists.txt, use SURF here -->
+    <param name="config/feature_extractor_type"        value="SURF"/><!-- If SIFTGPU is enabled in CMakeLists.txt, use SURF here -->
+    <param name="config/nn_distance_ratio"             value="0.95"/> <!-- Feature correspondence is valid if distance to nearest neighbour is smaller than this parameter times the distance to the 2nd neighbour -->
+    <param name="config/max_keypoints"                 value="600"/><!-- Extract no more than this many keypoints (not honored by SIFTGPU)-->
+  </node>
+</launch>
