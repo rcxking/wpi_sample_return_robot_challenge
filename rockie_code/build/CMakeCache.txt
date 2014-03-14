@@ -245,10 +245,16 @@ DOXYGEN_EXECUTABLE:FILEPATH=/usr/bin/doxygen
 DOXYGEN_FOUND:BOOL=TRUE
 
 //Path to a file.
+EIGEN_INCLUDE_DIR:PATH=/usr/include/eigen3
+
+//Path to a file.
 EIGEN_INCLUDE_DIRS:PATH=/usr/include/eigen3
 
 //Path to a program.
 EMPY_EXECUTABLE:FILEPATH=/usr/bin/empy
+
+//The directory containing a CMake configuration file for Eigen.
+Eigen_DIR:PATH=/opt/ros/hydro/share/eigen/cmake
 
 //Path to a file.
 FLANN_INCLUDE_DIRS:PATH=/usr/include
@@ -549,6 +555,18 @@ cv_bridge_DIR:PATH=/opt/ros/hydro/share/cv_bridge/cmake
 //The directory containing a CMake configuration file for dynamic_reconfigure.
 dynamic_reconfigure_DIR:PATH=/opt/ros/hydro/share/dynamic_reconfigure/cmake
 
+//Value Computed by CMake
+fovis_BINARY_DIR:STATIC=/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/fovis
+
+//Value Computed by CMake
+fovis_SOURCE_DIR:STATIC=/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/fovis
+
+//Value Computed by CMake
+fovis_ros_BINARY_DIR:STATIC=/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/fovis_ros
+
+//Value Computed by CMake
+fovis_ros_SOURCE_DIR:STATIC=/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/fovis_ros
+
 //The directory containing a CMake configuration file for gencpp.
 gencpp_DIR:PATH=/opt/ros/hydro/share/gencpp/cmake
 
@@ -597,6 +615,18 @@ image_transport_DIR:PATH=/opt/ros/hydro/share/image_transport/cmake
 
 //Path to a library.
 lib:FILEPATH=/opt/ros/hydro/lib/libtopic_tools.so
+
+//Value Computed by CMake
+libfovis_BINARY_DIR:STATIC=/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/libfovis-hydro
+
+//The directory containing a CMake configuration file for libfovis.
+libfovis_DIR:PATH=/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/share/libfovis/cmake
+
+//Dependencies for target
+libfovis_LIB_DEPENDS:STATIC=
+
+//Value Computed by CMake
+libfovis_SOURCE_DIR:STATIC=/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/libfovis-hydro
 
 //Value Computed by CMake
 libviso2_BINARY_DIR:STATIC=/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/libviso2
@@ -720,6 +750,9 @@ viso2_ros_BINARY_DIR:STATIC=/home/will/Code/wpi-sample-return-robot-challenge/ro
 
 //Value Computed by CMake
 viso2_ros_SOURCE_DIR:STATIC=/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/viso2_ros
+
+//Dependencies for target
+visualization_LIB_DEPENDS:STATIC=
 
 //The directory containing a CMake configuration file for xmlrpcpp.
 xmlrpcpp_DIR:PATH=/opt/ros/hydro/share/xmlrpcpp/cmake
@@ -892,7 +925,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_LOCAL_GENERATORS:INTERNAL=6
+CMAKE_NUMBER_OF_LOCAL_GENERATORS:INTERNAL=9
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -921,10 +954,14 @@ CMAKE_UNAME:INTERNAL=/bin/uname
 CMAKE_USE_RELATIVE_PATHS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: EIGEN_INCLUDE_DIR
+EIGEN_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//Details about finding Eigen
+FIND_PACKAGE_MESSAGE_DETAILS_Eigen:INTERNAL=[/usr/include/eigen3][v()]
 //Details about finding Flann
 FIND_PACKAGE_MESSAGE_DETAILS_Flann:INTERNAL=[/usr/lib/libflann_cpp_s.a][/usr/include][v()]
 //Details about finding PCL
-FIND_PACKAGE_MESSAGE_DETAILS_PCL:INTERNAL=[/usr/lib/libboost_system-mt.so;/usr/lib/libboost_filesystem-mt.so;/usr/lib/libboost_thread-mt.so;/usr/lib/libboost_date_time-mt.so;/usr/lib/libboost_iostreams-mt.so;/usr/lib/libboost_serialization-mt.so;optimized;/usr/lib/libpcl_common.so;debug;/usr/lib/libpcl_common.so;optimized;/usr/lib/libflann_cpp_s.a;debug;/usr/lib/libflann_cpp_s.a;optimized;/usr/lib/libpcl_kdtree.so;debug;/usr/lib/libpcl_kdtree.so;optimized;/usr/lib/libpcl_octree.so;debug;/usr/lib/libpcl_octree.so;optimized;/usr/lib/libpcl_search.so;debug;/usr/lib/libpcl_search.so;/usr/lib/libOpenNI.so;vtkCommon;vtkRendering;vtkHybrid;vtkCharts;optimized;/usr/lib/libpcl_io.so;debug;/usr/lib/libpcl_io.so;optimized;/usr/lib/libpcl_sample_consensus.so;debug;/usr/lib/libpcl_sample_consensus.so;optimized;/usr/lib/libpcl_filters.so;debug;/usr/lib/libpcl_filters.so;optimized;/usr/lib/libpcl_visualization.so;debug;/usr/lib/libpcl_visualization.so;optimized;/usr/lib/libpcl_outofcore.so;debug;/usr/lib/libpcl_outofcore.so;optimized;/usr/lib/libpcl_features.so;debug;/usr/lib/libpcl_features.so;optimized;/usr/lib/libpcl_segmentation.so;debug;/usr/lib/libpcl_segmentation.so;optimized;/usr/lib/libpcl_people.so;debug;/usr/lib/libpcl_people.so;optimized;/usr/lib/libpcl_registration.so;debug;/usr/lib/libpcl_registration.so;optimized;/usr/lib/libpcl_recognition.so;debug;/usr/lib/libpcl_recognition.so;optimized;/usr/lib/libpcl_keypoints.so;debug;/usr/lib/libpcl_keypoints.so;optimized;/usr/lib/libqhull.so;debug;/usr/lib/libqhull.so;optimized;/usr/lib/libpcl_surface.so;debug;/usr/lib/libpcl_surface.so;optimized;/usr/lib/libpcl_tracking.so;debug;/usr/lib/libpcl_tracking.so;optimized;/usr/lib/libpcl_apps.so;debug;/usr/lib/libpcl_apps.so;/usr/lib/libboost_system-mt.so;/usr/lib/libboost_filesystem-mt.so;/usr/lib/libboost_thread-mt.so;/usr/lib/libboost_date_time-mt.so;/usr/lib/libboost_iostreams-mt.so;/usr/lib/libboost_serialization-mt.so;optimized;/usr/lib/libqhull.so;debug;/usr/lib/libqhull.so;/usr/lib/libOpenNI.so;optimized;/usr/lib/libflann_cpp_s.a;debug;/usr/lib/libflann_cpp_s.a;vtkCommon;vtkRendering;vtkHybrid;vtkCharts][/usr/include/pcl-1.7;/usr/include/eigen3;/usr/include;/usr/include/ni;/usr/include/vtk-5.8;/usr/include/qhull][v()]
+FIND_PACKAGE_MESSAGE_DETAILS_PCL:INTERNAL=[/usr/lib/libboost_system-mt.so;/usr/lib/libboost_filesystem-mt.so;/usr/lib/libboost_thread-mt.so;/usr/lib/libboost_date_time-mt.so;/usr/lib/libboost_iostreams-mt.so;/usr/lib/libboost_serialization-mt.so;optimized;/usr/lib/libpcl_common.so;debug;/usr/lib/libpcl_common.so;optimized;/usr/lib/libflann_cpp_s.a;debug;/usr/lib/libflann_cpp_s.a;optimized;/usr/lib/libpcl_kdtree.so;debug;/usr/lib/libpcl_kdtree.so;optimized;/usr/lib/libpcl_octree.so;debug;/usr/lib/libpcl_octree.so;optimized;/usr/lib/libpcl_search.so;debug;/usr/lib/libpcl_search.so;optimized;/usr/lib/libpcl_sample_consensus.so;debug;/usr/lib/libpcl_sample_consensus.so;optimized;/usr/lib/libpcl_filters.so;debug;/usr/lib/libpcl_filters.so;optimized;/usr/lib/libpcl_features.so;debug;/usr/lib/libpcl_features.so;optimized;/usr/lib/libpcl_keypoints.so;debug;/usr/lib/libpcl_keypoints.so;/usr/lib/libOpenNI.so;vtkCommon;vtkRendering;vtkHybrid;vtkCharts;optimized;/usr/lib/libpcl_io.so;debug;/usr/lib/libpcl_io.so;optimized;/usr/lib/libpcl_segmentation.so;debug;/usr/lib/libpcl_segmentation.so;optimized;/usr/lib/libqhull.so;debug;/usr/lib/libqhull.so;optimized;/usr/lib/libpcl_surface.so;debug;/usr/lib/libpcl_surface.so;optimized;/usr/lib/libpcl_registration.so;debug;/usr/lib/libpcl_registration.so;optimized;/usr/lib/libpcl_recognition.so;debug;/usr/lib/libpcl_recognition.so;optimized;/usr/lib/libpcl_visualization.so;debug;/usr/lib/libpcl_visualization.so;optimized;/usr/lib/libpcl_outofcore.so;debug;/usr/lib/libpcl_outofcore.so;optimized;/usr/lib/libpcl_people.so;debug;/usr/lib/libpcl_people.so;optimized;/usr/lib/libpcl_tracking.so;debug;/usr/lib/libpcl_tracking.so;optimized;/usr/lib/libpcl_apps.so;debug;/usr/lib/libpcl_apps.so;/usr/lib/libboost_system-mt.so;/usr/lib/libboost_filesystem-mt.so;/usr/lib/libboost_thread-mt.so;/usr/lib/libboost_date_time-mt.so;/usr/lib/libboost_iostreams-mt.so;/usr/lib/libboost_serialization-mt.so;optimized;/usr/lib/libqhull.so;debug;/usr/lib/libqhull.so;/usr/lib/libOpenNI.so;optimized;/usr/lib/libflann_cpp_s.a;debug;/usr/lib/libflann_cpp_s.a;vtkCommon;vtkRendering;vtkHybrid;vtkCharts][/usr/include/pcl-1.7;/usr/include/eigen3;/usr/include;/usr/include/ni;/usr/include/vtk-5.8;/usr/include/qhull][v()]
 //Details about finding PCL_APPS
 FIND_PACKAGE_MESSAGE_DETAILS_PCL_APPS:INTERNAL=[/usr/lib/libpcl_apps.so][/usr/include/pcl-1.7][v()]
 //Details about finding PCL_COMMON

@@ -5,6 +5,9 @@
 # This file includes the relevent testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.
 SUBDIRS(gtest)
+SUBDIRS(fovis)
+SUBDIRS(libfovis-hydro)
+SUBDIRS(fovis_ros)
 SUBDIRS(libviso2)
 SUBDIRS(tf_robot)
 SUBDIRS(viso2)

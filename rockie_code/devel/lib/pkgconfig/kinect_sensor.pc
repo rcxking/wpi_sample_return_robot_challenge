@@ -1,8 +1,0 @@
-prefix=/home/bryant/wpi_sample_return_robot_challenge/rockie_code/devel
-
-Name: kinect_sensor
-Description: Description of kinect_sensor
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/bryant/wpi_sample_return_robot_challenge/rockie_code/devel/lib 
-Requires: 

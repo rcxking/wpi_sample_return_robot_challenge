@@ -559,7 +559,7 @@
           <pose>0 0.2 0 0 0 0</pose>
           <horizontal_fov>1.047</horizontal_fov>
           <image>
-            <width>1080</width>
+            <width>960</width>
             <height>720</height>
           </image>
           <clip>
@@ -572,7 +572,7 @@
           <pose>0 -0.2 0 0 0 0</pose>
           <horizontal_fov>1.047</horizontal_fov>
           <image>
-            <width>1080</width>
+            <width>960</width>
             <height>720</height>
           </image>
           <clip>

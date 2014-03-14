@@ -1,8 +1,0 @@
-prefix=/home/bryant/wpi_sample_return_robot_challenge/rockie_code/devel
-
-Name: controller_egress
-Description: Description of controller_egress
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/bryant/wpi_sample_return_robot_challenge/rockie_code/devel/lib 
-Requires: 

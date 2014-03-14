@@ -1,1 +1,1 @@
-libviso2:tf_robot:viso2:viso2_ros
+fovis:fovis_ros:libfovis-hydro:libviso2:tf_robot:viso2:viso2_ros
