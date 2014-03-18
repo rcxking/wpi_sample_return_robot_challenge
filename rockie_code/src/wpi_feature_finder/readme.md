@@ -7,4 +7,4 @@ The general processing outline of this node is:
 1. Attempt to perform [homographic feature matching](http://docs.opencv.org/trunk/doc/py_tutorials/py_feature2d/py_feature_homography/py_feature_homography.html) on both camera images, using the [images supplied by wpi](file:///home/will/Downloads/NASA%20Sample%20Return%20Robot%20Field%202014[4].pdf)
 2. If we can successfully perform this matching with both cameras, we can [determine the location of this object](http://en.wikipedia.org/wiki/Epipolar_geometry) in our map.
 3. If we can determine the location of three features (or two, with an additional assumption), we can triangulate the absolute position and orientation of the robot.
-4. With this information, we can perform absolute SLAM in the wpi-supplied frame of reference, and leave the rest up to motion planning.
+4. With this information, we can perform absolute SLAM in the wpi-supplied frame of reference (we now have a tf from robot_frame --> wpi_map_frame), and leave the rest up to motion planning.
