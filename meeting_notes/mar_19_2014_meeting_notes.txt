@@ -1,0 +1,59 @@
+3/19/14 Meeting Notes
+---------------------
+
+LIDARS - Ask Anybots for LIDARs
+
+- New access to CATS materials, machine shop
+- CATS may have extra undergraduate people who can join the team
+	- 4 work study + 4 undergraduate options    
+
+Hierarchy of Rockie Software:
+-----------------------------
+                       Exec (State Machine)
+					   /                  
+		send image    /                  
+                     /
+		     object detect
+
+State: 
+- Map (Map server)
+- Time
+- Objects Collect
+- Pose
+- Command State
+- Battery Levels
+- Velocities 
+- Current Task
+
+States:
+-------
+- Explore
+- Retrieve 
+- Return
+- Wake Up
+	- Global Localize
+- Shutdown 
+- Follow Path
+- Ingress Platform
+- Egress Platform
+- Approach
+- Scoop
+- Pause
+- Recovery (Lost?)  
+
+Parallel Nodes:
+---------------
+Motion Controller
+Mapping 
+Exec
+
+Services:
+---------
+Search Planner
+Path Planner
+Match Feature
+WPI Localize
+
+Unknown
+-------
+Scoop Control
