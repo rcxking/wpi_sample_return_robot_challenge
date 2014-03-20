@@ -1,5 +1,5 @@
 #include <ros/ros.h>
-#include <gazebo/common:>
+#include <gazebo_msgs/GetJointProperties.h>
 #include <cstdlib>
 #include <tf/transform_broadcaster.h>
 
@@ -8,7 +8,7 @@
 int main(int argc, char** argv){
   ros::init(argc, argv, "robot_tf_publisher");
   ros::NodeHandle n;
-  ros::ServiceClient client = n.serviceClient
+  ros::ServiceClient client = n.serviceClient<gazebo_msgs::GetJointProperties>("/gazebo/GetJointProperties")
 
   ros::Rate r(100);
 
