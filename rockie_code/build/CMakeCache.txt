@@ -534,6 +534,9 @@ actionlib_DIR:PATH=/opt/ros/hydro/share/actionlib/cmake
 //The directory containing a CMake configuration file for actionlib_msgs.
 actionlib_msgs_DIR:PATH=/opt/ros/hydro/share/actionlib_msgs/cmake
 
+//The directory containing a CMake configuration file for angles.
+angles_DIR:PATH=/opt/ros/hydro/share/angles/cmake
+
 //The directory containing a CMake configuration file for bond.
 bond_DIR:PATH=/opt/ros/hydro/share/bond/cmake
 
@@ -552,6 +555,9 @@ cpp_common_DIR:PATH=/opt/ros/hydro/share/cpp_common/cmake
 //The directory containing a CMake configuration file for cv_bridge.
 cv_bridge_DIR:PATH=/opt/ros/hydro/share/cv_bridge/cmake
 
+//The directory containing a CMake configuration file for driver_base.
+driver_base_DIR:PATH=/opt/ros/hydro/share/driver_base/cmake
+
 //The directory containing a CMake configuration file for dynamic_reconfigure.
 dynamic_reconfigure_DIR:PATH=/opt/ros/hydro/share/dynamic_reconfigure/cmake
 
@@ -566,6 +572,15 @@ fovis_ros_BINARY_DIR:STATIC=/home/will/Code/wpi-sample-return-robot-challenge/ro
 
 //Value Computed by CMake
 fovis_ros_SOURCE_DIR:STATIC=/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/fovis_ros
+
+//The directory containing a CMake configuration file for gazebo_msgs.
+gazebo_msgs_DIR:PATH=/opt/ros/hydro/share/gazebo_msgs/cmake
+
+//The directory containing a CMake configuration file for gazebo_plugins.
+gazebo_plugins_DIR:PATH=/opt/ros/hydro/share/gazebo_plugins/cmake
+
+//The directory containing a CMake configuration file for gazebo_ros.
+gazebo_ros_DIR:PATH=/opt/ros/hydro/share/gazebo_ros/cmake
 
 //The directory containing a CMake configuration file for gencpp.
 gencpp_DIR:PATH=/opt/ros/hydro/share/gencpp/cmake
@@ -614,7 +629,7 @@ image_geometry_DIR:PATH=/opt/ros/hydro/share/image_geometry/cmake
 image_transport_DIR:PATH=/opt/ros/hydro/share/image_transport/cmake
 
 //Path to a library.
-lib:FILEPATH=/opt/ros/hydro/lib/libtopic_tools.so
+lib:FILEPATH=/opt/ros/hydro/lib/libxmlrpcpp.so
 
 //Value Computed by CMake
 libfovis_BINARY_DIR:STATIC=/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/libfovis-hydro
@@ -672,6 +687,9 @@ rosbag_storage_DIR:PATH=/opt/ros/hydro/share/rosbag_storage/cmake
 
 //The directory containing a CMake configuration file for rosconsole.
 rosconsole_DIR:PATH=/opt/ros/hydro/share/rosconsole/cmake
+
+//The directory containing a CMake configuration file for rosconsole_bridge.
+rosconsole_bridge_DIR:PATH=/opt/ros/hydro/share/rosconsole_bridge/cmake
 
 //The directory containing a CMake configuration file for roscpp.
 roscpp_DIR:PATH=/opt/ros/hydro/share/roscpp/cmake
@@ -733,8 +751,14 @@ tf_robot_SOURCE_DIR:STATIC=/home/will/Code/wpi-sample-return-robot-challenge/roc
 //The directory containing a CMake configuration file for topic_tools.
 topic_tools_DIR:PATH=/opt/ros/hydro/share/topic_tools/cmake
 
+//The directory containing a CMake configuration file for trajectory_msgs.
+trajectory_msgs_DIR:PATH=/opt/ros/hydro/share/trajectory_msgs/cmake
+
 //The directory containing a CMake configuration file for turtlesim.
 turtlesim_DIR:PATH=/opt/ros/hydro/share/turtlesim/cmake
+
+//The directory containing a CMake configuration file for urdf.
+urdf_DIR:PATH=/opt/ros/hydro/share/urdf/cmake
 
 //Value Computed by CMake
 viso2_BINARY_DIR:STATIC=/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/viso2
@@ -753,6 +777,12 @@ viso2_ros_SOURCE_DIR:STATIC=/home/will/Code/wpi-sample-return-robot-challenge/ro
 
 //Dependencies for target
 visualization_LIB_DEPENDS:STATIC=
+
+//Value Computed by CMake
+wpi_feature_finder_BINARY_DIR:STATIC=/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/wpi_feature_finder
+
+//Value Computed by CMake
+wpi_feature_finder_SOURCE_DIR:STATIC=/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/wpi_feature_finder
 
 //The directory containing a CMake configuration file for xmlrpcpp.
 xmlrpcpp_DIR:PATH=/opt/ros/hydro/share/xmlrpcpp/cmake
@@ -925,7 +955,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_LOCAL_GENERATORS:INTERNAL=9
+CMAKE_NUMBER_OF_LOCAL_GENERATORS:INTERNAL=10
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -961,7 +991,7 @@ FIND_PACKAGE_MESSAGE_DETAILS_Eigen:INTERNAL=[/usr/include/eigen3][v()]
 //Details about finding Flann
 FIND_PACKAGE_MESSAGE_DETAILS_Flann:INTERNAL=[/usr/lib/libflann_cpp_s.a][/usr/include][v()]
 //Details about finding PCL
-FIND_PACKAGE_MESSAGE_DETAILS_PCL:INTERNAL=[/usr/lib/libboost_system-mt.so;/usr/lib/libboost_filesystem-mt.so;/usr/lib/libboost_thread-mt.so;/usr/lib/libboost_date_time-mt.so;/usr/lib/libboost_iostreams-mt.so;/usr/lib/libboost_serialization-mt.so;optimized;/usr/lib/libpcl_common.so;debug;/usr/lib/libpcl_common.so;optimized;/usr/lib/libflann_cpp_s.a;debug;/usr/lib/libflann_cpp_s.a;optimized;/usr/lib/libpcl_kdtree.so;debug;/usr/lib/libpcl_kdtree.so;optimized;/usr/lib/libpcl_octree.so;debug;/usr/lib/libpcl_octree.so;optimized;/usr/lib/libpcl_search.so;debug;/usr/lib/libpcl_search.so;/usr/lib/libOpenNI.so;vtkCommon;vtkRendering;vtkHybrid;vtkCharts;optimized;/usr/lib/libpcl_io.so;debug;/usr/lib/libpcl_io.so;optimized;/usr/lib/libpcl_sample_consensus.so;debug;/usr/lib/libpcl_sample_consensus.so;optimized;/usr/lib/libpcl_filters.so;debug;/usr/lib/libpcl_filters.so;optimized;/usr/lib/libpcl_visualization.so;debug;/usr/lib/libpcl_visualization.so;optimized;/usr/lib/libpcl_outofcore.so;debug;/usr/lib/libpcl_outofcore.so;optimized;/usr/lib/libpcl_features.so;debug;/usr/lib/libpcl_features.so;optimized;/usr/lib/libpcl_segmentation.so;debug;/usr/lib/libpcl_segmentation.so;optimized;/usr/lib/libpcl_people.so;debug;/usr/lib/libpcl_people.so;optimized;/usr/lib/libpcl_registration.so;debug;/usr/lib/libpcl_registration.so;optimized;/usr/lib/libpcl_recognition.so;debug;/usr/lib/libpcl_recognition.so;optimized;/usr/lib/libpcl_keypoints.so;debug;/usr/lib/libpcl_keypoints.so;optimized;/usr/lib/libqhull.so;debug;/usr/lib/libqhull.so;optimized;/usr/lib/libpcl_surface.so;debug;/usr/lib/libpcl_surface.so;optimized;/usr/lib/libpcl_tracking.so;debug;/usr/lib/libpcl_tracking.so;optimized;/usr/lib/libpcl_apps.so;debug;/usr/lib/libpcl_apps.so;/usr/lib/libboost_system-mt.so;/usr/lib/libboost_filesystem-mt.so;/usr/lib/libboost_thread-mt.so;/usr/lib/libboost_date_time-mt.so;/usr/lib/libboost_iostreams-mt.so;/usr/lib/libboost_serialization-mt.so;optimized;/usr/lib/libqhull.so;debug;/usr/lib/libqhull.so;/usr/lib/libOpenNI.so;optimized;/usr/lib/libflann_cpp_s.a;debug;/usr/lib/libflann_cpp_s.a;vtkCommon;vtkRendering;vtkHybrid;vtkCharts][/usr/include/pcl-1.7;/usr/include/eigen3;/usr/include;/usr/include/ni;/usr/include/vtk-5.8;/usr/include/qhull][v()]
+FIND_PACKAGE_MESSAGE_DETAILS_PCL:INTERNAL=[/usr/lib/libboost_system-mt.so;/usr/lib/libboost_filesystem-mt.so;/usr/lib/libboost_thread-mt.so;/usr/lib/libboost_date_time-mt.so;/usr/lib/libboost_iostreams-mt.so;/usr/lib/libboost_serialization-mt.so;optimized;/usr/lib/libpcl_common.so;debug;/usr/lib/libpcl_common.so;optimized;/usr/lib/libflann_cpp_s.a;debug;/usr/lib/libflann_cpp_s.a;optimized;/usr/lib/libpcl_kdtree.so;debug;/usr/lib/libpcl_kdtree.so;optimized;/usr/lib/libpcl_octree.so;debug;/usr/lib/libpcl_octree.so;optimized;/usr/lib/libpcl_search.so;debug;/usr/lib/libpcl_search.so;optimized;/usr/lib/libpcl_sample_consensus.so;debug;/usr/lib/libpcl_sample_consensus.so;optimized;/usr/lib/libpcl_filters.so;debug;/usr/lib/libpcl_filters.so;optimized;/usr/lib/libpcl_features.so;debug;/usr/lib/libpcl_features.so;optimized;/usr/lib/libpcl_keypoints.so;debug;/usr/lib/libpcl_keypoints.so;/usr/lib/libOpenNI.so;vtkCommon;vtkRendering;vtkHybrid;vtkCharts;optimized;/usr/lib/libpcl_io.so;debug;/usr/lib/libpcl_io.so;optimized;/usr/lib/libpcl_segmentation.so;debug;/usr/lib/libpcl_segmentation.so;optimized;/usr/lib/libqhull.so;debug;/usr/lib/libqhull.so;optimized;/usr/lib/libpcl_surface.so;debug;/usr/lib/libpcl_surface.so;optimized;/usr/lib/libpcl_registration.so;debug;/usr/lib/libpcl_registration.so;optimized;/usr/lib/libpcl_recognition.so;debug;/usr/lib/libpcl_recognition.so;optimized;/usr/lib/libpcl_visualization.so;debug;/usr/lib/libpcl_visualization.so;optimized;/usr/lib/libpcl_outofcore.so;debug;/usr/lib/libpcl_outofcore.so;optimized;/usr/lib/libpcl_people.so;debug;/usr/lib/libpcl_people.so;optimized;/usr/lib/libpcl_tracking.so;debug;/usr/lib/libpcl_tracking.so;optimized;/usr/lib/libpcl_apps.so;debug;/usr/lib/libpcl_apps.so;/usr/lib/libboost_system-mt.so;/usr/lib/libboost_filesystem-mt.so;/usr/lib/libboost_thread-mt.so;/usr/lib/libboost_date_time-mt.so;/usr/lib/libboost_iostreams-mt.so;/usr/lib/libboost_serialization-mt.so;optimized;/usr/lib/libqhull.so;debug;/usr/lib/libqhull.so;/usr/lib/libOpenNI.so;optimized;/usr/lib/libflann_cpp_s.a;debug;/usr/lib/libflann_cpp_s.a;vtkCommon;vtkRendering;vtkHybrid;vtkCharts][/usr/include/pcl-1.7;/usr/include/eigen3;/usr/include;/usr/include/ni;/usr/include/vtk-5.8;/usr/include/qhull][v()]
 //Details about finding PCL_APPS
 FIND_PACKAGE_MESSAGE_DETAILS_PCL_APPS:INTERNAL=[/usr/lib/libpcl_apps.so][/usr/include/pcl-1.7][v()]
 //Details about finding PCL_COMMON

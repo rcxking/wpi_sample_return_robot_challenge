@@ -92,6 +92,7 @@ IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
   INCLUDE("/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/tf_robot/cmake_install.cmake")
   INCLUDE("/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/viso2/cmake_install.cmake")
   INCLUDE("/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/viso2_ros/cmake_install.cmake")
+  INCLUDE("/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/wpi_feature_finder/cmake_install.cmake")
 
 ENDIF(NOT CMAKE_INSTALL_LOCAL_ONLY)
 
