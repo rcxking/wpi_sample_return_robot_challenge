@@ -14,6 +14,8 @@
 
   <node pkg="fovis_ros" type="fovis_stereo_odometer" name="stereo_odometer" args="stereo:=/rrbot/camera1 image:=image_rect" />
 
+  <!--This node transforms the camera frame to the base_link frame-->
+  <node pkg="tf_robot" type="tf_robot" name="tf_robot "/>
 
   <node pkg="octomap_server" type="octomap_server_node" name="octomap_server_node" args="cloud_in:=/rrbot/camera1/points2 _frame_id:=odom _sensor_model/max_range:=100" />
 
