@@ -1,0 +1,32 @@
+3/26/14 Meeting Notes
+---------------------
+
+Met with Glen:
+  - Possible new members
+    - Matt
+  - Will provide manufacturing resources and parts
+
+Camera
+  - Still having driver issues with ROS - exposure issues
+  - Going to try to use other software and just publish images
+  - Could use polarized film or not for exposure issues
+
+Shuai working on folder system
+  - Should be done this week
+
+Micah will be working on motor controller
+
+
+State Machine
+
+      Wake Up                       Recovery
+        |
+      Egress Platform               Pause
+      /             \
+Explore<--------->Follow Path
+      \         /
+        Approach       -----Return
+                              |
+                            Ingress Platform
+                              |
+                            Shutdown
