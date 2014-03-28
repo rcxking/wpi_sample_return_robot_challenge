@@ -8,11 +8,19 @@
 
   </node-->
 
-  <node ns="/rrbot/camera1" pkg="stereo_image_proc" type="stereo_image_proc" name="stereo_image_proc" />
+  <node 
+    ns="/rrbot/camera1" 
+    pkg="stereo_image_proc" 
+    type="stereo_image_proc" 
+    name="stereo_image_proc" />
 
   <!--node pkg="viso2_ros" type="stereo_odometer" name="stereo_odometer" args="stereo:=/rrbot/camera1 image:=image_rect _ref_frame_change_method:=2" /-->
 
-  <node pkg="fovis_ros" type="fovis_stereo_odometer" name="stereo_odometer" args="stereo:=/rrbot/camera1 image:=image_rect" />
+  <node 
+    pkg="fovis_ros" 
+    type="fovis_stereo_odometer" 
+    name="stereo_odometer" 
+    args="stereo:=/rrbot/camera1 image:=image_rect" />
 
   <!--This node transforms the camera frame to the base_link frame-->
   <node pkg="tf_robot" type="tf_robot" name="tf_robot"/>
@@ -20,14 +28,15 @@
   <node pkg="octomap_server" type="octomap_server_node" name="octomap_server_node" 
     args="
     cloud_in:=/rrbot/camera1/points2 
+    _latch:=false
     _frame_id:=odom 
-    _sensor_model/max_range:=50.0
-    _filter_ground:=true
+    _sensor_model/max_range:=30.0
+    _filter_ground:=false
     _resolution:=.09
-    _base_frame_id:=odom
-    _ground_filter/angle:=1.0
-    _ground_filter/distance:=1.0
-    _ground_filter/plane_distance:=5.0" />
+    _base_frame_id:=base_link
+    _ground_filter/angle:=0.15
+    _ground_filter/distance:=0.04
+    _ground_filter/plane_distance:=0.07" />
 
 
 

@@ -529,7 +529,7 @@
       </include-->
 
     <link name="stereocamera">
-      <pose>0 0 .3 0 0 0</pose>
+      <pose>0 0 .5 0 0 0</pose>
       <inertial>
         <mass>0.1</mass>
       </inertial>
@@ -603,10 +603,10 @@
         <parent>base_link</parent>
         <axis>
           <xyz>0 0 1</xyz>
-          <!--limit>
+          <limit>
             <upper>0</upper>
             <lower>0</lower>
-          </limit-->
+          </limit>
   </axis></lower></upper></limit></xyz></axis>
 </joint>
 
