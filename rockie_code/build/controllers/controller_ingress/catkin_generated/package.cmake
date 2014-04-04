@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "controller_ingress")
-set(controller_ingress_MAINTAINER "bryant <bryant@todo.todo>")
-set(controller_ingress_DEPRECATED "")
-set(controller_ingress_VERSION "0.0.0")
-set(controller_ingress_BUILD_DEPENDS "roscpp" "rospy" "std_msgs")
-set(controller_ingress_RUN_DEPENDS "roscpp" "rospy" "std_msgs")
-set(controller_ingress_BUILDTOOL_DEPENDS "catkin")

@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/libfovis-hydro/libfovis/gauss_pyramid.c
+gauss_pyramid.h
+/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/libfovis-hydro/libfovis/gauss_pyramid.h
+
+/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/libfovis-hydro/libfovis/gauss_pyramid.h
+stdint.h
+-
+

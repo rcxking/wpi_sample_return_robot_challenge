@@ -1,8 +1,0 @@
-prefix=/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel
-
-Name: tf_robot
-Description: Description of tf_robot
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib 
-Requires: 

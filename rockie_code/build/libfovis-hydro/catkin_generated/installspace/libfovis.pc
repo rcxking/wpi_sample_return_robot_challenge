@@ -1,0 +1,8 @@
+prefix=/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/install
+
+Name: libfovis
+Description: Description of libfovis
+Version: 0.0.4
+Cflags: -I/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/install/include
+Libs: -L/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/install/lib -llibfovis
+Requires: 

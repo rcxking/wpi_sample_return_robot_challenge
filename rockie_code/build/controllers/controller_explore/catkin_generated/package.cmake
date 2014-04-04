@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "controller_explore")
-set(controller_explore_MAINTAINER "bryant <bryant@todo.todo>")
-set(controller_explore_DEPRECATED "")
-set(controller_explore_VERSION "0.0.0")
-set(controller_explore_BUILD_DEPENDS "roscpp" "rospy" "std_msgs")
-set(controller_explore_RUN_DEPENDS "roscpp" "rospy" "std_msgs")
-set(controller_explore_BUILDTOOL_DEPENDS "catkin")
