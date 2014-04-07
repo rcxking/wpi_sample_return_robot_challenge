@@ -14,7 +14,7 @@
 #
 # The chosen versions are as follows:
 #       Ubuntu 12.04 (assumed you are running)
-#       ROS Groovy
+#       ROS Hydro
 # 
 # 
 ######################################################
@@ -30,7 +30,7 @@ fi
 . /etc/lsb-release
 if [ $DISTRIB_ID == "Ubuntu" ]; then
     if [ $DISTRIB_RELEASE == 12.04 ]; then
-        echo "User runnign Ubuntu 12.04"
+        echo "User running Ubuntu 12.04"
     else
         echo "WARNING: This script was only tested on Ubuntu 12.04"
     fi
@@ -55,11 +55,13 @@ sudo apt-get install -y git
 
 
 
+
+
 echo "------------ Installing ROS..."
 ######################################################
 # SECTION 2.  ROS
 ######################################################
-# From http://wiki.ros.org/groovy/Installation/Ubuntu
+# From http://wiki.ros.org/hydro/Installation/Ubuntu
 
 # 1.1
 # It is assumed that the user already has configured 
@@ -74,16 +76,18 @@ wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
 
 # 1.4
 sudo apt-get update
-sudo apt-get install -y ros-groovy-desktop-full
+sudo apt-get install ros-hydro-desktop-full
 
 # 1.5
 sudo rosdep init
 rosdep update
 
 # 1.6
-echo "source /opt/ros/groovy/setup.bash" >> ~/.bashrc
+echo "source /opt/ros/hydro/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 
+# 1.7
+sudo apt-get install python-rosinstall
 
 
 echo "------------ Replacing ROS's OpenCV with newest version..."
@@ -96,7 +100,7 @@ echo "------------ Replacing ROS's OpenCV with newest version..."
 # This follows: https://sites.google.com/site/rameyarnaud/research/ros/latest-opencv-in-ros
 # Also, check out https://help.ubuntu.com/community/OpenCV
 # Get the latest version of OpenCV 
-ROSVERSION="groovy"
+ROSVERSION="hydro"
 
 # Get and compile OpenCV
 cd ~
@@ -114,6 +118,10 @@ mkdir /opt/ros/$ROSVERSION/lib/libopencv_backup
 mv /opt/ros/$ROSVERSION/lib/libopencv*.so* /opt/ros/$ROSVERSION/lib/libopencv_backup
 cp ./lib/libopencv* /opt/ros/$ROSVERSION/lib/
 ls -hal /opt/ros/$ROSVERSION/lib/libopencv*
+
+
+
+
 
 
 
