@@ -16,6 +16,8 @@
 
 #include "displayEdges.hpp"
 #include "displayObjects.hpp"
+#include "displayCircles.hpp"
+#include "displayEllipses.hpp"
 
 #define ROWS 480    // Image size for logitech camera
 #define COLS 640 
@@ -39,7 +41,9 @@ int main(int argc, char** argv) {
     {
         cam >> frame;               // Capture frame
         //imshow("Display", frame);   // Display raw frame
-        //displayEdges( frame );      // Display edge detection
+        displayEdges( frame );      // Display edge detection
+        displayCircles( frame );    // Display circles detected
+        displayEllipses( frame );    // Display circles detected
         displayObjects( frame );    // Display identified objects 
 
         if(waitKey(30) >= 0) break;

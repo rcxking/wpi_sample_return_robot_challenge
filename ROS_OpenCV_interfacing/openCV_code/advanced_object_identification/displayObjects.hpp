@@ -12,8 +12,9 @@
 
 using namespace cv;
 
-void displayObjects( Mat& frame ) {
+void displayObjects( Mat frame ) {
 
+   
     // Load object images
     Mat drill1 = imread( "drill1.jpg", CV_LOAD_IMAGE_GRAYSCALE ); 
     Mat drill2 = imread( "drill2.jpg", CV_LOAD_IMAGE_GRAYSCALE ); 
