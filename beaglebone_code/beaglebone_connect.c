@@ -5,11 +5,12 @@
  * Bryant Pong
  * 3/26/14
  *
- * Last Updated: Bryant Pong: 3/27/14 - 11:13 AM
+ * Last Updated: Bryant Pong: 3/27/14 - 2:30 PM
  */
  
 // STL Libraries:
 #include <stdio.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>  
 #include <arpa/inet.h>
@@ -19,6 +20,10 @@ int main(int argc, char **argv) {
 
 	// We're going to use TCP for reliable connections between the Beaglebone
 	// and the main computer:
+	int sock, newsock, len;
+	unsigned int fromlen;
+
+	
 
 		 
 
