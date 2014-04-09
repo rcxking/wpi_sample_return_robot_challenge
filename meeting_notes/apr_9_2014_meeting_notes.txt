@@ -1,0 +1,21 @@
+4/9/14
+------
+Updates:
+Ying - Camera/Feature recognition; Rockie Code top level workspace; will commit subsystem packages
+Shuai - Manufacturing, state machine
+Micah - battery/electronics/heat sinks/encoders/motor drivers tests complete
+Matt - in process of creating standoffs, permission to work in CATS lab granted
+Bryant - PWM Control part of Adafruit Library in Python, TCP stack in Python, begin work on ROS Beaglebone Node
+Laurie - working with Landon/Matt for machining parts
+Will - testing RGBDSLAM w/Octomaps
+Landon - updated scopp in Solidworks; cut base pieces
+Jed - object recognition/recognizing spheres as circles
+Brayden - ordering parts, ROS navigation stack
+
+Camera Updates:
+---------------
+OpenCV works out of the box
+Backup option - Bryant implements GUVCViewer ROS Wrapper
+
+
+    
