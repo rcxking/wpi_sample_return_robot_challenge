@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/ann_1.1.2/sample
+END
+query.pts
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/ann_1.1.2/sample/query.pts
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/ann_1.1.2/sample/Makefile
+END
+sample.save
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/ann_1.1.2/sample/sample.save
+END
+ann_sample.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/ann_1.1.2/sample/ann_sample.cpp
+END
+data.pts
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/ann_1.1.2/sample/data.pts
+END

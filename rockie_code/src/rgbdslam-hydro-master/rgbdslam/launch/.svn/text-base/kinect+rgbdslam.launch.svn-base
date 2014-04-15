@@ -1,0 +1,39 @@
+<!-- This file demonstrates the use of SIFT features for online SLAM with a Kinect. 
+     The openni driver is started from this file -->
+<launch>
+  <include file="$(find openni_launch)/launch/openni.launch"/>
+  <node pkg="rgbdslam" type="rgbdslam" name="rgbdslam" cwd="node" required="true" output="screen" no-launch-prefix="/usr/bin/xterm -e gdb -ex run -args"> 
+    <!-- Input data settings-->
+    <param name="config/topic_image_mono"              value="/camera/rgb/image_rect_color"/> <!--could also be color -->
+    <param name="config/topic_image_depth"             value="/camera/depth_registered/image_rect"/>
+    <param name="config/topic_points"                  value=""/> <!--if empty, poincloud will be reconstructed from image and depth -->
+
+    <param name="config/feature_detector_type"         value="SIFTGPU"/><!-- If SIFTGPU is enabled in CMakeLists.txt, use SURF here -->
+    <param name="config/feature_extractor_type"        value="SIFTGPU"/><!-- If SIFTGPU is enabled in CMakeLists.txt, use SURF here -->
+    <param name="config/nn_distance_ratio"             value="0.95"/> <!-- Feature correspondence is valid if distance to nearest neighbour is smaller than this parameter times the distance to the 2nd neighbour -->
+    <param name="config/max_keypoints"                 value="600"/><!-- Extract no more than this many keypoints (not honored by SIFTGPU)-->
+    <param name="config/min_matches"                   value="10"/><!-- -->
+
+    <!-- Algortithm settings -->
+    <param name="config/backend_solver"                value="pcg"/> <!-- Which solver to use in g2o for matrix inversion: "csparse" , "cholmod" or "pcg"  -->
+    <param name="config/store_pointclouds"             value="true"/> <!-- if, e.g., only trajectory is required, setting this to false saves lots of memory -->
+    <param name="config/min_translation_meter"         value="-0.1"/><!-- frames with motion less than this, will be omitted -->
+  	<param name="config/min_rotation_degree"           value="-5"/><!-- frames with motion less than this, will be omitted -->
+    <param name="config/visualization_skip_step"       value="2"/> <!-- draw only every nth pointcloud row and line, high values require higher squared_meshing_threshold -->
+  	<param name="config/visualize_keyframes_only"      value="true"/>
+    <param name="config/min_time_reported"             value="0.01"/><!-- for easy runtime analysis -->
+
+    <param name="config/octomap_online_creation"       value="false"/> 
+    <param name="config/octomap_resolution"            value="0.05"/>
+
+    <param name="config/use_icp"                       value="false"/> <!-- Ignored if ICP is not compiled in (see top of CMakeLists.txt) -->
+    <param name="config/icp_method"                    value="icp"/> <!-- For testing different variants-->
+    <param name="config/gicp_max_cloud_size"           value="500000"/> <!-- Ignored if ICP is not compiled in (see top of CMakeLists.txt) -->
+    <param name="config/ransac_iterations"             value="500"/><!-- these are fast, so high values are ok -->
+    <param name="config/g2o_transformation_refinement" value="50"/><!-- -->
+    <param name="config/predecessor_candidates"        value="3"/><!-- -->
+    <param name="config/neighbor_candidates"           value="3"/><!-- -->
+    <param name="config/min_sampled_candidates"        value="3"/><!-- -->
+    <param name="config/observability_threshold"       value="-0.5"/>  -->
+  </node>
+</launch>

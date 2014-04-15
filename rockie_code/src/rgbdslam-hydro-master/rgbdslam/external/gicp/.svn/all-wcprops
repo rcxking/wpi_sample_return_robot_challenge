@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/2777/trunk/rgbdslam_freiburg/rgbdslam/external/gicp
+END
+gicp.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/gicp.cpp
+END
+scan.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/scan.cpp
+END
+optimize.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/optimize.h
+END
+gicp.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/gicp.h
+END
+scan.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/scan.h
+END
+transform.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/transform.cpp
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/README
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/Makefile
+END
+scan2ascii.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/scan2ascii.cpp
+END
+bfgs_funcs.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/bfgs_funcs.cpp
+END
+transform.h
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/transform.h
+END
+optimize.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/optimize.cpp
+END
+LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/LICENSE
+END
+test_gicp.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/test_gicp.cpp
+END

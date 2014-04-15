@@ -174,7 +174,6 @@ fovis_stereo_odometer_EXTERNAL_OBJECTS =
 /home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib/fovis_ros/fovis_stereo_odometer: /usr/lib/libpcl_filters.so
 /home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib/fovis_ros/fovis_stereo_odometer: /usr/lib/libpcl_features.so
 /home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib/fovis_ros/fovis_stereo_odometer: /usr/lib/libpcl_keypoints.so
-/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib/fovis_ros/fovis_stereo_odometer: /usr/lib/libOpenNI.so
 /home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib/fovis_ros/fovis_stereo_odometer: /usr/lib/libvtkCommon.so.5.8.0
 /home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib/fovis_ros/fovis_stereo_odometer: /usr/lib/libvtkRendering.so.5.8.0
 /home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib/fovis_ros/fovis_stereo_odometer: /usr/lib/libvtkHybrid.so.5.8.0
@@ -197,7 +196,6 @@ fovis_stereo_odometer_EXTERNAL_OBJECTS =
 /home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib/fovis_ros/fovis_stereo_odometer: /usr/lib/libboost_iostreams-mt.so
 /home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib/fovis_ros/fovis_stereo_odometer: /usr/lib/libboost_serialization-mt.so
 /home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib/fovis_ros/fovis_stereo_odometer: /usr/lib/libqhull.so
-/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib/fovis_ros/fovis_stereo_odometer: /usr/lib/libOpenNI.so
 /home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib/fovis_ros/fovis_stereo_odometer: /usr/lib/libflann_cpp_s.a
 /home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib/fovis_ros/fovis_stereo_odometer: /usr/lib/libvtkCommon.so.5.8.0
 /home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib/fovis_ros/fovis_stereo_odometer: /usr/lib/libvtkRendering.so.5.8.0

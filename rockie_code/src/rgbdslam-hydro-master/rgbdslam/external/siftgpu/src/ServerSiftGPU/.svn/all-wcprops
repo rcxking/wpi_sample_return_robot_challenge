@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/2106/trunk/rgbdslam_freiburg/rgbdslam/external/siftgpu/src/ServerSiftGPU
+END
+server.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/2106/trunk/rgbdslam_freiburg/rgbdslam/external/siftgpu/src/ServerSiftGPU/server.cpp
+END
+ServerSiftGPU.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/2106/trunk/rgbdslam_freiburg/rgbdslam/external/siftgpu/src/ServerSiftGPU/ServerSiftGPU.cpp
+END
+ServerSiftGPU.h
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/2106/trunk/rgbdslam_freiburg/rgbdslam/external/siftgpu/src/ServerSiftGPU/ServerSiftGPU.h
+END
