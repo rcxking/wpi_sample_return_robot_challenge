@@ -1,0 +1,6 @@
+quick overview fast io: http://hackaday.com/2013/12/07/speeding-up-beaglebone-black-gpio-a-thousand-times/
+More dev/mem overview: http://chiragnagpal.com/examples.html
+Low level stuff: http://derekmolloy.ie/gpios-on-the-beaglebone-black-using-device-tree-overlays/
+PRU: http://hipstercircuits.com/pypruss-one-library-to-rule-them-all/
+question about quadrature: http://osdir.com/ml/beagleboard/2013-07/msg01525.html
+PRU page on wiki: http://elinux.org/BeagleBone_PRU_Notes#Instruction_Syntax
