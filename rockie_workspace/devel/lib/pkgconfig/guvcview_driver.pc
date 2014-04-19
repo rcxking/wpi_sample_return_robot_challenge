@@ -1,8 +1,0 @@
-prefix=/home/bryant/wpi_sample_return_robot_challenge/rockie_workspace/devel
-
-Name: guvcview_driver
-Description: Description of guvcview_driver
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/bryant/wpi_sample_return_robot_challenge/rockie_workspace/devel/lib 
-Requires: 

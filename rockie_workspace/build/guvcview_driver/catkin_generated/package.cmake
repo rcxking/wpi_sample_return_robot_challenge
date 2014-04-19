@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "guvcview_driver")
-set(guvcview_driver_MAINTAINER "bryant <bryant@todo.todo>")
-set(guvcview_driver_DEPRECATED "")
-set(guvcview_driver_VERSION "0.0.0")
-set(guvcview_driver_BUILD_DEPENDS "roscpp" "rospy" "std_msgs")
-set(guvcview_driver_RUN_DEPENDS "roscpp" "rospy" "std_msgs")
-set(guvcview_driver_BUILDTOOL_DEPENDS "catkin")
