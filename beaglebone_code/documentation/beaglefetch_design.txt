@@ -1,0 +1,6 @@
+Beaglefetch - Native code on Beaglebone Black to control motors and read the encoders on Rockie.
+
+Overview:
+---------
+The Beaglebone will be talking to the main Rockie computer through TCP.  The only responsibilities
+that the Beaglebone has are to   

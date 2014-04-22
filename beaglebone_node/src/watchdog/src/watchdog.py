@@ -6,7 +6,7 @@ watchdog.py - Node to connect the Beaglebone to the Rockie Computer.
 RPI Rock Raiders
 4/20/15 
 
-Last Updated: Bryant Pong: 4/21/15 - 10:49 AM
+Last Updated: Bryant Pong: 4/22/15 - 1:00 PM
 '''
 
 # ROS Python Library:
@@ -17,7 +17,7 @@ from std_msgs.msg import String
 import socket
 
 # Global Constants:
-beagleIP = ""
+beagleIP = "192.168.7.2"
 beaglePort = 9001
 server_address = (beagleIP, beaglePort)
 # TCP Socket for Main Computer:
