@@ -6,7 +6,7 @@ watchdog.py - Node to connect the Beaglebone to the Rockie Computer.
 RPI Rock Raiders
 4/20/15 
 
-Last Updated: Bryant Pong: 4/22/15 - 1:00 PM
+Last Updated: Bryant Pong: 4/23/15 - 5:37 PM
 '''
 
 # ROS Python Library:
@@ -17,7 +17,7 @@ from std_msgs.msg import String
 import socket
 
 # Global Constants:
-beagleIP = "192.168.7.2"
+beagleIP = ""
 beaglePort = 9001
 server_address = (beagleIP, beaglePort)
 # TCP Socket for Main Computer:
@@ -34,9 +34,17 @@ def beaglenode():
 	while not rospy.is_shutdown():
 		#sock.connect(server_address)
 
-		message = "This is the message.  It will be repeated."
+		message = str(raw_input("Please enter in a message: "))
+
+
+		print("You entered: " + message)
+
+		
+		if message == "bye":
+			break
+
 		sock.send(message)
-		data = sock.recv(1024)
+		data = sock.recv(len(message))
 
 		print("Received data: " + str(data))
 		

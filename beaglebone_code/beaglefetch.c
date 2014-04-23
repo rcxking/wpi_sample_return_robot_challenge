@@ -6,7 +6,7 @@
  * RPI Rock Raiders
  * 4/21/14
  *
- * Last Updated: Bryant Pong: 4/21/14 - 5:09 PM
+ * Last Updated: Bryant Pong: 4/23/14 - 5:56 PM
  */     
 
 // STL Libraries:
@@ -15,12 +15,36 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
 #include <netinet/in.h>
 #include <string.h>
 #include <arpa/inet.h>
 
 // Constants
 #define BUFFER_SIZE 1024
+
+#define GPIO1_START_ADDR
+#define GPIO2_START_ADDR
+
+#define GPIO1_END_ADDR
+#define GPIO2_END_ADDR
+
+#define GPIO1_SIZE (GPIO1_END_ADDR - GPIO1_START_ADDR)
+#define GPIO2_SIZE (GPIO2_END_ADDR - GPIO2_START_ADDR)
+
+#define GPIO1_OE 0x134
+#define GPIO2_OE
+
+#define GPIO1_SETDATAOUT
+#define GPIO2_SETDATAOUT
+
+#define GPIO1_CLEARDATAOUT
+#define GPIO2_CLEARDATAOUT 
+
+#define PIN1
+#define PIN2
+  
 // End Section Constants
 
 // Function Prototypes
@@ -29,6 +53,28 @@
 
 // Main function:
 int main(int argc, char **argv) {
+
+	/*
+	 * Beaglebone Hardware Registers:
+	 */
+
+	
+
+	volatile void *gpio1_addr = NULL;
+	volatile void *gpio2_addr = NULL;
+
+	volatile unsigned int *gpio1_oe_addr = NULL;
+	volatile unsigned int *gpio2_oe_addr = NULL;
+
+	volatile unsigned int *gpio1_setdataout_addr = NULL;
+	volatile unsigned int *gpio2_setdataout_addr = NULL;
+
+	volatile unsigned *gpio1_cleardataout_addr = NULL;
+	volatile unsigned *gpio2_cleardataout_addr = NULL; 
+		 
+	unsigned int reg1, reg2;
+
+		
 
 	// Buffer to receive messages from Rockie:
 	char buffer[BUFFER_SIZE];
