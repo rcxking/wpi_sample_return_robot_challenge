@@ -36,7 +36,7 @@ int main(int argc, char** argv){
     broadcaster.sendTransform(
         tf::StampedTransform(
           tf::Transform(tf::Quaternion(.25, 0, 0, -0.25), tf::Vector3(0.0, 0.0, 0.3)),
-          ros::Time::now(),"base_link", "camera"));
+          ros::Time::now(),"base_link", "openni_camera"));
 
 
     }
