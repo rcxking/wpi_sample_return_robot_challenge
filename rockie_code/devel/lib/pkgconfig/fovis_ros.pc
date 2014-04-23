@@ -1,8 +1,0 @@
-prefix=/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel
-
-Name: fovis_ros
-Description: Description of fovis_ros
-Version: 0.0.1
-Cflags: -I/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/include
-Libs: -L/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib 
-Requires: 

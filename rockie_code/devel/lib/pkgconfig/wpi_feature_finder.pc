@@ -1,8 +1,0 @@
-prefix=/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel
-
-Name: wpi_feature_finder
-Description: Description of wpi_feature_finder
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib 
-Requires: 
