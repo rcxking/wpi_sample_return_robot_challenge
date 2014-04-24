@@ -1,0 +1,86 @@
+10
+
+dir
+1291
+http://rtabmap.googlecode.com/svn/trunk/rtabmap/tools
+http://rtabmap.googlecode.com/svn
+
+
+
+2014-04-03T15:56:01.571590Z
+1287
+matlabbe
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+f169173b-cf89-36c8-b27e-44dbe73f0c83
+
+ImagesJoiner
+dir
+
+CMakeLists.txt
+file
+
+
+
+
+2014-04-24T18:07:18.484345Z
+ca0556aa4795e8eb5a8c375931a93b91
+2014-04-03T15:56:01.571590Z
+1287
+matlabbe
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+442
+
+DataRecorder
+dir
+
+ExtractObject
+dir
+
+VocabularyComparison
+dir
+
+ConsoleApp
+dir
+
+OdometryViewer
+dir
+
+DatabaseViewer
+dir
+
+EpipolarGeometry
+dir
+

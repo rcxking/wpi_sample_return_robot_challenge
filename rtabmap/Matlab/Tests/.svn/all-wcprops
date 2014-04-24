@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/453/trunk/rtabmap/Matlab/Tests
+END
+TestAdjustLikelihood.m
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/109/trunk/rtabmap/Matlab/Tests/TestAdjustLikelihood.m
+END
+README.txt
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/109/trunk/rtabmap/Matlab/Tests/README.txt
+END
+TestComputeLikelihood.m
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/109/trunk/rtabmap/Matlab/Tests/TestComputeLikelihood.m
+END
+TestBayesFilter.m
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/453/trunk/rtabmap/Matlab/Tests/TestBayesFilter.m
+END
+090306-3_db-Signatures.txt
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/109/trunk/rtabmap/Matlab/Tests/090306-3_db-Signatures.txt
+END
+090306-3_db-Dictionary.txt
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/109/trunk/rtabmap/Matlab/Tests/090306-3_db-Dictionary.txt
+END
+TestUpdateCommonSignature.m
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/109/trunk/rtabmap/Matlab/Tests/TestUpdateCommonSignature.m
+END

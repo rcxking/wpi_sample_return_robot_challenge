@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/1273/trunk/rtabmap/tools/EpipolarGeometry
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/1273/trunk/rtabmap/tools/EpipolarGeometry/CMakeLists.txt
+END
+main.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/1014/trunk/rtabmap/tools/EpipolarGeometry/main.cpp
+END

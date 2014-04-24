@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/657/trunk/rtabmap/Matlab
+END
+updateDictionary.m
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/109/trunk/rtabmap/Matlab/updateDictionary.m
+END
+generatePrediction.m
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/109/trunk/rtabmap/Matlab/generatePrediction.m
+END
+RecursiveBayes.m
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/109/trunk/rtabmap/Matlab/RecursiveBayes.m
+END
+updateCommonSignature.m
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/109/trunk/rtabmap/Matlab/updateCommonSignature.m
+END
+adjustLikelihood.m
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/109/trunk/rtabmap/Matlab/adjustLikelihood.m
+END
+README.txt
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/109/trunk/rtabmap/Matlab/README.txt
+END
+computeLikelihood.m
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/109/trunk/rtabmap/Matlab/computeLikelihood.m
+END
+DumpMemorySign.txt
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/109/trunk/rtabmap/Matlab/DumpMemorySign.txt
+END
