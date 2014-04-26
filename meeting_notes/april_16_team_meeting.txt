@@ -1,0 +1,31 @@
+4/16/14 Team Meeting
+--------------------
+
+Updates
+-------
+Shuai - Rail system/ordering parts
+Micah - Beaglebone code motor controller/linear actuators
+Yuriy - Reimaging laptop/will look at Github
+Ying - ROS Packages for OpenCV/on success will not need to use GUVC Driver
+Jed - Feature/Color Recognition
+Will - RGBD SLAM ROS Package/poor documentation for package/simulated husky robot can create maps
+Landon - Scoop + CAD Model
+Bryant - TCP Server on Beaglebone + Beaglebone ROS Node
+
+New Updates:
+------------
+- required to make a video of the robot
+	- due May 8th
+	
+	- 5 Meter Traversal
+	- Collect Sample
+	- Travel 5 Meter w/Sample
+	- Return to Start Location
+	- >= 60 second of video
+	
+- May 8th - Updated Proposal on Robot Design
+
+- Housing:
+- WPI Providing housing on campus ($50/person)
+
+	

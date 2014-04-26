@@ -17,6 +17,33 @@
 //Build shared libraries (DLLs).
 BUILD_SHARED_LIBS:BOOL=ON
 
+//The directory containing a CMake configuration file for Boost.
+Boost_DIR:PATH=Boost_DIR-NOTFOUND
+
+//Path to a file.
+Boost_INCLUDE_DIR:PATH=/usr/include
+
+//Boost library directory
+Boost_LIBRARY_DIRS:FILEPATH=/usr/lib
+
+//The Boost SYSTEM library
+Boost_SYSTEM_LIBRARY:FILEPATH=/usr/lib/libboost_system-mt.so
+
+//Boost system library (debug)
+Boost_SYSTEM_LIBRARY_DEBUG:FILEPATH=/usr/lib/libboost_system-mt.so
+
+//Boost system library (release)
+Boost_SYSTEM_LIBRARY_RELEASE:FILEPATH=/usr/lib/libboost_system-mt.so
+
+//The Boost THREAD library
+Boost_THREAD_LIBRARY:FILEPATH=/usr/lib/libboost_thread-mt.so
+
+//Boost thread library (debug)
+Boost_THREAD_LIBRARY_DEBUG:FILEPATH=/usr/lib/libboost_thread-mt.so
+
+//Boost thread library (release)
+Boost_THREAD_LIBRARY_RELEASE:FILEPATH=/usr/lib/libboost_thread-mt.so
+
 //List of ';' separated packages to exclude
 CATKIN_BLACKLIST_PACKAGES:STRING=
 
@@ -238,6 +265,18 @@ catkin_DIR:PATH=/opt/ros/hydro/share/catkin/cmake
 //The directory containing a CMake configuration file for cpp_common.
 cpp_common_DIR:PATH=/opt/ros/hydro/share/cpp_common/cmake
 
+//The directory containing a CMake configuration file for gencpp.
+gencpp_DIR:PATH=/opt/ros/hydro/share/gencpp/cmake
+
+//The directory containing a CMake configuration file for genlisp.
+genlisp_DIR:PATH=/opt/ros/hydro/share/genlisp/cmake
+
+//The directory containing a CMake configuration file for genmsg.
+genmsg_DIR:PATH=/opt/ros/hydro/share/genmsg/cmake
+
+//The directory containing a CMake configuration file for genpy.
+genpy_DIR:PATH=/opt/ros/hydro/share/genpy/cmake
+
 //Value Computed by CMake
 gtest_BINARY_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/gtest
 
@@ -266,8 +305,29 @@ gtest_main_LIB_DEPENDS:STATIC=general;-lpthread;general;gtest;
 //Path to a library.
 lib:FILEPATH=/opt/ros/hydro/lib/libxmlrpcpp.so
 
+//The directory containing a CMake configuration file for message_generation.
+message_generation_DIR:PATH=/opt/ros/hydro/share/message_generation/cmake
+
 //The directory containing a CMake configuration file for message_runtime.
 message_runtime_DIR:PATH=/opt/ros/hydro/share/message_runtime/cmake
+
+//Value Computed by CMake
+moonshot_BINARY_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rockie_arduino_node
+
+//Value Computed by CMake
+moonshot_SOURCE_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rockie_arduino_node
+
+//Value Computed by CMake
+rockie_arduino_node_BINARY_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rockie_arduino_node
+
+//Value Computed by CMake
+rockie_arduino_node_SOURCE_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rockie_arduino_node
+
+//Value Computed by CMake
+rockie_arduino_pub_BINARY_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rockie_arduino_pub
+
+//Value Computed by CMake
+rockie_arduino_pub_SOURCE_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rockie_arduino_pub
 
 //The directory containing a CMake configuration file for rosconsole.
 rosconsole_DIR:PATH=/opt/ros/hydro/share/rosconsole/cmake
@@ -287,11 +347,65 @@ rosgraph_msgs_DIR:PATH=/opt/ros/hydro/share/rosgraph_msgs/cmake
 //The directory containing a CMake configuration file for rospy.
 rospy_DIR:PATH=/opt/ros/hydro/share/rospy/cmake
 
+//Value Computed by CMake
+rosserial_BINARY_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial
+
+//Value Computed by CMake
+rosserial_SOURCE_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial
+
+//Value Computed by CMake
+rosserial_arduino_BINARY_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_arduino
+
+//Value Computed by CMake
+rosserial_arduino_SOURCE_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_arduino
+
+//Value Computed by CMake
+rosserial_client_BINARY_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_client
+
+//Value Computed by CMake
+rosserial_client_SOURCE_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_client
+
+//Value Computed by CMake
+rosserial_embeddedlinux_BINARY_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_embeddedlinux
+
+//Value Computed by CMake
+rosserial_embeddedlinux_SOURCE_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_embeddedlinux
+
+//Value Computed by CMake
+rosserial_msgs_BINARY_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_msgs
+
+//The directory containing a CMake configuration file for rosserial_msgs.
+rosserial_msgs_DIR:PATH=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/devel/share/rosserial_msgs/cmake
+
+//Value Computed by CMake
+rosserial_msgs_SOURCE_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_msgs
+
+//Value Computed by CMake
+rosserial_python_BINARY_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_python
+
+//Value Computed by CMake
+rosserial_python_SOURCE_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_python
+
+//Value Computed by CMake
+rosserial_server_BINARY_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_server
+
+//Value Computed by CMake
+rosserial_server_SOURCE_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_server
+
+//Value Computed by CMake
+rosserial_xbee_BINARY_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_xbee
+
+//Value Computed by CMake
+rosserial_xbee_SOURCE_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_xbee
+
 //The directory containing a CMake configuration file for rostime.
 rostime_DIR:PATH=/opt/ros/hydro/share/rostime/cmake
 
 //The directory containing a CMake configuration file for std_msgs.
 std_msgs_DIR:PATH=/opt/ros/hydro/share/std_msgs/cmake
+
+//The directory containing a CMake configuration file for topic_tools.
+topic_tools_DIR:PATH=/opt/ros/hydro/share/topic_tools/cmake
 
 //Value Computed by CMake
 watchdog_BINARY_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/watchdog
@@ -307,6 +421,30 @@ xmlrpcpp_DIR:PATH=/opt/ros/hydro/share/xmlrpcpp/cmake
 # INTERNAL cache entries
 ########################
 
+//ADVANCED property for variable: Boost_INCLUDE_DIR
+Boost_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_LIBRARY_DIRS
+Boost_LIBRARY_DIRS-ADVANCED:INTERNAL=1
+//The library version string for boost libraries
+Boost_LIB_VERSION:INTERNAL=1_46_1
+//Whether the Boost SYSTEM library found
+Boost_SYSTEM_FOUND:INTERNAL=ON
+//ADVANCED property for variable: Boost_SYSTEM_LIBRARY
+Boost_SYSTEM_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_SYSTEM_LIBRARY_DEBUG
+Boost_SYSTEM_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_SYSTEM_LIBRARY_RELEASE
+Boost_SYSTEM_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//Whether the Boost THREAD library found
+Boost_THREAD_FOUND:INTERNAL=ON
+//ADVANCED property for variable: Boost_THREAD_LIBRARY
+Boost_THREAD_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_THREAD_LIBRARY_DEBUG
+Boost_THREAD_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_THREAD_LIBRARY_RELEASE
+Boost_THREAD_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//The version number for boost libraries
+Boost_VERSION:INTERNAL=104601
 //catkin environment
 CATKIN_ENV:INTERNAL=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/catkin_generated/env_cached.sh
 CATKIN_TEST_RESULTS_DIR:INTERNAL=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/test_results
@@ -406,7 +544,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_LOCAL_GENERATORS:INTERNAL=3
+CMAKE_NUMBER_OF_LOCAL_GENERATORS:INTERNAL=12
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

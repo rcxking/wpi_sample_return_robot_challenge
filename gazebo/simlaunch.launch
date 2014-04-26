@@ -2,11 +2,11 @@
 <launch>
 
   <!--I dont know why, but i just cant get this to work...-->
-  <node pkg="gazebo_ros" type="gzserver" name="gzserver" args="/home/will/Code/wpi-sample-return-robot-challenge/gazebo/landscape_with_background.world">
-    <!--env name="GAZEBO_MODEL_PATH" value="/home/will/Code/wpi-sample-return-robot-challenge/gazebo/models/" />
-    <env name="GAZEBO_RESOURCE_PATH" value="/home/will/Code/wpi-sample-return-robot-challenge/gazebo/" /-->
+  <!--node pkg="gazebo_ros" type="gzserver" name="gzserver" args="/home/will/Code/wpi-sample-return-robot-challenge/gazebo/landscape_with_background.world">
+    <env name="GAZEBO_MODEL_PATH" value="/home/will/Code/wpi-sample-return-robot-challenge/gazebo/models/" />
+    <env name="GAZEBO_RESOURCE_PATH" value="/home/will/Code/wpi-sample-return-robot-challenge/gazebo/" />
 
-  </node>
+  </node-->
 
   <!--stereo image processing node-->
   <node 
@@ -45,16 +45,19 @@
 
   <node pkg="octomap_server" type="octomap_server_node" name="octomap_server_node" 
     args="
-    cloud_in:=/rrbot/camera1/points2 
     _latch:=false
-    _frame_id:=odom 
+    _frame_id:=map 
     _sensor_model/max_range:=30.0
     _filter_ground:=false
     _resolution:=.09
     _base_frame_id:=base_link
     _ground_filter/angle:=0.15
     _ground_filter/distance:=0.04
-    _ground_filter/plane_distance:=0.07" />
+    _ground_filter/plane_distance:=0.07">
+
+    <remap from="cloud_in" to="/rgbdslam/batch_clouds" />
+
+  </node>
 
   <node pkg="rviz" type="rviz" name="rviz" />
 

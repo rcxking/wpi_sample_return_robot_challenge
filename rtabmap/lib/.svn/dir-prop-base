@@ -1,0 +1,14 @@
+K 10
+svn:ignore
+V 65
+librtabmap_core.dll.a
+
+librtabmap_gui.dll.a
+
+*.lib
+
+*.exp
+
+Debug
+
+END

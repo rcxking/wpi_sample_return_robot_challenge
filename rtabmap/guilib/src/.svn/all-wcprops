@@ -1,0 +1,167 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/1288/trunk/rtabmap/guilib/src
+END
+MapVisibilityWidget.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/1066/trunk/rtabmap/guilib/src/MapVisibilityWidget.h
+END
+AboutDialog.h
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/450/trunk/rtabmap/guilib/src/AboutDialog.h
+END
+DataRecorder.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/1066/trunk/rtabmap/guilib/src/DataRecorder.cpp
+END
+ExportDialog.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/1066/trunk/rtabmap/guilib/src/ExportDialog.cpp
+END
+StatsToolBox.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/855/trunk/rtabmap/guilib/src/StatsToolBox.cpp
+END
+ExportDialog.h
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/1066/trunk/rtabmap/guilib/src/ExportDialog.h
+END
+ConsoleWidget.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/855/trunk/rtabmap/guilib/src/ConsoleWidget.cpp
+END
+PdfPlot.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/1014/trunk/rtabmap/guilib/src/PdfPlot.cpp
+END
+StatsToolBox.h
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/657/trunk/rtabmap/guilib/src/StatsToolBox.h
+END
+ConsoleWidget.h
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/855/trunk/rtabmap/guilib/src/ConsoleWidget.h
+END
+MainWindow.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/1286/trunk/rtabmap/guilib/src/MainWindow.cpp
+END
+ImageView.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/1050/trunk/rtabmap/guilib/src/ImageView.cpp
+END
+PdfPlot.h
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/1014/trunk/rtabmap/guilib/src/PdfPlot.h
+END
+GuiLib.qrc
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/1050/trunk/rtabmap/guilib/src/GuiLib.qrc
+END
+DetailedProgressDialog.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/1014/trunk/rtabmap/guilib/src/DetailedProgressDialog.cpp
+END
+PreferencesDialog.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/1288/trunk/rtabmap/guilib/src/PreferencesDialog.cpp
+END
+KeypointItem.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/855/trunk/rtabmap/guilib/src/KeypointItem.cpp
+END
+GraphViewer.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/1077/trunk/rtabmap/guilib/src/GraphViewer.cpp
+END
+OdometryViewer.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/1179/trunk/rtabmap/guilib/src/OdometryViewer.cpp
+END
+DetailedProgressDialog.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/1014/trunk/rtabmap/guilib/src/DetailedProgressDialog.h
+END
+DatabaseViewer.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/1264/trunk/rtabmap/guilib/src/DatabaseViewer.cpp
+END
+LoopClosureViewer.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/1014/trunk/rtabmap/guilib/src/LoopClosureViewer.cpp
+END
+CloudViewer.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/1264/trunk/rtabmap/guilib/src/CloudViewer.cpp
+END
+GraphViewer.h
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/1075/trunk/rtabmap/guilib/src/GraphViewer.h
+END
+MapVisibilityWidget.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/1066/trunk/rtabmap/guilib/src/MapVisibilityWidget.cpp
+END
+AboutDialog.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/1014/trunk/rtabmap/guilib/src/AboutDialog.cpp
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/1075/trunk/rtabmap/guilib/src/CMakeLists.txt
+END

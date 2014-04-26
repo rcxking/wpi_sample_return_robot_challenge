@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: rosserial_client
+Version: 0.5.5
+Summary: Generalized client side source for rosserial.
+Home-page: http://ros.org/wiki/rosserial_client
+Author: Paul Bouchier
+Author-email: paul.bouchier@gmail.com
+License: BSD
+Description: UNKNOWN
+Platform: UNKNOWN
