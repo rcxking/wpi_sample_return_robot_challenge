@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: rosserial_python
+Version: 0.5.5
+Summary: A Python-based implementation of the ROS serial protocol.
+Home-page: http://ros.org/wiki/rosserial_python
+Author: Paul Bouchier
+Author-email: paul.bouchier@gmail.com
+License: BSD
+Description: UNKNOWN
+Platform: UNKNOWN

@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "rosserial")
+set(rosserial_MAINTAINER "Paul Bouchier <paul.bouchier@gmail.com>")
+set(rosserial_DEPRECATED "")
+set(rosserial_VERSION "0.5.5")
+set(rosserial_BUILD_DEPENDS )
+set(rosserial_RUN_DEPENDS "rosserial_msgs" "rosserial_client" "rosserial_python")
+set(rosserial_BUILDTOOL_DEPENDS "catkin")
