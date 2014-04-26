@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "rockie_arduino_pub")
+set(rockie_arduino_pub_MAINTAINER "bryant <bryant@todo.todo>")
+set(rockie_arduino_pub_DEPRECATED "")
+set(rockie_arduino_pub_VERSION "0.0.0")
+set(rockie_arduino_pub_BUILD_DEPENDS "rospy" "std_msgs")
+set(rockie_arduino_pub_RUN_DEPENDS "rospy" "std_msgs")
+set(rockie_arduino_pub_BUILDTOOL_DEPENDS "catkin")
