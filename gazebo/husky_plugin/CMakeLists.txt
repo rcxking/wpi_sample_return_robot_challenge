@@ -6,6 +6,16 @@ if (PKG_CONFIG_FOUND)
 endif()
 include_directories(${GAZEBO_INCLUDE_DIRS})
 link_directories(${GAZEBO_LIBRARY_DIRS})
+##cmake_minimum_required(VERSION 2.8.3)
+##project(husky_gazebo_plugins)
+
+##find_package(catkin REQUIRED COMPONENTS
+  ##gazebo_ros
+##)
+
+##find_package(gazebo REQUIRED)
+
+##include_directories(include ${catkin_INCLUE_DIRS} ${GAZEBO_INCLUDE_DIRS} ${SDFormate_INCLUDE_DIRS})
 # Set the build type. Options are:
 # Coverage : w/ debug symbols, w/o optimization, w/ code-coverage
 # Debug : w/ debug symbols, w/o optimization
@@ -39,3 +49,11 @@ add_library(${PROJECT_NAME} SHARED src/husky_plugin.cpp)
 target_link_libraries(${PROJECT_NAME} ${GAZEBO_libraries})
 
 #rosbuild_link_boost(${PROJECT_NAME} thread)
+
+##catkin_package(
+##	DEPENDS
+##		gazebo_ros
+##	CATKIN_DEPENDS
+##	INCLUDE_DIRS
+##	LIBRARIES
+##)

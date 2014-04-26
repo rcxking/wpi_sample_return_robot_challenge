@@ -11,10 +11,11 @@ Clearpath Husky A200 Gazebo Plugin
 <depend package="roscpp"/>
 <depend package="tf"/>
 <!--Gazebo specific-->
-<depend package="gazebo" />
-<depend package="gazebo_tools" />
-<depend package="gazebo_worlds"/>
+<!--depend package="gazebo" /-->
+<!--depend package="gazebo_tools" /-->
+<!--depend package="gazebo_worlds" /-->
 <depend package="gazebo_plugins"/>
+
 
 <export>
         <gazebo plugin_path="${prefix}/lib" />
