@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/1161/trunk/rtabmap/examples/RGBDMapping
+END
+main.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/1161/trunk/rtabmap/examples/RGBDMapping/main.cpp
+END
+MapBuilder.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/1152/trunk/rtabmap/examples/RGBDMapping/MapBuilder.h
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/1152/trunk/rtabmap/examples/RGBDMapping/CMakeLists.txt
+END

@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/1014/trunk/rtabmap/corelib/src/toro3d
+END
+treeoptimizer3.hh
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/1014/trunk/rtabmap/corelib/src/toro3d/treeoptimizer3.hh
+END
+treeoptimizer3_iteration.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/1014/trunk/rtabmap/corelib/src/toro3d/treeoptimizer3_iteration.cpp
+END
+dmatrix.hh
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/1014/trunk/rtabmap/corelib/src/toro3d/dmatrix.hh
+END
+treeoptimizer3.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/1014/trunk/rtabmap/corelib/src/toro3d/treeoptimizer3.cpp
+END
+posegraph.hh
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/1014/trunk/rtabmap/corelib/src/toro3d/posegraph.hh
+END
+transformation3.hh
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/1014/trunk/rtabmap/corelib/src/toro3d/transformation3.hh
+END
+posegraph3.hh
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/1014/trunk/rtabmap/corelib/src/toro3d/posegraph3.hh
+END
+posegraph3.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/1014/trunk/rtabmap/corelib/src/toro3d/posegraph3.cpp
+END
+posegraph.hxx
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/1014/trunk/rtabmap/corelib/src/toro3d/posegraph.hxx
+END
+dmatrix.hxx
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/1014/trunk/rtabmap/corelib/src/toro3d/dmatrix.hxx
+END
+transformation3.hxx
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/1014/trunk/rtabmap/corelib/src/toro3d/transformation3.hxx
+END

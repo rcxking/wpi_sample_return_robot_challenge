@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/1288/trunk/rtabmap/guilib/src/ui
+END
+DatabaseViewer.ui
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/1253/trunk/rtabmap/guilib/src/ui/DatabaseViewer.ui
+END
+consoleWidget.ui
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/450/trunk/rtabmap/guilib/src/ui/consoleWidget.ui
+END
+loopClosureViewer.ui
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/1014/trunk/rtabmap/guilib/src/ui/loopClosureViewer.ui
+END
+aboutDialog.ui
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/1014/trunk/rtabmap/guilib/src/ui/aboutDialog.ui
+END
+mainWindow.ui
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/1075/trunk/rtabmap/guilib/src/ui/mainWindow.ui
+END
+exportDialog.ui
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/1066/trunk/rtabmap/guilib/src/ui/exportDialog.ui
+END
+preferencesDialog.ui
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/1288/trunk/rtabmap/guilib/src/ui/preferencesDialog.ui
+END

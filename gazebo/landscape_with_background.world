@@ -509,7 +509,7 @@
     </ode>
   </physics>
 </joint>
-<plugin name='husky_diff_controller' filename='/home/will/Code/wpi-sample-return-robot-challenge/gazebo/libhusky_gazebo_plugins.so'>
+<plugin name='husky_diff_controller' filename='/home/bdnumber1/Challenge/wpi/gazebo/libhusky_gazebo_plugins.so'>
   <alwaysOn>true</alwaysOn>
   <updateRate>100.0</updateRate>
   <backLeftJoint>back_left_joint</backLeftJoint>

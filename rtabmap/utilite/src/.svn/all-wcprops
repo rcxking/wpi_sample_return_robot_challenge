@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/1291/trunk/rtabmap/utilite/src
+END
+UFile.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/909/trunk/rtabmap/utilite/src/UFile.cpp
+END
+ULogger.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/1014/trunk/rtabmap/utilite/src/ULogger.cpp
+END
+UEventsManager.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/1264/trunk/rtabmap/utilite/src/UEventsManager.cpp
+END
+UTimer.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/856/trunk/rtabmap/utilite/src/UTimer.cpp
+END
+UEventsHandler.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/1014/trunk/rtabmap/utilite/src/UEventsHandler.cpp
+END
+UDirectory.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/919/trunk/rtabmap/utilite/src/UDirectory.cpp
+END
+UConversion.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/1291/trunk/rtabmap/utilite/src/UConversion.cpp
+END
+UEventsSender.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/1014/trunk/rtabmap/utilite/src/UEventsSender.cpp
+END
+UThread.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/856/trunk/rtabmap/utilite/src/UThread.cpp
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/1051/trunk/rtabmap/utilite/src/CMakeLists.txt
+END
+UProcessInfo.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/856/trunk/rtabmap/utilite/src/UProcessInfo.cpp
+END

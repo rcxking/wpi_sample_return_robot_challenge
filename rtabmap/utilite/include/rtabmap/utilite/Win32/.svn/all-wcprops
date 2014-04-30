@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/857/trunk/rtabmap/utilite/include/rtabmap/utilite/Win32
+END
+UWin32.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/857/trunk/rtabmap/utilite/include/rtabmap/utilite/Win32/UWin32.h
+END
+UThreadC.h
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/857/trunk/rtabmap/utilite/include/rtabmap/utilite/Win32/UThreadC.h
+END

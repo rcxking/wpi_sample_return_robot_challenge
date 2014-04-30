@@ -1,0 +1,13 @@
+K 10
+svn:ignore
+V 9
+.project
+
+K 13
+svn:mergeinfo
+V 140
+/branches/STM/rtabmap:320-449
+/branches/attention/rtabmap:569-656
+/branches/audio/rtabmap:469-559
+/branches/pcl_integration/rtabmap:925-1013
+END

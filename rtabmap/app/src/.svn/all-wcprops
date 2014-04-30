@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/1152/trunk/rtabmap/app/src
+END
+RTABMap.ico
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/1014/trunk/rtabmap/app/src/RTABMap.ico
+END
+RTABMap.icns
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/1014/trunk/rtabmap/app/src/RTABMap.icns
+END
+ObjDeletionHandler.h
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/855/trunk/rtabmap/app/src/ObjDeletionHandler.h
+END
+main.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/1152/trunk/rtabmap/app/src/main.cpp
+END
+RTABMap.rc
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/1014/trunk/rtabmap/app/src/RTABMap.rc
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/1051/trunk/rtabmap/app/src/CMakeLists.txt
+END

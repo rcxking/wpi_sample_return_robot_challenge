@@ -1,0 +1,179 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/1288/trunk/rtabmap/corelib/src
+END
+DBReader.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/1264/trunk/rtabmap/corelib/src/DBReader.cpp
+END
+Memory.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/1288/trunk/rtabmap/corelib/src/Memory.cpp
+END
+BayesFilter.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/1014/trunk/rtabmap/corelib/src/BayesFilter.cpp
+END
+DBDriverSqlite3.h
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/1074/trunk/rtabmap/corelib/src/DBDriverSqlite3.h
+END
+Transform.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/1126/trunk/rtabmap/corelib/src/Transform.cpp
+END
+RtabmapThread.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/1152/trunk/rtabmap/corelib/src/RtabmapThread.cpp
+END
+BayesFilter.h
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/1014/trunk/rtabmap/corelib/src/BayesFilter.h
+END
+NearestNeighbor.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/855/trunk/rtabmap/corelib/src/NearestNeighbor.cpp
+END
+CameraThread.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/1014/trunk/rtabmap/corelib/src/CameraThread.cpp
+END
+VWDictionary.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/1056/trunk/rtabmap/corelib/src/VWDictionary.cpp
+END
+NearestNeighbor.h
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/657/trunk/rtabmap/corelib/src/NearestNeighbor.h
+END
+Rtabmap.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/1136/trunk/rtabmap/corelib/src/Rtabmap.cpp
+END
+EpipolarGeometry.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/1014/trunk/rtabmap/corelib/src/EpipolarGeometry.cpp
+END
+Camera.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/1014/trunk/rtabmap/corelib/src/Camera.cpp
+END
+Statistics.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/1058/trunk/rtabmap/corelib/src/Statistics.cpp
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/1074/trunk/rtabmap/corelib/src/CMakeLists.txt
+END
+SimpleIni.h
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/560/trunk/rtabmap/corelib/src/SimpleIni.h
+END
+ConvertUTF.c
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/109/trunk/rtabmap/corelib/src/ConvertUTF.c
+END
+VisualWord.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/855/trunk/rtabmap/corelib/src/VisualWord.cpp
+END
+DBDriver.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/1058/trunk/rtabmap/corelib/src/DBDriver.cpp
+END
+CameraOpenni.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/1014/trunk/rtabmap/corelib/src/CameraOpenni.cpp
+END
+Signature.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/1014/trunk/rtabmap/corelib/src/Signature.cpp
+END
+Odometry.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/1288/trunk/rtabmap/corelib/src/Odometry.cpp
+END
+Parameters.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/1077/trunk/rtabmap/corelib/src/Parameters.cpp
+END
+VisualWord.h
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/657/trunk/rtabmap/corelib/src/VisualWord.h
+END
+util3d.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/1288/trunk/rtabmap/corelib/src/util3d.cpp
+END
+Features2d.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/1288/trunk/rtabmap/corelib/src/Features2d.cpp
+END
+ConvertUTF.h
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/109/trunk/rtabmap/corelib/src/ConvertUTF.h
+END
+DBDriverSqlite3.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/1075/trunk/rtabmap/corelib/src/DBDriverSqlite3.cpp
+END

@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/1014/trunk/rtabmap/tools/ConsoleApp
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/1014/trunk/rtabmap/tools/ConsoleApp/CMakeLists.txt
+END
+main.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/1014/trunk/rtabmap/tools/ConsoleApp/main.cpp
+END

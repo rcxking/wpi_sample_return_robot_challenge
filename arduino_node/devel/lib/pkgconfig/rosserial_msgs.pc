@@ -1,0 +1,8 @@
+prefix=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/devel
+
+Name: rosserial_msgs
+Description: Description of rosserial_msgs
+Version: 0.5.5
+Cflags: -I/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/devel/include
+Libs: -L/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/devel/lib 
+Requires: message_runtime

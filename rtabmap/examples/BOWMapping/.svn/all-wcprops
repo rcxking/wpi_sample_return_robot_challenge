@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/1152/trunk/rtabmap/examples/BOWMapping
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/1152/trunk/rtabmap/examples/BOWMapping/CMakeLists.txt
+END
+main.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/1152/trunk/rtabmap/examples/BOWMapping/main.cpp
+END
