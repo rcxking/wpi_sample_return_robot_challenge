@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "wpi_feature_finder")
-set(wpi_feature_finder_MAINTAINER "will <will@todo.todo>")
-set(wpi_feature_finder_DEPRECATED "")
-set(wpi_feature_finder_VERSION "0.0.0")
-set(wpi_feature_finder_BUILD_DEPENDS "roscpp" "std_msgs")
-set(wpi_feature_finder_RUN_DEPENDS "roscpp" "std_msgs")
-set(wpi_feature_finder_BUILDTOOL_DEPENDS "catkin")

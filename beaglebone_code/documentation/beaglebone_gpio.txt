@@ -1,0 +1,2 @@
+Beaglebone Pins are 3.3 V tolerant.
+Device Tree (devicetree.org): a data structure that stores the hardware specific features of a platform and passes it to the OS at boot time.  

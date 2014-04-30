@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/2106/trunk/rgbdslam_freiburg/rgbdslam/external/siftgpu/include/GL
+END
+glew.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/2106/trunk/rgbdslam_freiburg/rgbdslam/external/siftgpu/include/GL/glew.h
+END
+wglew.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/2106/trunk/rgbdslam_freiburg/rgbdslam/external/siftgpu/include/GL/wglew.h
+END
+glut.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/2106/trunk/rgbdslam_freiburg/rgbdslam/external/siftgpu/include/GL/glut.h
+END

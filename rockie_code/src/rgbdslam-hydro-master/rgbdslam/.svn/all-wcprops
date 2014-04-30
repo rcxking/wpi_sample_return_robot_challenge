@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/4188/trunk/rgbdslam_freiburg/rgbdslam
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/3960/trunk/rgbdslam_freiburg/rgbdslam/README
+END
+rosdep.yaml
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/3382/trunk/rgbdslam_freiburg/rgbdslam/rosdep.yaml
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/4115/trunk/rgbdslam_freiburg/rgbdslam/CMakeLists.txt
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/2106/trunk/rgbdslam_freiburg/rgbdslam/Makefile
+END
+log.conf
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/3859/trunk/rgbdslam_freiburg/rgbdslam/log.conf
+END
+manifest.xml
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/3982/trunk/rgbdslam_freiburg/rgbdslam/manifest.xml
+END
+nodelet_plugin.xml
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/nodelet_plugin.xml
+END
+COPYING
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2106/trunk/rgbdslam_freiburg/rgbdslam/COPYING
+END
+rosdoc.yaml
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/rosdoc.yaml
+END
+mainpage.dox
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/mainpage.dox
+END
+octomap_server_manifest.patch
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/3859/trunk/rgbdslam_freiburg/rgbdslam/octomap_server_manifest.patch
+END

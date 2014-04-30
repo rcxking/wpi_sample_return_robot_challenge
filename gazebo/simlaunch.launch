@@ -2,43 +2,62 @@
 <launch>
 
   <!--I dont know why, but i just cant get this to work...-->
-  <!--node pkg="gazebo_ros" type="gzserver" name="gzserver" args="landscape.world">
+  <!--node pkg="gazebo_ros" type="gzserver" name="gzserver" args="/home/will/Code/wpi-sample-return-robot-challenge/gazebo/landscape_with_background.world">
     <env name="GAZEBO_MODEL_PATH" value="/home/will/Code/wpi-sample-return-robot-challenge/gazebo/models/" />
     <env name="GAZEBO_RESOURCE_PATH" value="/home/will/Code/wpi-sample-return-robot-challenge/gazebo/" />
 
   </node-->
 
+  <!--stereo image processing node-->
   <node 
     ns="/rrbot/camera1" 
     pkg="stereo_image_proc" 
     type="stereo_image_proc" 
     name="stereo_image_proc" />
 
-  <!--node pkg="viso2_ros" type="stereo_odometer" name="stereo_odometer" args="stereo:=/rrbot/camera1 image:=image_rect _ref_frame_change_method:=2" /-->
+  <!--RGBDSLAM-->
+  <node pkg="rgbdslam" type="rgbdslam" name="rgbdslam" cwd="node" required="true"> 
+    <!-- Input data settings-->
+    <param name="config/camera_info_topic"                value="/rrbot/camera1/camera_info" />
+    <param name="config/wide_topic"                value="/rrbot/camera1/left/image_mono" />
+    <param name="config/wide_cloud_topic"                value="/rrbot/camera1/points2" />
 
-  <node 
+    <param name="config/feature_detector_type"         value="SURF"/><!-- If SIFTGPU is enabled in CMakeLists.txt, use SURF here -->
+    <param name="config/feature_extractor_type"        value="SURF"/><!-- If SIFTGPU is enabled in CMakeLists.txt, use SURF here -->
+    <param name="config/nn_distance_ratio"             value="0.95"/> <!-- Feature correspondence is valid if distance to nearest neighbour is smaller than this parameter times the distance to the 2nd neighbour -->
+    <param name="config/max_keypoints"                 value="600"/><!-- Extract no more than this many keypoints (not honored by SIFTGPU)-->
+    <param name="config/store_pointclouds" value="True" />
+    <param name="config/fixed_camera" value="False" />
+    <param name="config/base_frame_name" value="base_link" />
+    <param name="config/use_gui" value="True" />
+
+  </node>
+  <!--node pkg="viso2_ros" type="stereo_odometer" name="stereo_odometer" args="stereo:=/rrbot/camera1 image:=image_rect" /-->
+
+  <!--node 
     pkg="fovis_ros" 
     type="fovis_stereo_odometer" 
     name="stereo_odometer" 
-    args="stereo:=/rrbot/camera1 image:=image_rect" />
+    args="stereo:=/rrbot/camera1 image:=image_rect" /-->
 
   <!--This node transforms the camera frame to the base_link frame-->
   <node pkg="tf_robot" type="tf_robot" name="tf_robot"/>
 
   <node pkg="octomap_server" type="octomap_server_node" name="octomap_server_node" 
     args="
-    cloud_in:=/rrbot/camera1/points2 
     _latch:=false
-    _frame_id:=odom 
+    _frame_id:=map 
     _sensor_model/max_range:=30.0
     _filter_ground:=false
     _resolution:=.09
     _base_frame_id:=base_link
     _ground_filter/angle:=0.15
     _ground_filter/distance:=0.04
-    _ground_filter/plane_distance:=0.07" />
+    _ground_filter/plane_distance:=0.07">
 
+    <remap from="cloud_in" to="/rgbdslam/batch_clouds" />
 
+  </node>
 
   <node pkg="rviz" type="rviz" name="rviz" />
 

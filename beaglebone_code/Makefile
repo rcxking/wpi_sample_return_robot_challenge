@@ -1,5 +1,5 @@
 clean:
-	rm -rf *o beaglebone_connect
+	rm -rf *o beaglefetch
 
 all:
-	gcc -Werror -O3 beaglebone_connect.c -o beaglebone_connect 
+	gcc -Wall -Werror -O3 beaglefetch.c -o beaglefetch

@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/3859/trunk/rgbdslam_freiburg/rgbdslam/rgbd_benchmark
+END
+download_benchmark_files.sh
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/rgbd_benchmark/download_benchmark_files.sh
+END
+summarize_evaluation.sh
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/3859/trunk/rgbdslam_freiburg/rgbdslam/rgbd_benchmark/summarize_evaluation.sh
+END
+download_benchmark_data.urls
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/2717/trunk/rgbdslam_freiburg/rgbdslam/rgbd_benchmark/download_benchmark_data.urls
+END
+generate_color_octomap_from_estimate.sh
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/!svn/ver/2717/trunk/rgbdslam_freiburg/rgbdslam/rgbd_benchmark/generate_color_octomap_from_estimate.sh
+END
+spreadsheet_template.ods
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/rgbd_benchmark/spreadsheet_template.ods
+END
+settings_for_evaluation.launch
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/3859/trunk/rgbdslam_freiburg/rgbdslam/rgbd_benchmark/settings_for_evaluation.launch
+END
+benchmark_evaluation.sh
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/3859/trunk/rgbdslam_freiburg/rgbdslam/rgbd_benchmark/benchmark_evaluation.sh
+END

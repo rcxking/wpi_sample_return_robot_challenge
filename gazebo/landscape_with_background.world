@@ -509,7 +509,7 @@
     </ode>
   </physics>
 </joint>
-<plugin name='husky_diff_controller' filename='libhusky_gazebo_plugins.so'>
+<plugin name='husky_diff_controller' filename='/home/will/Code/wpi-sample-return-robot-challenge/gazebo/libhusky_gazebo_plugins.so'>
   <alwaysOn>true</alwaysOn>
   <updateRate>100.0</updateRate>
   <backLeftJoint>back_left_joint</backLeftJoint>
@@ -552,7 +552,7 @@
 
       <sensor name="camera" type="multicamera">
         <always_on>1</always_on>
-        <update_rate>3</update_rate>
+        <update_rate>15</update_rate>
         <visualize>false</visualize>
 
         <camera name="left">
@@ -587,7 +587,8 @@
         <imageTopicName>image_raw</imageTopicName>
         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
         <!--frameName>base_link</frameName-->
-        <frameName>camera</frameName>
+        <!--frameName>camera_link</frameName-->
+      <frameName>openni_camera</frameName>
      
         <hackBaseline>0.07</hackBaseline>
         <distortionK1>0.0</distortionK1>

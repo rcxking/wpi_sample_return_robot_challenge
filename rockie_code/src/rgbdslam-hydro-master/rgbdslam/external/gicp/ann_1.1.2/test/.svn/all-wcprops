@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/ann_1.1.2/test
+END
+ann_test.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/ann_1.1.2/test/ann_test.cpp
+END
+test1-data.pts
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/ann_1.1.2/test/test1-data.pts
+END
+test2-data.pts
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/ann_1.1.2/test/test2-data.pts
+END
+test1.save
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/ann_1.1.2/test/test1.save
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/ann_1.1.2/test/Makefile
+END
+test2.save
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/ann_1.1.2/test/test2.save
+END
+rand.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/ann_1.1.2/test/rand.cpp
+END
+test1.in
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/ann_1.1.2/test/test1.in
+END
+test2.in
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/ann_1.1.2/test/test2.in
+END
+test1-query.pts
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/ann_1.1.2/test/test1-query.pts
+END
+test2-query.pts
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/ann_1.1.2/test/test2-query.pts
+END
+rand.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/2357/trunk/rgbdslam_freiburg/rgbdslam/external/gicp/ann_1.1.2/test/rand.h
+END
