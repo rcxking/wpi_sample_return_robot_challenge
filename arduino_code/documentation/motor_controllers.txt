@@ -1,0 +1,20 @@
+Angular Velocity: encoder ticks per second / encoder ticks per encoder revolution / gear ratio (8.3)* 2 pi 
+- Read encoder ticks using interrupts/NOT digitalRead
+- Interrupt on change from 0 to 1 and vice-versa  
+- Use fastread function (Sparkfun)
+ 
+Linear Velocity: angular velocity * radius of wheel
+
+Linear velocity of Rockie = average linear velocity of each wheel  
+Angular velocity of Rockie = difference in linear velocity of each wheel / (0.5 * distance between both wheels)
+
+PD Controller for Rockie
+------------------------
+- Treating as continuous rotating servos:
+
+int kp, kd;
+while true {
+	// PD Loop on either angular velocity or linear velocity
+	
+	
+}
