@@ -2,7 +2,7 @@
 
 message(STATUS "rosserial_arduino: 1 messages, 1 services")
 
-set(MSG_I_FLAGS "-Irosserial_arduino:/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_arduino/msg")
+set(MSG_I_FLAGS "-Irosserial_arduino:/home/bryant/wpi_sample_return_robot_challenge/arduino_node/src/rosserial/rosserial_arduino/msg")
 
 # Find all generators
 find_package(gencpp REQUIRED)
@@ -18,7 +18,7 @@ add_custom_target(rosserial_arduino_generate_messages ALL)
 ### Section generating for lang: gencpp
 ### Generating Messages
 _generate_msg_cpp(rosserial_arduino
-  "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_arduino/msg/Adc.msg"
+  "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/src/rosserial/rosserial_arduino/msg/Adc.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/rosserial_arduino
@@ -26,7 +26,7 @@ _generate_msg_cpp(rosserial_arduino
 
 ### Generating Services
 _generate_srv_cpp(rosserial_arduino
-  "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_arduino/srv/Test.srv"
+  "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/src/rosserial/rosserial_arduino/srv/Test.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/rosserial_arduino
@@ -53,7 +53,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS rosserial_arduino_generate_messages
 ### Section generating for lang: genlisp
 ### Generating Messages
 _generate_msg_lisp(rosserial_arduino
-  "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_arduino/msg/Adc.msg"
+  "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/src/rosserial/rosserial_arduino/msg/Adc.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/rosserial_arduino
@@ -61,7 +61,7 @@ _generate_msg_lisp(rosserial_arduino
 
 ### Generating Services
 _generate_srv_lisp(rosserial_arduino
-  "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_arduino/srv/Test.srv"
+  "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/src/rosserial/rosserial_arduino/srv/Test.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/rosserial_arduino
@@ -88,7 +88,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS rosserial_arduino_generate_messages
 ### Section generating for lang: genpy
 ### Generating Messages
 _generate_msg_py(rosserial_arduino
-  "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_arduino/msg/Adc.msg"
+  "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/src/rosserial/rosserial_arduino/msg/Adc.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/rosserial_arduino
@@ -96,7 +96,7 @@ _generate_msg_py(rosserial_arduino
 
 ### Generating Services
 _generate_srv_py(rosserial_arduino
-  "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_arduino/srv/Test.srv"
+  "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/src/rosserial/rosserial_arduino/srv/Test.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/rosserial_arduino

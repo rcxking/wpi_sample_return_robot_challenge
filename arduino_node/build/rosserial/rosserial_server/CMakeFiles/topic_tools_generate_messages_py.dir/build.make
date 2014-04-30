@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src
+CMAKE_SOURCE_DIR = /home/bryant/wpi_sample_return_robot_challenge/arduino_node/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build
+CMAKE_BINARY_DIR = /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build
 
 # Utility rule file for topic_tools_generate_messages_py.
 
@@ -53,10 +53,10 @@ rosserial/rosserial_server/CMakeFiles/topic_tools_generate_messages_py.dir/build
 .PHONY : rosserial/rosserial_server/CMakeFiles/topic_tools_generate_messages_py.dir/build
 
 rosserial/rosserial_server/CMakeFiles/topic_tools_generate_messages_py.dir/clean:
-	cd /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_server && $(CMAKE_COMMAND) -P CMakeFiles/topic_tools_generate_messages_py.dir/cmake_clean.cmake
+	cd /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial_server && $(CMAKE_COMMAND) -P CMakeFiles/topic_tools_generate_messages_py.dir/cmake_clean.cmake
 .PHONY : rosserial/rosserial_server/CMakeFiles/topic_tools_generate_messages_py.dir/clean
 
 rosserial/rosserial_server/CMakeFiles/topic_tools_generate_messages_py.dir/depend:
-	cd /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_server /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_server /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_server/CMakeFiles/topic_tools_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/bryant/wpi_sample_return_robot_challenge/arduino_node/src /home/bryant/wpi_sample_return_robot_challenge/arduino_node/src/rosserial/rosserial_server /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial_server /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial_server/CMakeFiles/topic_tools_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : rosserial/rosserial_server/CMakeFiles/topic_tools_generate_messages_py.dir/depend
 

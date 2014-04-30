@@ -67,14 +67,14 @@ set(rosserial_msgs_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(rosserial_msgs_SOURCE_PREFIX /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_msgs)
-  set(rosserial_msgs_DEVEL_PREFIX /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/devel)
+  set(rosserial_msgs_SOURCE_PREFIX /home/bryant/wpi_sample_return_robot_challenge/arduino_node/src/rosserial/rosserial_msgs)
+  set(rosserial_msgs_DEVEL_PREFIX /home/bryant/wpi_sample_return_robot_challenge/arduino_node/devel)
   set(rosserial_msgs_INSTALL_PREFIX "")
   set(rosserial_msgs_PREFIX ${rosserial_msgs_DEVEL_PREFIX})
 else()
   set(rosserial_msgs_SOURCE_PREFIX "")
   set(rosserial_msgs_DEVEL_PREFIX "")
-  set(rosserial_msgs_INSTALL_PREFIX /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/install)
+  set(rosserial_msgs_INSTALL_PREFIX /home/bryant/wpi_sample_return_robot_challenge/arduino_node/install)
   set(rosserial_msgs_PREFIX ${rosserial_msgs_INSTALL_PREFIX})
 endif()
 
@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(rosserial_msgs_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/devel/include" STREQUAL "")
+if(NOT "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/devel/include" STREQUAL "")
   set(rosserial_msgs_INCLUDE_DIRS "")
-  set(_include_dirs "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/devel/include")
+  set(_include_dirs "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/devel/include")
   foreach(idir ${_include_dirs})
     if(IS_ABSOLUTE ${idir} AND IS_DIRECTORY ${idir})
       set(include ${idir})
@@ -103,7 +103,7 @@ if(NOT "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/devel/inc
         message(FATAL_ERROR "Project 'rosserial_msgs' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  Ask the maintainer 'Paul Bouchier <paul.bouchier@gmail.com>' to fix it.")
       endif()
     else()
-      message(FATAL_ERROR "Project 'rosserial_msgs' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_msgs/${idir}'.  Ask the maintainer 'Paul Bouchier <paul.bouchier@gmail.com>' to fix it.")
+      message(FATAL_ERROR "Project 'rosserial_msgs' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/bryant/wpi_sample_return_robot_challenge/arduino_node/src/rosserial/rosserial_msgs/${idir}'.  Ask the maintainer 'Paul Bouchier <paul.bouchier@gmail.com>' to fix it.")
     endif()
     _list_append_unique(rosserial_msgs_INCLUDE_DIRS ${include})
   endforeach()
@@ -122,7 +122,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/devel/lib;/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/devel/lib;/opt/ros/hydro/lib)
+    foreach(path /home/bryant/wpi_sample_return_robot_challenge/arduino_node/devel/lib;/home/bryant/wpi_sample_return_robot_challenge/arduino_node/devel/lib;/opt/ros/hydro/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

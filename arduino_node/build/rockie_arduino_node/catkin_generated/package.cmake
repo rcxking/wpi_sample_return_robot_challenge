@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "rockie_arduino_node")
-set(rockie_arduino_node_MAINTAINER "bryant <bryant@todo.todo>")
-set(rockie_arduino_node_DEPRECATED "")
-set(rockie_arduino_node_VERSION "0.0.0")
-set(rockie_arduino_node_BUILD_DEPENDS "rospy" "std_msgs")
-set(rockie_arduino_node_RUN_DEPENDS "rospy" "std_msgs")
-set(rockie_arduino_node_BUILDTOOL_DEPENDS "catkin")

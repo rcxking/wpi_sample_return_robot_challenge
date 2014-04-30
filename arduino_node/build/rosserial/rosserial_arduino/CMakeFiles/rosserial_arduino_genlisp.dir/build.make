@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src
+CMAKE_SOURCE_DIR = /home/bryant/wpi_sample_return_robot_challenge/arduino_node/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build
+CMAKE_BINARY_DIR = /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build
 
 # Utility rule file for rosserial_arduino_genlisp.
 
@@ -53,10 +53,10 @@ rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_genlisp.dir/build: ross
 .PHONY : rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_genlisp.dir/build
 
 rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_genlisp.dir/clean:
-	cd /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_arduino && $(CMAKE_COMMAND) -P CMakeFiles/rosserial_arduino_genlisp.dir/cmake_clean.cmake
+	cd /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial_arduino && $(CMAKE_COMMAND) -P CMakeFiles/rosserial_arduino_genlisp.dir/cmake_clean.cmake
 .PHONY : rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_genlisp.dir/clean
 
 rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_genlisp.dir/depend:
-	cd /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_arduino /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_arduino /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_genlisp.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/bryant/wpi_sample_return_robot_challenge/arduino_node/src /home/bryant/wpi_sample_return_robot_challenge/arduino_node/src/rosserial/rosserial_arduino /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial_arduino /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_genlisp.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_genlisp.dir/depend
 

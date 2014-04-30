@@ -1,8 +1,8 @@
-prefix=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/devel
+prefix=/home/bryant/wpi_sample_return_robot_challenge/arduino_node/devel
 
 Name: rosserial_arduino
 Description: Description of rosserial_arduino
 Version: 0.5.5
-Cflags: -I/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/devel/include
-Libs: -L/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/devel/lib 
+Cflags: -I/home/bryant/wpi_sample_return_robot_challenge/arduino_node/devel/include
+Libs: -L/home/bryant/wpi_sample_return_robot_challenge/arduino_node/devel/lib 
 Requires: message_runtime

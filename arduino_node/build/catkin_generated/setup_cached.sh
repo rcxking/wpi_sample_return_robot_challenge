@@ -7,4 +7,7 @@
 # new environment variables
 
 # modified environment variables
-export PWD="/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build"
+export CATKIN_TEST_RESULTS_DIR="/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/test_results"
+export PWD="/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build"
+export ROS_PACKAGE_PATH="/home/bryant/wpi_sample_return_robot_challenge/arduino_node/src:/opt/ros/hydro/share:/opt/ros/hydro/stacks"
+export ROS_TEST_RESULTS_DIR="/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/test_results"

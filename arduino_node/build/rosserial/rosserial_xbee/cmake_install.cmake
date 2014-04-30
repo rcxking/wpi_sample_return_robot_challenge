@@ -1,8 +1,8 @@
-# Install script for directory: /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_xbee
+# Install script for directory: /home/bryant/wpi_sample_return_robot_challenge/arduino_node/src/rosserial/rosserial_xbee
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  SET(CMAKE_INSTALL_PREFIX "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/install")
+  SET(CMAKE_INSTALL_PREFIX "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/install")
 ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
 STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -33,29 +33,29 @@ IF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_xbee/catkin_generated/installspace/rosserial_xbee.pc")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial_xbee/catkin_generated/installspace/rosserial_xbee.pc")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rosserial_xbee/cmake" TYPE FILE FILES
-    "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_xbee/catkin_generated/installspace/rosserial_xbeeConfig.cmake"
-    "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_xbee/catkin_generated/installspace/rosserial_xbeeConfig-version.cmake"
+    "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial_xbee/catkin_generated/installspace/rosserial_xbeeConfig.cmake"
+    "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial_xbee/catkin_generated/installspace/rosserial_xbeeConfig-version.cmake"
     )
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rosserial_xbee" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_xbee/package.xml")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rosserial_xbee" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/src/rosserial/rosserial_xbee/package.xml")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_xbee/catkin_generated/safe_execute_install.cmake")
+  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial_xbee/catkin_generated/safe_execute_install.cmake")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/rosserial_xbee" TYPE PROGRAM FILES "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_xbee/scripts/setup_xbee.py")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/rosserial_xbee" TYPE PROGRAM FILES "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/src/rosserial/rosserial_xbee/scripts/setup_xbee.py")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/rosserial_xbee" TYPE PROGRAM FILES "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_xbee/scripts/xbee_network.py")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/rosserial_xbee" TYPE PROGRAM FILES "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/src/rosserial/rosserial_xbee/scripts/xbee_network.py")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 

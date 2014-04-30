@@ -1,8 +1,8 @@
-# Install script for directory: /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rockie_arduino_pub
+# Install script for directory: /home/bryant/wpi_sample_return_robot_challenge/arduino_node/src/rockie_arduino_pub
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  SET(CMAKE_INSTALL_PREFIX "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/install")
+  SET(CMAKE_INSTALL_PREFIX "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/install")
 ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
 STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -33,17 +33,17 @@ IF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rockie_arduino_pub/catkin_generated/installspace/rockie_arduino_pub.pc")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rockie_arduino_pub/catkin_generated/installspace/rockie_arduino_pub.pc")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rockie_arduino_pub/cmake" TYPE FILE FILES
-    "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rockie_arduino_pub/catkin_generated/installspace/rockie_arduino_pubConfig.cmake"
-    "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rockie_arduino_pub/catkin_generated/installspace/rockie_arduino_pubConfig-version.cmake"
+    "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rockie_arduino_pub/catkin_generated/installspace/rockie_arduino_pubConfig.cmake"
+    "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rockie_arduino_pub/catkin_generated/installspace/rockie_arduino_pubConfig-version.cmake"
     )
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rockie_arduino_pub" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rockie_arduino_pub/package.xml")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rockie_arduino_pub" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/src/rockie_arduino_pub/package.xml")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 

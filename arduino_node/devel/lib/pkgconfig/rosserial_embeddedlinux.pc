@@ -1,8 +1,8 @@
-prefix=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/devel
+prefix=/home/bryant/wpi_sample_return_robot_challenge/arduino_node/devel
 
 Name: rosserial_embeddedlinux
 Description: Description of rosserial_embeddedlinux
 Version: 0.5.5
 Cflags: 
-Libs: -L/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/devel/lib 
+Libs: -L/home/bryant/wpi_sample_return_robot_challenge/arduino_node/devel/lib 
 Requires: 

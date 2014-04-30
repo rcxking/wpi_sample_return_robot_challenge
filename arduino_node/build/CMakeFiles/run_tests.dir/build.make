@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src
+CMAKE_SOURCE_DIR = /home/bryant/wpi_sample_return_robot_challenge/arduino_node/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build
+CMAKE_BINARY_DIR = /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build
 
 # Utility rule file for run_tests.
 
@@ -57,6 +57,6 @@ CMakeFiles/run_tests.dir/clean:
 .PHONY : CMakeFiles/run_tests.dir/clean
 
 CMakeFiles/run_tests.dir/depend:
-	cd /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/CMakeFiles/run_tests.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/bryant/wpi_sample_return_robot_challenge/arduino_node/src /home/bryant/wpi_sample_return_robot_challenge/arduino_node/src /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/CMakeFiles/run_tests.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/run_tests.dir/depend
 

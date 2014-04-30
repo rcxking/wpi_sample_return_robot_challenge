@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src
+CMAKE_SOURCE_DIR = /home/bryant/wpi_sample_return_robot_challenge/arduino_node/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build
+CMAKE_BINARY_DIR = /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build
 
 # Utility rule file for std_msgs_generate_messages_py.
 
@@ -53,10 +53,10 @@ rockie_arduino_pub/CMakeFiles/std_msgs_generate_messages_py.dir/build: std_msgs_
 .PHONY : rockie_arduino_pub/CMakeFiles/std_msgs_generate_messages_py.dir/build
 
 rockie_arduino_pub/CMakeFiles/std_msgs_generate_messages_py.dir/clean:
-	cd /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rockie_arduino_pub && $(CMAKE_COMMAND) -P CMakeFiles/std_msgs_generate_messages_py.dir/cmake_clean.cmake
+	cd /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rockie_arduino_pub && $(CMAKE_COMMAND) -P CMakeFiles/std_msgs_generate_messages_py.dir/cmake_clean.cmake
 .PHONY : rockie_arduino_pub/CMakeFiles/std_msgs_generate_messages_py.dir/clean
 
 rockie_arduino_pub/CMakeFiles/std_msgs_generate_messages_py.dir/depend:
-	cd /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rockie_arduino_pub /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rockie_arduino_pub /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rockie_arduino_pub/CMakeFiles/std_msgs_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/bryant/wpi_sample_return_robot_challenge/arduino_node/src /home/bryant/wpi_sample_return_robot_challenge/arduino_node/src/rockie_arduino_pub /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rockie_arduino_pub /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rockie_arduino_pub/CMakeFiles/std_msgs_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : rockie_arduino_pub/CMakeFiles/std_msgs_generate_messages_py.dir/depend
 

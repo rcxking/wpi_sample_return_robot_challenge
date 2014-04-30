@@ -6,7 +6,7 @@ from sys import path as sys_path
 
 from pkgutil import extend_path
 
-__extended_path = "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src/rosserial/rosserial_python/src".split(";")
+__extended_path = "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/src/rosserial/rosserial_python/src".split(";")
 for p in reversed(__extended_path):
     sys_path.insert(0, p)
     del p

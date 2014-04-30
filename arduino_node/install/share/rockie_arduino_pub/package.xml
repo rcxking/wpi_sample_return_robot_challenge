@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>rockie_arduino_node</name>
+  <name>rockie_arduino_pub</name>
   <version>0.0.0</version>
-  <description>The moonshot package</description>
+  <description>The rockie_arduino_pub package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
@@ -19,7 +19,7 @@
   <!-- Url tags are optional, but mutiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/moonshot</url> -->
+  <!-- <url type="website">http://wiki.ros.org/rockie_arduino_pub</url> -->
 
 
   <!-- Author tags are optional, mutiple are allowed, one per tag -->

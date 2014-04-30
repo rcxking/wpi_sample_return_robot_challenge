@@ -1,8 +1,0 @@
-prefix=/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/devel
-
-Name: watchdog
-Description: Description of watchdog
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/devel/lib 
-Requires: 

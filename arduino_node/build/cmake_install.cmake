@@ -1,8 +1,8 @@
-# Install script for directory: /home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/src
+# Install script for directory: /home/bryant/wpi_sample_return_robot_challenge/arduino_node/src
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  SET(CMAKE_INSTALL_PREFIX "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/install")
+  SET(CMAKE_INSTALL_PREFIX "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/install")
 ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
 STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -34,44 +34,44 @@ ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CPACK_ABSOLUTE_DESTINATION_FILES
-   "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/install/.catkin")
-FILE(INSTALL DESTINATION "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/install" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/catkin_generated/installspace/.catkin")
+   "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/install/.catkin")
+FILE(INSTALL DESTINATION "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/install" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/catkin_generated/installspace/.catkin")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CPACK_ABSOLUTE_DESTINATION_FILES
-   "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/install/_setup_util.py")
-FILE(INSTALL DESTINATION "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/install" TYPE PROGRAM FILES "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/catkin_generated/installspace/_setup_util.py")
+   "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/install/_setup_util.py")
+FILE(INSTALL DESTINATION "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/install" TYPE PROGRAM FILES "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/catkin_generated/installspace/_setup_util.py")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CPACK_ABSOLUTE_DESTINATION_FILES
-   "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/install/env.sh")
-FILE(INSTALL DESTINATION "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/install" TYPE PROGRAM FILES "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/catkin_generated/installspace/env.sh")
+   "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/install/env.sh")
+FILE(INSTALL DESTINATION "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/install" TYPE PROGRAM FILES "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/catkin_generated/installspace/env.sh")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CPACK_ABSOLUTE_DESTINATION_FILES
-   "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/install/setup.bash")
-FILE(INSTALL DESTINATION "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/install" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/catkin_generated/installspace/setup.bash")
+   "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/install/setup.bash")
+FILE(INSTALL DESTINATION "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/install" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/catkin_generated/installspace/setup.bash")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CPACK_ABSOLUTE_DESTINATION_FILES
-   "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/install/setup.sh")
-FILE(INSTALL DESTINATION "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/install" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/catkin_generated/installspace/setup.sh")
+   "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/install/setup.sh")
+FILE(INSTALL DESTINATION "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/install" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/catkin_generated/installspace/setup.sh")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CPACK_ABSOLUTE_DESTINATION_FILES
-   "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/install/setup.zsh")
-FILE(INSTALL DESTINATION "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/install" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/catkin_generated/installspace/setup.zsh")
+   "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/install/setup.zsh")
+FILE(INSTALL DESTINATION "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/install" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/catkin_generated/installspace/setup.zsh")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   list(APPEND CPACK_ABSOLUTE_DESTINATION_FILES
-   "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/install/.rosinstall")
-FILE(INSTALL DESTINATION "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/install" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/catkin_generated/installspace/.rosinstall")
+   "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/install/.rosinstall")
+FILE(INSTALL DESTINATION "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/install" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/catkin_generated/installspace/.rosinstall")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
@@ -84,17 +84,16 @@ ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unsp
 
 IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/gtest/cmake_install.cmake")
-  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rockie_arduino_pub/cmake_install.cmake")
-  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial/cmake_install.cmake")
-  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_client/cmake_install.cmake")
-  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_msgs/cmake_install.cmake")
-  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_arduino/cmake_install.cmake")
-  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_embeddedlinux/cmake_install.cmake")
-  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_python/cmake_install.cmake")
-  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_server/cmake_install.cmake")
-  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/rosserial/rosserial_xbee/cmake_install.cmake")
-  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/watchdog/cmake_install.cmake")
+  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/gtest/cmake_install.cmake")
+  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rockie_arduino_pub/cmake_install.cmake")
+  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial/cmake_install.cmake")
+  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial_client/cmake_install.cmake")
+  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial_msgs/cmake_install.cmake")
+  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial_arduino/cmake_install.cmake")
+  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial_embeddedlinux/cmake_install.cmake")
+  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial_python/cmake_install.cmake")
+  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial_server/cmake_install.cmake")
+  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial_xbee/cmake_install.cmake")
 
 ENDIF(NOT CMAKE_INSTALL_LOCAL_ONLY)
 
@@ -104,7 +103,7 @@ ELSE(CMAKE_INSTALL_COMPONENT)
   SET(CMAKE_INSTALL_MANIFEST "install_manifest.txt")
 ENDIF(CMAKE_INSTALL_COMPONENT)
 
-FILE(WRITE "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/${CMAKE_INSTALL_MANIFEST}" "")
+FILE(WRITE "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/${CMAKE_INSTALL_MANIFEST}" "")
 FOREACH(file ${CMAKE_INSTALL_MANIFEST_FILES})
-  FILE(APPEND "/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
+  FILE(APPEND "/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
 ENDFOREACH(file)
