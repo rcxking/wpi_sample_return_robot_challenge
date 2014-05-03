@@ -1,0 +1,8 @@
+4/30/14
+-------
+
+Updates:
+--------
+Will: Stereo Cams work in ROS.  Mount camera on aluminum rod/generate point clouds from cameras.
+Bryant: ROS <-> Arduino nodes. 
+

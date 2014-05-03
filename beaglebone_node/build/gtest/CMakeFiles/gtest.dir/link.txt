@@ -1,1 +1,0 @@
-/usr/bin/c++  -fPIC    -shared -Wl,-soname,libgtest.so -o libgtest.so CMakeFiles/gtest.dir/src/gtest-all.cc.o -L/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/gtest/src -lpthread -Wl,-rpath,/home/bryant/wpi_sample_return_robot_challenge/beaglebone_node/build/gtest/src 
