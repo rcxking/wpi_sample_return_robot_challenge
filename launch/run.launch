@@ -1,8 +1,26 @@
 <?xml version="1.0"?>
 <launch>
+  <!--camera driver node, retrieves images-->
   <node name="uvc_camera" pkg="uvc_camera" type="uvc_stereo_node" ns="my_stereo">
     <param name="frame_id" value="camera" />
   </node>
-  <node name="stereo_image_proc" pkg="stereo_image_proc" type="stereo_image_proc" ns="my_stereo">
-  </node>
+
+  <!--stereo image processing, produces disparity image, point cloud data from stereo images-->
+  <node name="stereo_image_proc" pkg="stereo_image_proc" type="stereo_image_proc" ns="my_stereo" />
+
+  <!--map server, serves and saves 2D occupancy grid map for motion planning, navigation, search-->
+  <node name="map_server" pkg="map_server" type="map_server" args="wpi_map.yaml" />
+
+  <!--obstacle detection node, identifies obstacles from disparity image and writes to map_server-->
+  <node name="obstacle_detection" pkg="obstacle_detection" type="obstacle_detection" />
+
+  <!--wpi feature finder, finds wpi features to triangulate a transform from RGBDSLAM frame to the
+        global wpi frame-->
+  <node name="wpi_feature_finder" type="wpi_feature_finder" pkg="wpi_feature_finder" />
+
+  <!--executive state-machine node-->
+  <!--obstacle detection node-->
+  <!--motor driver node-->
+  <!--scoop node-->
+
 </launch>
