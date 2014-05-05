@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+  <node name="uvc_camera" pkg="uvc_camera" type="uvc_stereo_node" ns="my_stereo">
+    <param name="frame_id" value="camera" />
+  </node>
+  <node name="stereo_image_proc" pkg="stereo_image_proc" type="stereo_image_proc" ns="my_stereo">
+  </node>
+</launch>

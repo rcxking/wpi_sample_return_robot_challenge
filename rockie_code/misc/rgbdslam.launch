@@ -4,9 +4,9 @@
 <launch>
   <node pkg="rgbdslam" type="rgbdslam" name="rgbdslam" cwd="node" required="true"> 
     <!-- Input data settings-->
-    <param name="config/camera_info_topic"                value="/rrbot/camera1/camera_info" />
-    <param name="config/wide_topic"                value="/rrbot/camera1/left/image_mono" />
-    <param name="config/wide_cloud_topic"                value="/rrbot/camera1/points2" />
+    <param name="config/camera_info_topic"                value="/my_stereo/camera_info" />
+    <param name="config/wide_topic"                value="/my_stereo/left/image_mono" />
+    <param name="config/wide_cloud_topic"                value="/my_stereo/points2" />
 
     <param name="config/feature_detector_type"         value="SURF"/><!-- If SIFTGPU is enabled in CMakeLists.txt, use SURF here -->
     <param name="config/feature_extractor_type"        value="SURF"/><!-- If SIFTGPU is enabled in CMakeLists.txt, use SURF here -->
