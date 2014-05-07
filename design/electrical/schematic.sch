@@ -1,0 +1,464 @@
+EESchema Schematic File Version 2  date Tue 06 May 2014 10:17:35 PM EDT
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:special
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:parts
+LIBS:schematic-cache
+EELAYER 25  0
+EELAYER END
+$Descr A4 11700 8267
+encoding utf-8
+Sheet 1 2
+Title ""
+Date "7 may 2014"
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Wire Wire Line
+	5650 2350 5750 2350
+Wire Wire Line
+	5750 2350 5750 2000
+Wire Wire Line
+	5750 2000 6950 2000
+Wire Wire Line
+	6950 2000 6950 2200
+Wire Wire Line
+	5800 5950 5800 2200
+Wire Wire Line
+	5800 2200 5650 2200
+Wire Notes Line
+	7450 6000 7000 6000
+Wire Notes Line
+	7450 6000 7450 6500
+Wire Notes Line
+	7450 6500 7000 6500
+Wire Notes Line
+	7000 6500 7000 6000
+Wire Wire Line
+	7250 6200 6900 6200
+Wire Wire Line
+	6900 6200 6900 6400
+Connection ~ 5700 3800
+Wire Wire Line
+	6100 6600 5700 6600
+Wire Wire Line
+	5800 6450 5800 6500
+Wire Wire Line
+	5800 6500 6100 6500
+Wire Wire Line
+	9300 4100 8850 4100
+Wire Wire Line
+	8850 4100 8850 4800
+Wire Wire Line
+	8850 4800 6900 4800
+Wire Wire Line
+	8550 4900 8550 2500
+Wire Wire Line
+	8550 4900 6900 4900
+Connection ~ 8500 3700
+Wire Wire Line
+	9300 3500 8750 3500
+Wire Wire Line
+	8750 3500 8750 2400
+Wire Wire Line
+	8750 2400 6950 2400
+Wire Wire Line
+	6950 2200 8500 2200
+Connection ~ 5300 3800
+Wire Notes Line
+	9500 3350 8650 3350
+Wire Notes Line
+	9500 3350 9500 4500
+Wire Notes Line
+	9500 4500 8650 4500
+Wire Notes Line
+	8650 4500 8650 3350
+Wire Wire Line
+	8400 3800 9300 3800
+Wire Wire Line
+	9300 3600 8400 3600
+Wire Notes Line
+	3450 2650 2150 2650
+Wire Notes Line
+	3450 2650 3450 5000
+Wire Notes Line
+	3450 5000 2150 5000
+Wire Notes Line
+	2150 5000 2150 2650
+Wire Wire Line
+	4600 4250 4650 4250
+Connection ~ 2250 3800
+Wire Wire Line
+	2250 4550 2250 2850
+Wire Wire Line
+	2800 3000 2800 2850
+Wire Wire Line
+	2800 4450 2800 4550
+Connection ~ 4000 3700
+Wire Wire Line
+	7000 3000 7300 3000
+Wire Wire Line
+	7300 3000 7300 3450
+Wire Wire Line
+	7000 4050 7300 4050
+Connection ~ 3350 4550
+Wire Wire Line
+	3350 2850 3350 4550
+Wire Wire Line
+	4500 4750 4000 4750
+Connection ~ 2800 3700
+Wire Wire Line
+	2800 3850 2800 3600
+Wire Wire Line
+	5200 5250 5300 5250
+Wire Wire Line
+	5300 5250 5300 5200
+Wire Wire Line
+	4500 4850 4500 5250
+Wire Wire Line
+	4600 5250 4450 5250
+Connection ~ 4500 5250
+Wire Wire Line
+	7300 3950 7100 3950
+Wire Wire Line
+	7100 3950 7100 4400
+Wire Wire Line
+	7100 4400 6300 4400
+Wire Wire Line
+	6300 4400 6300 4050
+Wire Wire Line
+	7300 3550 6300 3550
+Wire Wire Line
+	6300 3550 6300 3000
+Wire Wire Line
+	5300 4700 5300 3800
+Wire Wire Line
+	5300 3800 7300 3800
+Connection ~ 5300 4650
+Wire Wire Line
+	2650 4550 2950 4550
+Connection ~ 2800 4550
+Wire Wire Line
+	2950 2850 2650 2850
+Connection ~ 2800 2850
+Wire Wire Line
+	1600 3800 2250 3800
+Wire Wire Line
+	4100 4250 4000 4250
+Connection ~ 4000 4250
+Wire Wire Line
+	5050 4250 5300 4250
+Connection ~ 5300 4250
+Wire Notes Line
+	2050 4350 2050 3550
+Wire Notes Line
+	2050 4350 1300 4350
+Wire Notes Line
+	1300 4350 1300 3550
+Wire Notes Line
+	1300 3550 2050 3550
+Wire Wire Line
+	3850 4750 3850 4550
+Connection ~ 3850 4550
+Wire Wire Line
+	3350 4550 4500 4550
+Wire Notes Line
+	3700 5750 3700 3350
+Wire Notes Line
+	3700 5750 5550 5750
+Wire Notes Line
+	5550 5750 5550 3350
+Wire Notes Line
+	5550 3350 3700 3350
+Wire Wire Line
+	9300 3700 8400 3700
+Wire Wire Line
+	9300 3900 8400 3900
+Wire Wire Line
+	4000 4750 4000 3700
+Wire Wire Line
+	7300 3700 1600 3700
+Wire Wire Line
+	8550 2500 6950 2500
+Connection ~ 8550 3600
+Wire Wire Line
+	6950 2300 8850 2300
+Wire Wire Line
+	8850 2300 8850 3400
+Wire Wire Line
+	8850 3400 9300 3400
+Wire Wire Line
+	6900 4600 8500 4600
+Wire Wire Line
+	8500 4600 8500 2200
+Wire Wire Line
+	6900 4700 8750 4700
+Wire Wire Line
+	8750 4700 8750 4000
+Wire Wire Line
+	8750 4000 9300 4000
+Wire Notes Line
+	5900 5600 5900 1750
+Wire Notes Line
+	5900 5600 10050 5600
+Wire Notes Line
+	10050 5600 10050 1750
+Wire Notes Line
+	10050 1750 5900 1750
+Connection ~ 5800 3700
+Wire Wire Line
+	6150 6300 6000 6300
+Wire Wire Line
+	6000 6300 6000 6100
+Wire Wire Line
+	6000 6100 7250 6100
+Wire Notes Line
+	7500 5900 5600 5900
+Wire Notes Line
+	7500 5900 7500 7100
+Wire Notes Line
+	7500 7100 5600 7100
+Wire Notes Line
+	5600 7100 5600 5900
+Wire Wire Line
+	5650 2500 5700 2500
+Wire Wire Line
+	5700 2500 5700 6600
+Text HLabel 5650 2500 0    60   Input ~ 0
+Gnd
+Text HLabel 5650 2350 0    60   Input ~ 0
++5V
+Text HLabel 5650 2200 0    60   Input ~ 0
++12V
+$Sheet
+S 4750 1950 900  850 
+U 53699132
+F0 "Actuators" 60
+F1 "Actuators.sch" 60
+$EndSheet
+Text Notes 7000 6400 0    60   ~ 0
+To Laptop
+Text Notes 6100 7000 0    60   ~ 0
+Laptop Control
+$Comp
+L R ?
+U 1 1 53698A93
+P 5800 6200
+F 0 "?" V 5880 6200 50  0000 C CNN
+F 1 "R" V 5800 6200 50  0000 C CNN
+	1    5800 6200
+	1    0    0    -1  
+$EndComp
+$Comp
+L RELAY_SPST K?
+U 1 1 53698A2B
+P 6550 6500
+F 0 "K?" H 6450 6600 70  0000 C CNN
+F 1 "RELAY_SPST" H 6450 6200 70  0000 C CNN
+	1    6550 6500
+	1    0    0    -1  
+$EndComp
+Text Notes 7450 5350 0    60   ~ 0
+Main Motor Control
+$Comp
+L ENCODER U?
+U 1 1 5369893D
+P 6600 4750
+F 0 "U?" H 6600 5100 60  0000 C CNN
+F 1 "ENCODER" H 6600 4450 60  0000 C CNN
+	1    6600 4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L ENCODER U?
+U 1 1 536988DF
+P 6650 2350
+F 0 "U?" H 6650 2700 60  0000 C CNN
+F 1 "ENCODER" H 6650 2050 60  0000 C CNN
+	1    6650 2350
+	1    0    0    -1  
+$EndComp
+Text Notes 8900 4400 0    60   ~ 0
+To Arduino
+Text Notes 4100 5600 0    60   ~ 0
+Power Control / E-stop
+Text Notes 2300 4900 0    60   ~ 0
+Isolated SLA Batteries
+Text Notes 1450 4200 0    60   ~ 0
+To Charger
+$Comp
+L R R?
+U 1 1 5369610F
+P 4350 4250
+F 0 "R?" V 4430 4250 50  0000 C CNN
+F 1 "R" V 4350 4250 50  0000 C CNN
+	1    4350 4250
+	0    1    1    0   
+$EndComp
+$Comp
+L LED Safety
+U 0 1 536960FF
+P 4850 4250
+F 0 "Safety Light" H 4850 4350 50  0000 C CNN
+F 1 "LED" H 4850 4150 50  0000 C CNN
+	0    4850 4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L DC_MOTOR U?
+U 1 1 53695EFD
+P 6650 4050
+F 0 "U?" H 6650 4300 60  0000 C CNN
+F 1 "DC_MOTOR" H 6700 3800 60  0000 C CNN
+	1    6650 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L R 100
+U 1 1 53695BEF
+P 3850 5000
+F 0 "100" V 3930 5000 50  0000 C CNN
+F 1 "R" V 3850 5000 50  0000 C CNN
+	1    3850 5000
+	1    0    0    -1  
+$EndComp
+$Comp
+L R 100
+U 1 1 53695BE6
+P 5300 4950
+F 0 "100" V 5380 4950 50  0000 C CNN
+F 1 "R" V 5300 4950 50  0000 C CNN
+	1    5300 4950
+	1    0    0    -1  
+$EndComp
+$Comp
+L DIODESCH D?
+U 1 1 53695BB5
+P 2450 4550
+F 0 "D?" H 2450 4650 40  0000 C CNN
+F 1 "DIODESCH" H 2450 4450 40  0000 C CNN
+	1    2450 4550
+	-1   0    0    1   
+$EndComp
+$Comp
+L DIODESCH D?
+U 1 1 53695B9B
+P 2450 2850
+F 0 "D?" H 2450 2950 40  0000 C CNN
+F 1 "DIODESCH" H 2450 2750 40  0000 C CNN
+	1    2450 2850
+	-1   0    0    1   
+$EndComp
+$Comp
+L SW_NC Emergency
+U 1 1 53695B5E
+P 4900 5250
+F 0 "Emergency" H 4900 5310 50  0000 C CNN
+F 1 "SW_NC" H 4900 5120 50  0000 C CNN
+	1    4900 5250
+	1    0    0    -1  
+$EndComp
+$Comp
+L DC_MOTOR U?
+U 1 1 5369375F
+P 6650 3000
+F 0 "U?" H 6650 3250 60  0000 C CNN
+F 1 "DC_MOTOR" H 6700 2750 60  0000 C CNN
+	1    6650 3000
+	1    0    0    -1  
+$EndComp
+$Comp
+L SABERTOOTH_2X60 U?
+U 1 1 53693578
+P 7950 3850
+F 0 "U?" H 7900 4500 60  0000 C CNN
+F 1 "SABERTOOTH_2X60" H 7900 3400 60  0000 C CNN
+	1    7950 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L SW_PUSH Power
+U 1 1 53693222
+P 4150 5250
+F 0 "Power" H 4300 5360 50  0000 C CNN
+F 1 "SW_PUSH" H 4150 5170 50  0000 C CNN
+	1    4150 5250
+	1    0    0    -1  
+$EndComp
+$Comp
+L RELAY_SPST K?
+U 1 1 536931BD
+P 4950 4750
+F 0 "K?" H 4850 4850 70  0000 C CNN
+F 1 "RELAY_SPST" H 4850 4450 70  0000 C CNN
+	1    4950 4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L DIODESCH D?
+U 1 1 53692A3A
+P 3150 4550
+F 0 "D?" H 3150 4650 40  0000 C CNN
+F 1 "DIODESCH" H 3150 4450 40  0000 C CNN
+	1    3150 4550
+	1    0    0    -1  
+$EndComp
+$Comp
+L DIODESCH D?
+U 1 1 53692A31
+P 3150 2850
+F 0 "D?" H 3150 2950 40  0000 C CNN
+F 1 "DIODESCH" H 3150 2750 40  0000 C CNN
+	1    3150 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L BATTERY 12-12
+U 0 1 5369288D
+P 2800 4150
+F 0 "12-12 SLA" H 2800 4350 50  0000 C CNN
+F 1 "BATTERY" H 2800 3960 50  0000 C CNN
+	0    2800 4150
+	0    1    1    0   
+$EndComp
+$Comp
+L BATTERY 12-12
+U 0 1 5369287B
+P 2800 3300
+F 0 "12-12 SLA" H 2800 3500 50  0000 C CNN
+F 1 "BATTERY" H 2800 3110 50  0000 C CNN
+	0    2800 3300
+	0    -1   -1   0   
+$EndComp
+$EndSCHEMATC
