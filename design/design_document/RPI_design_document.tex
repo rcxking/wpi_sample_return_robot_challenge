@@ -5,7 +5,7 @@
 
 %% Packages
 \usepackage{algorithm}
-\usepackage{algorithmicx}
+\usepackage{algorithmic}
 \usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{bm}
@@ -104,10 +104,53 @@ We are currently deciding between methods of how to store acquired objects witho
 
 	We will use ROS as our software platform since it offers many useful libraries, in particular SLAM, SIFT, and PCL to name a few.     
 
+\subsubsection*{Object identification using OpenCV and ROS}
+The open-source vision package OpenCV has been around for a long time and there are many available algorithms that we could take advantage to identify the ``samples" that we want to pick up. Since  our software platform is Robotics Operating System (ROS), we need to set up the interface between ROS and OpenCV. The output from the tracking system provides important information for the SLAM and navigation. \\ 
 
+The following is a high-level flow chart of how the nodes communicate using topics. The blue rectangles are the nodes while the red ellipses are the topics. The arrow is pointing to the node, which subscribes to the topic. 
 
+% Define block styles
+%\tikzstyle{decision} = [diamond, draw, fill=red!20, 
+%    text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+     text centered, rounded corners, minimum height=3em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+    minimum height=2em]
+\begin{tikzpicture}[auto]
+    % Place nodes
+    \node [block]  (camera)  at (0, 0) {rockie\_camera\_node};
+    \node [block]  (imageproc) at (10, 0) {image\_process\_node};
+    \node [block]  (postproc) at (10, -4) {post\_processing\_node};
+    \node [block]  (navigation) at (0, -4) {navigation\_node};
+    \node [block]  (scoop)     at (0, -7) {scoop\_node};
+    \path [line]   (camera) -- (imageproc);
+    \path [line] (imageproc) -- (postproc);
+    \path [line] (postproc) -- (navigation);
+    \path [line, dashed] (navigation) -- (camera);
+    \node [cloud] (rawimg) at (5, 0.4) {/camera/image\_raw};
+    \node [cloud] (procimg) at (10, -2) {/camera/image\_processed};
+    \node [cloud] (sample) at (5, -4) {/is\_sample};
+    \node [cloud, dotted] (capture) at (0, -2) {/take\_pictures};
+    \path [line]  (sample) -- (scoop);
+\end{tikzpicture}
+We are using the Logitech $C920$ camera. Once the camera takes a picture, the frame will be published as a topic ``\/camera\/image\_raw". 
+Since the ``image\_process\_node" subscribes to this topic, once the raw\_image is published, it will be processed inside ``image\_process\_node" and a new topic ``\/camera\/image\_processed" is published for post processing. Here it is worth to mention that the OpenCV feature detection algorithms are used in the ``image\_process\_node". After the post processing, the robot is confident whether the object is an sample and decides whether or not to pick it up.   
 
+The following are some initial object matching results using combination of ROS and OpenCV package: 
+\begin{figure}[htp]
+\centering
+\includegraphics[width=0.95\textwidth]{fig/vision1.png}  
 
+ 
+\includegraphics[width=0.95\textwidth]{fig/vision2.png} 
+
+ 
+\includegraphics[width=0.95\textwidth]{fig/vision3.png}
+\caption{The left picture is a puck image cached in database, the right one is taken from the web camera.}
+\label{fig:vision}
+\end{figure}
+Thick green square means the algorithm is confident to find the cached object in the active frame, while the lines shows the matching between the cached image and the picture from the live frame. Right now this object identification testing is limited to feature and geometry. Colour detection will be added to the package.
 \end{document}
 
 
