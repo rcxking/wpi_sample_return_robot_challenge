@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2012.12.17)  6 MAY 2014 21:05
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.9.6)  7 MAY 2014 00:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -832,86 +832,102 @@ Overfull \hbox (21.14845pt too wide) in paragraph at lines 43--43
 [][]  
  []
 
-<fig/robot_assemble_scoop.JPG, id=23, 877.77937pt x 444.91219pt>
-File: fig/robot_assemble_scoop.JPG Graphic file (type jpg)
+<fig/robot_assembly_1.PDF, id=23, 845.0471pt x 597.50829pt>
+File: fig/robot_assembly_1.PDF Graphic file (type pdf)
 
-<use fig/robot_assemble_scoop.JPG>
-Package pdftex.def Info: fig/robot_assemble_scoop.JPG used on input line 54.
-(pdftex.def)             Requested size: 224.2479pt x 113.65816pt.
+<use fig/robot_assembly_1.PDF>
+Package pdftex.def Info: fig/robot_assembly_1.PDF used on input line 54.
+(pdftex.def)             Requested size: 224.2479pt x 158.55775pt.
 
-<fig/robot_assemble_scoop_2.JPG, id=24, 877.77937pt x 444.91219pt>
-File: fig/robot_assemble_scoop_2.JPG Graphic file (type jpg)
+<fig/robot_assembly_2.PDF, id=24, 845.0471pt x 597.50829pt>
+File: fig/robot_assembly_2.PDF Graphic file (type pdf)
 
-<use fig/robot_assemble_scoop_2.JPG>
-Package pdftex.def Info: fig/robot_assemble_scoop_2.JPG used on input line 55.
-(pdftex.def)             Requested size: 224.2479pt x 113.65816pt.
+<use fig/robot_assembly_2.PDF>
+Package pdftex.def Info: fig/robot_assembly_2.PDF used on input line 55.
+(pdftex.def)             Requested size: 224.2479pt x 158.55775pt.
 
-<fig/robot_assemble_scoop_4.JPG, id=25, 877.77937pt x 444.91219pt>
-File: fig/robot_assemble_scoop_4.JPG Graphic file (type jpg)
+<fig/robot_assembly_3.PDF, id=25, 845.0471pt x 597.50829pt>
+File: fig/robot_assembly_3.PDF Graphic file (type pdf)
 
-<use fig/robot_assemble_scoop_4.JPG>
-Package pdftex.def Info: fig/robot_assemble_scoop_4.JPG used on input line 56.
-(pdftex.def)             Requested size: 224.2479pt x 113.65816pt.
+<use fig/robot_assembly_3.PDF>
+Package pdftex.def Info: fig/robot_assembly_3.PDF used on input line 56.
+(pdftex.def)             Requested size: 224.2479pt x 158.55775pt.
  [1
 
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./fig/robot_assemble_scoop
-.JPG> <./fig/robot_assemble_scoop_2.JPG> <./fig/robot_assemble_scoop_4.JPG>]
-Underfull \hbox (badness 10000) in paragraph at lines 108--109
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2 <./fig/robot_assembly_1
+.PDF> <./fig/robot_assembly_2.PDF> <./fig/robot_assembly_3.PDF>] <fig/schematic
+.jpg, id=45, 845.559pt x 597.432pt>
+File: fig/schematic.jpg Graphic file (type jpg)
+
+<use fig/schematic.jpg>
+Package pdftex.def Info: fig/schematic.jpg used on input line 102.
+(pdftex.def)             Requested size: 327.74895pt x 231.57544pt.
+
+<fig/schematic-Actuators.jpg, id=46, 845.559pt x 597.432pt>
+File: fig/schematic-Actuators.jpg Graphic file (type jpg)
+
+<use fig/schematic-Actuators.jpg>
+Package pdftex.def Info: fig/schematic-Actuators.jpg used on input line 105.
+(pdftex.def)             Requested size: 327.74895pt x 231.57544pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 128--129
 
  []
 
-[2]
-Overfull \hbox (86.88467pt too wide) in paragraph at lines 136--139
+
+Overfull \hbox (86.88467pt too wide) in paragraph at lines 156--159
 [][]
  []
 
 
-Overfull \hbox (34.35619pt too wide) in paragraph at lines 136--139
+Overfull \hbox (34.35619pt too wide) in paragraph at lines 156--159
 \OT1/cmr/m/n/10 will be pro-cessed in-side ``im-age[]process[]node" and a new t
 opic ``cameraimage[]processed"
  []
 
-<fig/vision1.png, id=43, 944.52875pt x 506.89375pt>
+[3] [4 <./fig/schematic.jpg> <./fig/schematic-Actuators.jpg>]
+<fig/vision1.png, id=56, 944.52875pt x 506.89375pt>
 File: fig/vision1.png Graphic file (type png)
  <use fig/vision1.png>
-Package pdftex.def Info: fig/vision1.png used on input line 143.
+Package pdftex.def Info: fig/vision1.png used on input line 163.
 (pdftex.def)             Requested size: 327.74895pt x 175.89175pt.
 
-<fig/vision2.png, id=44, 947.54pt x 505.89pt>
+<fig/vision2.png, id=57, 947.54pt x 505.89pt>
 File: fig/vision2.png Graphic file (type png)
  <use fig/vision2.png>
-Package pdftex.def Info: fig/vision2.png used on input line 146.
+Package pdftex.def Info: fig/vision2.png used on input line 166.
 (pdftex.def)             Requested size: 327.74895pt x 174.97995pt.
 
-<fig/vision3.png, id=45, 944.52875pt x 513.92pt>
+<fig/vision3.png, id=58, 944.52875pt x 513.92pt>
 File: fig/vision3.png Graphic file (type png)
  <use fig/vision3.png>
-Package pdftex.def Info: fig/vision3.png used on input line 149.
+Package pdftex.def Info: fig/vision3.png used on input line 169.
 (pdftex.def)             Requested size: 327.74895pt x 178.32985pt.
 
 
-LaTeX Warning: Float too large for page by 15.20155pt on input line 152.
+LaTeX Warning: Float too large for page by 15.20155pt on input line 172.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 154.
-[3] [4 <./fig/vision1.png> <./fig/vision2.png> <./fig/vision3.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 154.
+[5] [6 <./fig/vision1.png> <./fig/vision2.png> <./fig/vision3.png>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 200.
+ [7]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 200.
 
 (./RPI_design_document.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 154.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 154.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 200.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 200.
 Package rerunfilecheck Info: File `RPI_design_document.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 154.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 200.
  ) 
 Here is how much of TeX's memory you used:
- 18716 strings out of 495059
- 361023 string characters out of 3182029
- 458281 words of memory out of 3000000
- 21485 multiletter control sequences out of 15000+200000
+ 18732 strings out of 495059
+ 361240 string characters out of 3182031
+ 459331 words of memory out of 3000000
+ 21494 multiletter control sequences out of 15000+200000
  14919 words of font info for 54 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
- 56i,8n,69p,522b,577s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 56i,8n,69p,1419b,577s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texli
@@ -919,10 +935,10 @@ ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmssi12.pfb></usr/share/texlive/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on RPI_design_document.pdf (4 pages, 1502775 bytes).
+Output written on RPI_design_document.pdf (7 pages, 2412830 bytes).
 PDF statistics:
- 83 PDF objects out of 1000 (max. 8388607)
- 47 compressed objects within 1 object stream
- 7 named destinations out of 1000 (max. 500000)
- 139 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 102 PDF objects out of 1000 (max. 8388607)
+ 61 compressed objects within 1 object stream
+ 11 named destinations out of 1000 (max. 500000)
+ 149 words of extra memory for PDF output out of 10000 (max. 10000000)
 
