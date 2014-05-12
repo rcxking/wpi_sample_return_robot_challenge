@@ -1,6 +1,9 @@
 /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial/CMakeFiles/_catkin_empty_exported_target.dir
 /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/CMakeFiles/clean_test_results.dir
 /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/CMakeFiles/doxygen.dir
+/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir
+/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir
+/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir
 /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/gtest/CMakeFiles/gtest.dir
 /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/gtest/CMakeFiles/gtest_main.dir
 /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial_server/CMakeFiles/roscpp_generate_messages_cpp.dir

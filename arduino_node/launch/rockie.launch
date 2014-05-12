@@ -1,0 +1,4 @@
+<launch>
+	<node pkg="rockie_arduino_pub" name="rockiearduinopublisher" type="rockie_arduino_pub.py"/>
+	<node pkg="rockie_arduino_pub" name="simulatednavpublisher" type="simulated_nav_commands.py"/>
+</launch>

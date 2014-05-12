@@ -1,0 +1,5 @@
+To Implement for the Arduino Node:
+----------------------------------
+1) Odometry data published from the Arduino Node in form of nav_msgs/Odometry
+    - http://wiki.ros.org/navigation/Tutorials/RobotSetup/Odom
+2) Python Arduino Node expects a message of type "geometry_msgs/Twist"

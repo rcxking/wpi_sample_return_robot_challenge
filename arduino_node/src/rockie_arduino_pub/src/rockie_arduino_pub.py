@@ -6,16 +6,19 @@
 # RPI Rock Raiders
 # 4/26/14
 #
-# Last Updated: 4/26/14 - 12:55 PM
+# Last Updated: 5/12/14 - 11:28 AM
 
 # ROS Libraries:
 import rospy
-from std_msgs.msg import String   
+from std_msgs.msg import String, Float64
+from geometry_msgs.msg import Twist
 
 def arduino_publisher():
 	
 	# Create the publisher to talk to the Arduino:
 	pub = rospy.Publisher('arduino', String) 
+
+	# Create the subscriber to listen for Twist messages:  
 
 	# Start the arduino_publisher node:
 	rospy.init_node('arduino_publisher', anonymous=True)

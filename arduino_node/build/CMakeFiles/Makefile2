@@ -259,6 +259,9 @@ rockie_arduino_pub/all:
 .PHONY : rockie_arduino_pub/all
 
 # Convenience name for "clean" pass in the directory.
+rockie_arduino_pub/clean: rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/clean
+rockie_arduino_pub/clean: rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/clean
+rockie_arduino_pub/clean: rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/clean
 rockie_arduino_pub/clean: rockie_arduino_pub/CMakeFiles/std_msgs_generate_messages_cpp.dir/clean
 rockie_arduino_pub/clean: rockie_arduino_pub/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean
 rockie_arduino_pub/clean: rockie_arduino_pub/CMakeFiles/std_msgs_generate_messages_py.dir/clean
@@ -267,6 +270,99 @@ rockie_arduino_pub/clean: rockie_arduino_pub/CMakeFiles/std_msgs_generate_messag
 # Convenience name for "preinstall" pass in the directory.
 rockie_arduino_pub/preinstall:
 .PHONY : rockie_arduino_pub/preinstall
+
+#=============================================================================
+# Target rules for target rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir
+
+# All Build rule for target.
+rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all:
+	$(MAKE) -f rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build.make rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/depend
+	$(MAKE) -f rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build.make rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/CMakeFiles 
+	@echo "Built target geometry_msgs_generate_messages_cpp"
+.PHONY : rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all
+
+# Build rule for subdir invocation for target.
+rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/CMakeFiles 0
+.PHONY : rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+geometry_msgs_generate_messages_cpp: rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
+.PHONY : geometry_msgs_generate_messages_cpp
+
+# clean rule for target.
+rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/clean:
+	$(MAKE) -f rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build.make rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/clean
+.PHONY : rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/clean
+
+# clean rule for target.
+clean: rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir
+
+# All Build rule for target.
+rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all:
+	$(MAKE) -f rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build.make rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/depend
+	$(MAKE) -f rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build.make rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/CMakeFiles 
+	@echo "Built target geometry_msgs_generate_messages_lisp"
+.PHONY : rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all
+
+# Build rule for subdir invocation for target.
+rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/CMakeFiles 0
+.PHONY : rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+geometry_msgs_generate_messages_lisp: rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
+.PHONY : geometry_msgs_generate_messages_lisp
+
+# clean rule for target.
+rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/clean:
+	$(MAKE) -f rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build.make rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/clean
+.PHONY : rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/clean
+
+# clean rule for target.
+clean: rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir
+
+# All Build rule for target.
+rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/all:
+	$(MAKE) -f rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/build.make rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/depend
+	$(MAKE) -f rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/build.make rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/CMakeFiles 
+	@echo "Built target geometry_msgs_generate_messages_py"
+.PHONY : rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/all
+
+# Build rule for subdir invocation for target.
+rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/CMakeFiles 0
+.PHONY : rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+geometry_msgs_generate_messages_py: rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
+.PHONY : geometry_msgs_generate_messages_py
+
+# clean rule for target.
+rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/clean:
+	$(MAKE) -f rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/build.make rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/clean
+.PHONY : rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/clean
+
+# clean rule for target.
+clean: rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/clean
+.PHONY : clean
 
 #=============================================================================
 # Target rules for target rockie_arduino_pub/CMakeFiles/std_msgs_generate_messages_cpp.dir
@@ -722,9 +818,9 @@ clean: rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_gencpp.dir/clean
 # Target rules for target rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_generate_messages.dir
 
 # All Build rule for target.
-rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_generate_messages.dir/all: rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_generate_messages_py.dir/all
 rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_generate_messages.dir/all: rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_generate_messages_cpp.dir/all
 rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_generate_messages.dir/all: rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_generate_messages_lisp.dir/all
+rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_generate_messages.dir/all: rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_generate_messages_py.dir/all
 	$(MAKE) -f rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_generate_messages.dir/build.make rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_generate_messages.dir/depend
 	$(MAKE) -f rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_generate_messages.dir/build.make rosserial/rosserial_arduino/CMakeFiles/rosserial_arduino_generate_messages.dir/build
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/CMakeFiles 

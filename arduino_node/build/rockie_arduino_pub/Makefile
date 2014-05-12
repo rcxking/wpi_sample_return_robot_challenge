@@ -147,6 +147,48 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule:
+	cd /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build && $(MAKE) -f CMakeFiles/Makefile2 rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
+.PHONY : rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+geometry_msgs_generate_messages_cpp: rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
+.PHONY : geometry_msgs_generate_messages_cpp
+
+# fast build rule for target.
+geometry_msgs_generate_messages_cpp/fast:
+	cd /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build && $(MAKE) -f rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build.make rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build
+.PHONY : geometry_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
+rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule:
+	cd /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build && $(MAKE) -f CMakeFiles/Makefile2 rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
+.PHONY : rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+geometry_msgs_generate_messages_lisp: rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
+.PHONY : geometry_msgs_generate_messages_lisp
+
+# fast build rule for target.
+geometry_msgs_generate_messages_lisp/fast:
+	cd /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build && $(MAKE) -f rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build.make rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build
+.PHONY : geometry_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule:
+	cd /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build && $(MAKE) -f CMakeFiles/Makefile2 rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
+.PHONY : rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+geometry_msgs_generate_messages_py: rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
+.PHONY : geometry_msgs_generate_messages_py
+
+# fast build rule for target.
+geometry_msgs_generate_messages_py/fast:
+	cd /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build && $(MAKE) -f rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/build.make rockie_arduino_pub/CMakeFiles/geometry_msgs_generate_messages_py.dir/build
+.PHONY : geometry_msgs_generate_messages_py/fast
+
+# Convenience name for target.
 rockie_arduino_pub/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule:
 	cd /home/bryant/wpi_sample_return_robot_challenge/arduino_node/build && $(MAKE) -f CMakeFiles/Makefile2 rockie_arduino_pub/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
 .PHONY : rockie_arduino_pub/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
@@ -195,6 +237,9 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... geometry_msgs_generate_messages_cpp"
+	@echo "... geometry_msgs_generate_messages_lisp"
+	@echo "... geometry_msgs_generate_messages_py"
 	@echo "... install"
 	@echo "... install/local"
 	@echo "... install/strip"

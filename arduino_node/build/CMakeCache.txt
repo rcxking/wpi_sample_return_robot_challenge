@@ -277,6 +277,9 @@ genmsg_DIR:PATH=/opt/ros/hydro/share/genmsg/cmake
 //The directory containing a CMake configuration file for genpy.
 genpy_DIR:PATH=/opt/ros/hydro/share/genpy/cmake
 
+//The directory containing a CMake configuration file for geometry_msgs.
+geometry_msgs_DIR:PATH=/opt/ros/hydro/share/geometry_msgs/cmake
+
 //Value Computed by CMake
 gtest_BINARY_DIR:STATIC=/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/gtest
 
