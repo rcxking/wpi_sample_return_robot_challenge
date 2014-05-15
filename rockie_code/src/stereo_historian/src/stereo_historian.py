@@ -6,6 +6,10 @@ from sensor_msgs.msg import Image as ros_image
 from cv_bridge import CvBridge, CvBridgeError
 import datetime
 
+stereo_ns = 'my_stereo'
+image_name = 'image_mono_rect'
+path_to_img_store = '~/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/images/'
+
 if __name__ == '__main__':
     store_stereo_images()
 
@@ -29,7 +33,11 @@ def store_stereo_images():
     bridge = CvBridge()
 
     rospy.init_node("stereo_historian")
-    rospy.Subscriber("my_stereo/left_image", ros_image, left_callback)
-    rospy.Subscriber("my_stereo/right_image", ros_image, right_callback)
+
+    left_img_topic = stereo_ns + '/left/' + image_name
+    right_img_topic = stereo_ns + '/right/' + image_name
+
+    rospy.Subscriber(left_img_topic, ros_image, left_callback)
+    rospy.Subscriber(right_img_topic, ros_image, right_callback)
 
     rospy.spin()
