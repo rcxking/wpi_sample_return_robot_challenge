@@ -14,32 +14,27 @@ import datetime
 stereo_historian_topic = 'stereo_pair_history'
 
 if __name__ == '__main__':
-    find_and_store_features()
+    match_and_store_feature_matches()
 
-def create_and_store_features_callback(filepath_pair):
+'''
+Determine matches for this keypoint, using FLANN. If
+the full search turns out to be too intensive, maybe we can try
+to search the strongest descriptors first
+'''
+def create_and_store_features_callback(keypoint_matches_id):
 
-    split_pair = filepath_pair.split("###")
+    new_keypoints = get_keypoints(keypoint_matches_id)
+    existing_matches = get_all_keypoints()
+    matches = find_matches(new_keypoints, existing_matches)
+    store_matches(matches)
 
-    img_left_filepath = split_pair[0]
-    img_right_filepath = split_pair[1]
-
-    img_left = cv2.imread(img_left_filepath)
-    img_right = cv2.imread(split_pair[1])
-
-    keypoints1 = CreateKeypoints(img_left)
-    keypoints2 = CreateKeypoints(img_right)
-
-    SaveKeypoints(keypoints1, keypoints2, img_left_filepath, img_right_filepath)
-
-    matches = FindMatches()
-
-    SaveMatches(matches, left_img=img_left, right_img=img_right)
-
+'''
+Every time our feature matcher saves keypoints to the store, perform keypoint matching
+'''
 def match_and_store_feature_matches():
 
     rospy.init_node("stereo_feature_matcher")
 
     rospy.Subscriber(stereo_feature_identifier_topic, String, match_and_store_feature_matches)
-
 
     rospy.spin()
