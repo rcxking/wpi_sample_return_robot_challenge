@@ -2,28 +2,34 @@ import numpy as np
 import cv2
 import rospy
 from std_msgs.msg import String
+from sensor_msgs.msg import Image as ros_image
+from cv_bridge import CvBridge, CvBridgeError
 import datetime
 
 if __name__ == '__main__':
+    store_stereo_images()
 
-  video2 = cv2.VideoCapture(2)
-  video1 = cv2.VideoCapture(1)
+def save_image(img, time, camera):
 
-  while(True):
+    cv2_img = bridge.imgmsg_to_cv2(img, "bgr8")
+    cv2_img_gray = cv2.cvtColor(cv2_img, cv2.COLOR_BGR2GRAY)
 
-    ret1, img1 = video1.read()
-    ret2, img2 = video2.read()
+    cv2.imwrite('images/' + str(currenttime)  + '-' + camera + 'jpg', cv2_img_gray)
 
-    gray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
-    gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
-
-    cv2.imshow('gray1', gray1)
-    cv2.imshow('gray2', gray2)
- 
+def left_callback(left_image):
     currenttime = datetime.datetime.now().time()
+    save_image(left_image, currenttime, "left")
 
-    cv2.imwrite('images/' + str(currenttime)  + '-left.jpg', gray1)
-    cv2.imwrite('images/' + str(currenttime)  + '-right.jpg', gray2)
+def right_callback(right_image):
+    currenttime = datetime.datetime.now().time()
+    save_image(right_image, currenttime, "right")
 
-    cv2.waitKey(300)
+def store_stereo_images():
 
+    bridge = CvBridge()
+
+    rospy.init_node("stereo_historian")
+    rospy.Subscriber("my_stereo/left_image", ros_image, left_callback)
+    rospy.Subscriber("my_stereo/right_image", ros_image, right_callback)
+
+    rospy.spin()
