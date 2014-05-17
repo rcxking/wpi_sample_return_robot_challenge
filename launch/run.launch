@@ -3,6 +3,8 @@
   <!--camera driver node, retrieves images-->
   <node name="uvc_camera" pkg="uvc_camera" type="uvc_stereo_node" ns="my_stereo">
     <param name="frame_id" value="camera" />
+    <param name="left/camera_info_url" value="file:///home/will/Code/wpi-sample-return-robot-challenge/camera_calibration/ost.yml" />
+    <param name="right/camera_info_url" value="file:///home/will/Code/wpi-sample-return-robot-challenge/camera_calibration/ost.yml" />
   </node>
 
   <!--stereo image processing, produces disparity image, point cloud data from stereo images-->
