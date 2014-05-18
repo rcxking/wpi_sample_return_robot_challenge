@@ -10,8 +10,11 @@ from stereo_historian_db import Image_Frame, Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-stereo_ns = '/my_stereo'
-image_name = 'image_rect'
+#stereo_ns = '/my_stereo'
+#image_name = 'image_rect'
+
+stereo_ns = '/rrbot/camera1'
+image_name = 'image_raw'
 path_to_img_store = '~/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/images/'
 bridge = CvBridge()
 
@@ -20,18 +23,21 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+pub = rospy.Publisher("/{0}/stereo_image_saves".format(stereo_ns), String)
+
+
 def ConvertToCV2Grayscale(img):
     cv2_img = bridge.imgmsg_to_cv2(img, "bgr8")
     cv2_img_gray = cv2.cvtColor(cv2_img, cv2.COLOR_BGR2GRAY)
     return cv2_img_gray
 
 def WriteToFile(img, time, camera):
-    img_file_string = "images/{0}/{1}-{2}".format(camera, str(time))
-    cv2.imwrite(img_file_string)
+    img_file_string = "images/{0}/{1}.jpg".format(camera, str(time))
+    cv2.imwrite(img_file_string, img)
     return img_file_string
 
 def WriteToDatabase(filepath, camera, time):
-    new_frame = new Image_Frame()
+    new_frame = Image_Frame()
     new_frame.filepath = filepath
     new_frame.is_left = True if camera == 'left' else False
     new_frame.capture_time = time
@@ -51,8 +57,6 @@ def save_image(img, time, camera):
     img = ConvertToCV2Grayscale(img)
     filepath = WriteToFile(img, time, camera)
     WriteToDatabase(filepath, camera, time)
-
-    #cv2.imwrite('images/'+ str(time)  + '-' + camera + '.jpg', cv2_img_gray)
 
     pub.publish(img_file_string)
 
@@ -74,7 +78,6 @@ def store_stereo_images():
     rospy.Subscriber(left_img_topic, ros_image, left_callback)
     rospy.Subscriber(right_img_topic, ros_image, right_callback)
 
-    pub = rospy.Publisher("/{0}/stereo_image_saves".format(stereo_ns), String)
     rospy.spin()
 
 if __name__ == '__main__':
