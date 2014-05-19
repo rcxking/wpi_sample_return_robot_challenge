@@ -1,5 +1,7 @@
 #!/usr/bin/python
 import datetime
+
+from sqlalchemy.dialects.mysql import DATETIME
 from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -9,9 +11,9 @@ Base = declarative_base()
 
 class Image_Frame(Base):
     __tablename__='image_frame'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     is_left = Column(Boolean)
-    capture_time = Column(DateTime)
+    capture_time = Column(DATETIME)
     filepath = Column(String(250))
 
 if __name__ == '__main__':

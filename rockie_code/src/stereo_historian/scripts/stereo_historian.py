@@ -13,7 +13,7 @@ from sqlalchemy.orm import sessionmaker
 #stereo_ns = '/my_stereo'
 #image_name = 'image_rect'
 
-stereo_ns = '/rrbot/camera1'
+stereo_ns = 'rrbot/camera1'
 image_name = 'image_raw'
 path_to_img_store = '~/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/images/'
 bridge = CvBridge()
@@ -44,13 +44,6 @@ def WriteToDatabase(filepath, camera, time):
 
     session.add(new_frame)
     session.commit()
-    '''
-    is_left = 1 if camera == "left" else 0
-
-    vals = "'{0}', '{1}', '{2}'".Format(is_left, time, filepath)
-
-    db.query("INSERT INTO image_frame (stereo_is_left, capture_time, filepath) VALUES ({0})".format(vals))
-    '''
 
 def save_image(img, time, camera):
 
@@ -58,14 +51,14 @@ def save_image(img, time, camera):
     filepath = WriteToFile(img, time, camera)
     WriteToDatabase(filepath, camera, time)
 
-    pub.publish(img_file_string)
+    pub.publish(filepath)
 
 def left_callback(left_image):
-    currenttime = datetime.datetime.now().time()
+    currenttime = datetime.datetime.now()
     save_image(left_image, currenttime, "left")
 
 def right_callback(right_image):
-    currenttime = datetime.datetime.now().time()
+    currenttime = datetime.datetime.now()
     save_image(right_image, currenttime, "right")
 
 def store_stereo_images():
