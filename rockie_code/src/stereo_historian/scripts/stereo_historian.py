@@ -9,13 +9,15 @@ import datetime
 from stereo_historian_db import Image_Frame, Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import os
 
 #stereo_ns = '/my_stereo'
 #image_name = 'image_rect'
 
 stereo_ns = 'rrbot/camera1'
 image_name = 'image_raw'
-path_to_img_store = '/home/rockie/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/images'
+#path_to_img_store = '/home/rockie/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/images'
+path_to_img_store = 'images'
 bridge = CvBridge()
 
 pub = rospy.Publisher("/{0}/stereo_image_saves".format(stereo_ns), String)
@@ -41,7 +43,6 @@ def WriteToDatabase(filepath, camera, time):
     new_frame.filepath = filepath
     new_frame.is_left = True if camera == 'left' else False
     new_frame.capture_time = datetime.datetime.now()
-    #new_frame.capture_time = time
 
     session.add(new_frame)
     session.commit()
@@ -76,5 +77,7 @@ def store_stereo_images():
     rospy.spin()
 
 if __name__ == '__main__':
+    os.makedirs("{0}/left".format(path_to_img_store))
+    os.makedirs("{0}/right".format(path_to_img_store))
     store_stereo_images()
 
