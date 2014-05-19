@@ -15,7 +15,7 @@ from sqlalchemy.orm import sessionmaker
 
 stereo_ns = 'rrbot/camera1'
 image_name = 'image_raw'
-path_to_img_store = '~/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/images/'
+path_to_img_store = '/home/rockie/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/images'
 bridge = CvBridge()
 
 engine = create_engine('mysql://root@localhost/rockie')
@@ -32,7 +32,7 @@ def ConvertToCV2Grayscale(img):
     return cv2_img_gray
 
 def WriteToFile(img, time, camera):
-    img_file_string = "images/{0}/{1}.jpg".format(camera, str(time))
+    img_file_string = "{0}/{1}/{2}.jpg".format(path_to_img_store, camera, str(time))
     cv2.imwrite(img_file_string, img)
     return img_file_string
 
