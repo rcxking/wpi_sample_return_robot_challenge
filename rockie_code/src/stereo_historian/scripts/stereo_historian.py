@@ -18,13 +18,11 @@ image_name = 'image_raw'
 path_to_img_store = '/home/rockie/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/images'
 bridge = CvBridge()
 
+pub = rospy.Publisher("/{0}/stereo_image_saves".format(stereo_ns), String)
+
 engine = create_engine('mysql://root@localhost/rockie')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
-session = DBSession()
-
-pub = rospy.Publisher("/{0}/stereo_image_saves".format(stereo_ns), String)
-
 
 def ConvertToCV2Grayscale(img):
     cv2_img = bridge.imgmsg_to_cv2(img, "bgr8")
@@ -37,13 +35,17 @@ def WriteToFile(img, time, camera):
     return img_file_string
 
 def WriteToDatabase(filepath, camera, time):
+    session = DBSession()
+
     new_frame = Image_Frame()
     new_frame.filepath = filepath
     new_frame.is_left = True if camera == 'left' else False
-    new_frame.capture_time = time
+    new_frame.capture_time = datetime.datetime.now()
+    #new_frame.capture_time = time
 
     session.add(new_frame)
     session.commit()
+    session.close()
 
 def save_image(img, time, camera):
 
