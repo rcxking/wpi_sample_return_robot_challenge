@@ -6,7 +6,7 @@
 # RPI Rock Raiders
 # 5/12/14
 #
-# Last Updated: Bryant Pong: 5/12/14 - 12:10 PM
+# Last Updated: Bryant Pong: 5/13/14 - 5:12 PM
 
 # ROS Libraries:
 import rospy
@@ -19,9 +19,9 @@ import random
 def random_commands():
 	# Create a ROS topic called "random_vel_messages" that 
 	# communicates via geometry_msgs/Twist messages:
-	pub = rospy.Publisher('random_vel_messages', Twist, queue_size=10) 	
+	pub = rospy.Publisher('cmd_vel', Twist, queue_size=10) 	
 	rospy.init_node('simulated_nav_commands', anonymous=True)
-	r = rospy.Rate(10)
+	r = rospy.Rate(20)
 
 	while not rospy.is_shutdown():
 		# This node spoofs geometry_msgs/Twist messages.
