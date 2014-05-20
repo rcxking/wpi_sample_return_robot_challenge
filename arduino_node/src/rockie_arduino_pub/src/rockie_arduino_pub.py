@@ -13,26 +13,32 @@ import rospy
 from std_msgs.msg import String, Float64
 from geometry_msgs.msg import Twist
 
+pub = rospy.Publisher('arduino', String)
+
+def cmdVelCallback(data):
+
+	# This node is expecting "data" to be of type geometry_msgs/Twist.
+
+	# First, let's get the linear and angular velocity request from the Twist msg:
+	linearVel = data.linear.x
+	angularVel = data.angular.z
+		 
+	pub.publish("DRIVE " + str(linearVel) + " " + str(angularVel))
+
+def replCallback(data):
+
+	pub.publish(data)
+   
+
 def arduino_publisher():
 	
-	# Create the publisher to talk to the Arduino:
-	pub = rospy.Publisher('arduino', String) 
-
 	# Create the subscriber to listen for Twist messages:  
+	rospy.init_node('cmdVelListener', anonymous=True)
+	rospy.Subscriber('cmd_vel', Twist, cmdVelCallback)
+	rospy.Subscriber('repl_ctrl', String, replCallback)
 
-	# Start the arduino_publisher node:
-	rospy.init_node('arduino_publisher', anonymous=True)
+	rospy.spin()
 
-	while not rospy.is_shutdown():
-	
-		nextCommand = str(raw_input("Please enter your next command: "))
-		print("nextCommand: " + nextCommand)
-
-		if nextCommand == 'BYE':
-			print("Goodbye!")
-			return
-
-		pub.publish(nextCommand)
 
 if __name__ == '__main__':
 	try:
