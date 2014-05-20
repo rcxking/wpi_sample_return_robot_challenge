@@ -1,4 +1,6 @@
 <launch>
 	<node pkg="rockie_arduino_pub" name="rockiearduinopublisher" type="rockie_arduino_pub.py"/>
-	<node pkg="rockie_arduino_pub" name="simulatednavpublisher" type="simulated_nav_commands.py"/>
+	<!-- <node pkg="rockie_arduino_pub" name="simulatednavpublisher" type="simulated_nav_commands.py"/> -->
+	<node pkg="rockie_arduino_pub" name="rockie_remote_control" type="rockie_remote_control.py"/>
+	<!-- <node pkg="rosserial_python" name="rosserial_python" type="serial_node.py" /> -->
 </launch>
