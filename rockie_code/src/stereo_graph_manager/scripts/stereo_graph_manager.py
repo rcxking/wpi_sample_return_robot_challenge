@@ -148,30 +148,46 @@ def update_slam_graph(_3d_matches, stereo_image_pair):
 
     [fn_descs, fn_positions] = feature_node_3d_points_obj
 
-    feature_point_descs = np.array(fn_descs, np.float32)
-    feature_point_positions = np.array(fn_positions, np.int32)
+    if(len(fn_positions) > 0):
 
-    point_matches = get_3d_point_matches(new_point_descs, feature_point_descs)
+      feature_point_descs = np.array(fn_descs, np.float32)
+      feature_point_positions = np.array(fn_positions, np.float32)
 
-    num_3d_matches = len(point_matches)
-    num_feature_node_points = feature_point_positions.shape[0]
+      point_matches = get_3d_point_matches(new_point_descs, feature_point_descs)
 
-    print("Number of 3d matches = {0}".format(num_3d_matches))
-    print("Number of feature 3d points = {0}".format(num_feature_node_points))
+      num_3d_matches = len(point_matches)
+      num_feature_node_points = feature_point_positions.shape[0]
 
-    #Returns true if we have enough matches to connect new pose to existing feature, false otherwise
-    if(num_3d_matches > new_connection_threshold):
-      transform = calculate_3d_transform(point_matches, new_point_positions, feature_point_positions)
-      connect_pose_to_feature(new_pose_node, feature_node, transform, point_matches, new_point_positions, feature_point_positions)
+      print("Number of 3d matches = {0}".format(num_3d_matches))
+      print("Number of feature 3d points = {0}".format(num_feature_node_points))
 
-      #don't add new feature node if num of matches is relatively large
-      if(num_3d_matches > new_feature_threshold*num_feature_node_points):
-        insert_new_feature_node = False
+      #Returns true if we have enough matches to connect new pose to existing feature, false otherwise
+      if(num_3d_matches > new_connection_threshold):
+
+        transform = calculate_3d_transform(point_matches, 
+            new_point_positions, 
+            feature_point_positions)
+
+        connect_pose_to_feature(new_pose_node, 
+            feature_node, 
+            transform, 
+            point_matches, 
+            new_point_positions, 
+            feature_point_positions)
+
+        #don't add new feature node if num of matches is relatively large
+        if(num_3d_matches > new_feature_threshold*num_feature_node_points):
+          insert_new_feature_node = False
 
   if(insert_new_feature_node):
     new_feature_node = add_new_feature_node(_3d_matches)
     identity_transform = get_identity_transform()
-    connect_pose_to_feature(new_pose_node, new_feature_node, identity_transform, None, new_point_positions, new_point_positions)
+    connect_pose_to_feature(new_pose_node, 
+        new_feature_node, 
+        identity_transform, 
+        None, 
+        new_point_positions, 
+        new_point_positions)
 
 def get_identity_transform():
   return [np.empty([3, 3]).tolist(), np.empty([1, 3]).tolist()]
@@ -194,7 +210,7 @@ def calculate_3d_transform(matches, positions_1, positions_2):
 
   min_error = float("inf")
 
-  opt_t = np.empty([1, 3])
+  opt_t = np.empty([3, 1])
   opt_R = np.empty([3, 3])
 
   for i in range(ransac_iterations):
@@ -214,13 +230,23 @@ def calculate_3d_transform(matches, positions_1, positions_2):
 
     error = calculate_transform_error(R, t, rand_positions_1, rand_positions_2)
 
+    print("---------------------------------")
+    print("centroid 1 = {0}".format(centroid_1))
+    print("centroid 2 = {0}".format(centroid_2))
+    print("t = {0}".format(t))
+    print("R = {0}".format(R))
+
+    print("error = {0}".format(error))
+
+    print("---------------------------------")
+
     if(error < min_error):
       opt_t = t
       opt_R = R
       min_error = error
 
-  print("R = {0}".format(opt_R))
-  print("t = {0}".format(opt_t))
+  print("opt R = {0}".format(opt_R))
+  print("opt t = {0}".format(opt_t))
 
   return [opt_R.tolist(), opt_t.tolist()]
 
