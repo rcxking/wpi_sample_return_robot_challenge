@@ -43,7 +43,9 @@ flann = cv2.FlannBasedMatcher(index_params,search_params)
 new_feature_threshold = .7
 
 #If we have at least 7 matches, make a connection
-new_connection_threshold = 7 
+new_connection_threshold = 15 
+ransac_sample_size = 15
+ransac_iterations = 10
 
 stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/images/left/".format(os.getenv("HOME"))
 
@@ -119,9 +121,6 @@ def get_sp_keypoint_matches(sp_keypoint_matches_id):
 def get_3d_matches_object(_3d_matches):
   obj = pickle.load(open(_3d_matches.sp_3d_matches_filepath))
 
-  #obj[0] = np.array(obj[0])
-  #obj[1] = np.array(obj[1])
-
   return obj
 
 def update_slam_graph(_3d_matches, stereo_image_pair):
@@ -158,8 +157,8 @@ def update_slam_graph(_3d_matches, stereo_image_pair):
       num_3d_matches = len(point_matches)
       num_feature_node_points = feature_point_positions.shape[0]
 
-      print("Number of 3d matches = {0}".format(num_3d_matches))
-      print("Number of feature 3d points = {0}".format(num_feature_node_points))
+      #print("Number of 3d matches = {0}".format(num_3d_matches))
+      #print("Number of feature 3d points = {0}".format(num_feature_node_points))
 
       #Returns true if we have enough matches to connect new pose to existing feature, false otherwise
       if(num_3d_matches > new_connection_threshold):
@@ -205,9 +204,7 @@ def add_new_feature_node(_3d_matches):
 #Look at github wiki  
 def calculate_3d_transform(matches, positions_1, positions_2):
 
-  ransac_iterations = 10
-  ransac_sample_size = 15
-
+  
   min_error = float("inf")
 
   opt_t = np.empty([3, 1])
@@ -230,23 +227,26 @@ def calculate_3d_transform(matches, positions_1, positions_2):
 
     error = calculate_transform_error(R, t, rand_positions_1, rand_positions_2)
 
-    print("---------------------------------")
-    print("centroid 1 = {0}".format(centroid_1))
-    print("centroid 2 = {0}".format(centroid_2))
-    print("t = {0}".format(t))
-    print("R = {0}".format(R))
+    #print("---------------------------------")
+    #print("centroid 1 = {0}".format(centroid_1))
+    #print("centroid 2 = {0}".format(centroid_2))
+    #print("t = {0}".format(t))
+    #print("R = {0}".format(R))
 
-    print("error = {0}".format(error))
+    #print("error = {0}".format(error))
 
-    print("---------------------------------")
+    #print("---------------------------------")
 
     if(error < min_error):
       opt_t = t
       opt_R = R
       min_error = error
 
+  print("------------------------------")
   print("opt R = {0}".format(opt_R))
   print("opt t = {0}".format(opt_t))
+  print("min error = {0}".format(min_error))
+  print("-----------------------------")
 
   return [opt_R.tolist(), opt_t.tolist()]
 
@@ -342,6 +342,8 @@ def convert_match(match):
 def save_3d_matches(point_matches, pose_3d_points, feature_3d_points, pose_id, feature_id, transform):
   if(point_matches != None):
     matches = [convert_match(match) for match in point_matches]
+  else:
+    matches = None
 
   _3d_matches = [matches, pose_3d_points.tolist(), feature_3d_points.tolist(), transform]
 
