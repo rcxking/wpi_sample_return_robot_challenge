@@ -44,7 +44,7 @@ new_feature_threshold = .7
 
 #If we have at least 7 matches, make a connection
 new_connection_threshold = 15 
-ransac_sample_size = 15 
+ransac_sample_size = 7 
 ransac_iterations = 30 
 
 stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/images/left/".format(os.getenv("HOME"))
@@ -208,24 +208,41 @@ def calculate_3d_transform(matches, positions_1, positions_2):
 
   for i in range(ransac_iterations):
 
+    #following http://en.wikipedia.org/wiki/Kabsch_algorithm
+    #also check out https://github.com/charnley/rmsd
     ransac_matches = rand_sampled_matches(matches, ransac_sample_size)
-    [rand_positions_1, rand_positions_2] = get_rand_positions(ransac_matches, positions_1, positions_2)
+
+    [rand_positions_1, rand_positions_2] = get_rand_positions(ransac_matches, 
+        positions_1, 
+        positions_2)
+
+    rand_positions_1 = np.asmatrix(rand_positions_1)  
+    rand_positions_2 = np.asmatrix(rand_positions_2)
 
     centroid_1 = get_centroid(rand_positions_1)
     centroid_2 = get_centroid(rand_positions_2)
 
-    H = get_covariance_matrix(rand_positions_1, rand_positions_2, centroid_1, centroid_2)
+    #subtract centroid from each position
+    for i in range(ransac_sample_size):
+      rand_positions_1[i, :] -= centroid_1.transpose()
+      rand_positions_2[i, :] -= centroid_2.transpose()
+  
+    A = np.dot(rand_positions_1.transpose(), rand_positions_2)
 
-    [U, S, V] = np.linalg.svd(H, full_matrices=True)
+    #H = get_covariance_matrix(rand_positions_1, rand_positions_2, centroid_1, centroid_2)
 
-    R = V*(U.transpose())
+    #print("H = {0}".format(H))
 
-    if np.linalg.det(R) < 0:
-      V[0, 2] = -V[0, 2]
-      V[1, 2] = -V[1, 2]
-      V[2, 2] = -V[2, 2]
-      R = V*(U.transpose())
+    #[U, S, V] = np.linalg.svd(H, full_matrices=True)
+    V, S, W = np.linalg.svd(A)
 
+    d = (np.linalg.det(V) * np.linalg.det(W)) < 0.0
+
+    if d:
+      S[-1] = -S[-1]
+      V[:, -1] = -V[:, -1]
+
+    R = np.dot(V, W)
 
     t = -R*centroid_1 + centroid_2
     
@@ -296,6 +313,7 @@ def get_rand_positions(ransac_matches, positions_query, positions_train):
 
 def get_centroid(positions):
   num_points = positions.shape[0]
+
   summed_points = np.sum(positions, axis=0)
   summed_points_average = np.divide(summed_points, num_points)
 
@@ -323,8 +341,6 @@ def get_covariance_matrix(positions_1, positions_2, centroid_1, centroid_2):
     '''
 
     H += (point_1 - centroid_1)*((point_2 - centroid_2).transpose())
-
-    #print(H)
 
   return H
 
