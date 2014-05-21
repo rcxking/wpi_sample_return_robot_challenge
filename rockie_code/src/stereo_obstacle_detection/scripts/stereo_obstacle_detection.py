@@ -73,13 +73,13 @@ def find_and_report_obstacles_callback(stereo_image_pair_data_id):
   for i in range(max_disparity):
     padding = np.empty([h, 1], dtype='float32')
 
-    img_left_blur = np.hstack((img_left_blur, padding))
-    img_right_blur = np.hstack((padding, img_right_blur))
-    img_diff = np.absolute(img_left_blur - img_right_blur)
+    #img_left_blur = np.hstack((img_left_blur, padding))
+    #img_right_blur = np.hstack((padding, img_right_blur))
+    #img_diff = np.absolute(img_left_blur - img_right_blur)
 
-    #img_left = np.hstack((img_left, padding))
-    #img_right = np.hstack((padding, img_right))
-    #img_diff = np.absolute(img_left - img_right)
+    img_left = np.hstack((img_left, padding))
+    img_right = np.hstack((padding, img_right))
+    img_diff = np.absolute(img_left - img_right)
 
     ret, thresh = cv2.threshold(img_diff, 1, 255, cv2.THRESH_BINARY_INV)
 
