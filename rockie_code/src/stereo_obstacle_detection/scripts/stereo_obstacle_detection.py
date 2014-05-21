@@ -60,31 +60,33 @@ def find_and_report_obstacles_callback(stereo_image_pair_data_id):
   cv2.imshow('right', img_right_blur)
   #cv2.imshow('img', img_diff)
 
-  ret, thresh_left = cv2.threshold(img_left_blur, 128, 255, cv2.THRESH_BINARY)
-  cv2.imshow('thresh', thresh_left)
-
-  cv2.waitKey(0)
-
   max_disparity = 500
+  num_erodes_dilates = 10 
 
-  '''
+  kernel = np.ones((5,5), np.uint8)
 
   for i in range(max_disparity):
-    padding = np.empty([h, 1])
+    padding = np.empty([h, 1], dtype='float32')
 
     img_left_blur = np.hstack((img_left_blur, padding))
     img_right_blur = np.hstack((padding, img_right_blur))
+    img_diff = np.absolute(img_left_blur - img_right_blur)
 
-    img_diff = img_left_blur - img_right_blur
-    ret, thresh = cv2.threshold(img_left_blur, 128, 255, cv2.THRESH_BINARY)
-      
-    #cv2.imshow('diff', img_diff)
+    #img_left = np.hstack((img_left, padding))
+    #img_right = np.hstack((padding, img_right))
+    #img_diff = img_left - img_right
+
+    ret, thresh = cv2.threshold(img_diff, 1, 255, cv2.THRESH_BINARY_INV)
+
+    eroded = cv2.erode(thresh, kernel, iterations = num_erodes_dilates)
+    #img_diff = cv2.dilate(img_diff, kernel, iterations = num_erodes_dilates)
+
     cv2.imshow('thresh', thresh)
+    cv2.imshow('erode', eroded)
 
     cv2.waitKey(100)
 
     pass 
-  '''
 
 
   #small gaussian blur on stereo frames
