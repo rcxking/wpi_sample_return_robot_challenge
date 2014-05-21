@@ -229,11 +229,6 @@ def calculate_3d_transform(matches, positions_1, positions_2):
   
     A = np.dot(rand_positions_1.transpose(), rand_positions_2)
 
-    #H = get_covariance_matrix(rand_positions_1, rand_positions_2, centroid_1, centroid_2)
-
-    #print("H = {0}".format(H))
-
-    #[U, S, V] = np.linalg.svd(H, full_matrices=True)
     V, S, W = np.linalg.svd(A)
 
     d = (np.linalg.det(V) * np.linalg.det(W)) < 0.0
