@@ -54,16 +54,21 @@ def find_and_report_obstacles_callback(stereo_image_pair_data_id):
   img_left_blur = cv2.GaussianBlur(img_left, (5, 5), 0)
   img_right_blur = cv2.GaussianBlur(img_right, (5, 5), 0)
   
-  h = img_left.shape[0]
+  [h, w] = img_left.shape
 
-  cv2.imshow('left', img_left_blur)
-  cv2.imshow('right', img_right_blur)
+  #cv2.imshow('left', img_left_blur)
+  #cv2.imshow('right', img_right_blur)
   #cv2.imshow('img', img_diff)
 
   max_disparity = 500
-  num_erodes_dilates = 10 
+  num_erodes_dilates = 1 
 
   kernel = np.ones((5,5), np.uint8)
+
+  left_obstacles_color = np.zeros((h, w, 3), np.uint8)
+  left_obstacles_gray = np.zeros((h, w), np.uint8)
+
+  img_left_blur_color = cv2.cvtColor(img_left_blur, cv2.COLOR_GRAY2RGB)
 
   for i in range(max_disparity):
     padding = np.empty([h, 1], dtype='float32')
@@ -74,20 +79,28 @@ def find_and_report_obstacles_callback(stereo_image_pair_data_id):
 
     #img_left = np.hstack((img_left, padding))
     #img_right = np.hstack((padding, img_right))
-    #img_diff = img_left - img_right
+    #img_diff = np.absolute(img_left - img_right)
 
     ret, thresh = cv2.threshold(img_diff, 1, 255, cv2.THRESH_BINARY_INV)
 
     eroded = cv2.erode(thresh, kernel, iterations = num_erodes_dilates)
+
+    left_obstacles_gray += eroded[:, :w]
     #img_diff = cv2.dilate(img_diff, kernel, iterations = num_erodes_dilates)
+    
+    #cv2.imshow('thresh', thresh)
+    #cv2.imshow('erode', eroded)
+    #cv2.imshow('left_obs', left_obstacles_gray)
 
-    cv2.imshow('thresh', thresh)
-    cv2.imshow('erode', eroded)
+    #cv2.waitKey(100)
 
-    cv2.waitKey(100)
+  ret, left_obstacles_gray = cv2.threshold(left_obstacles_gray, 0, 255, cv2.THRESH_BINARY)
 
-    pass 
+  img_left_blur_color[:, :, 1] = left_obstacles_gray
+  cv2.imshow('obs', img_left_blur_color)
+  cv2.imshow('gray', left_obstacles_gray)
 
+  cv2.waitKey(0)
 
   #small gaussian blur on stereo frames
 
