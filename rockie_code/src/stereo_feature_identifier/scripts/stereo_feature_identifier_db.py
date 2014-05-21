@@ -44,7 +44,7 @@ class Graph_Edges(Base):
   edge_id = Column(Integer, primary_key=True, autoincrement=True)
   node_1_id = Column(Integer)
   node_2_id = Column(Integer)
-  _3d_match_matches_filepath = Column(VARCHAR(6500))
+  _3d_matches_filepath = Column(VARCHAR(6500))
   rigid_body_transform_filepath = Column(VARCHAR(6500))
 
 if __name__ == '__main__':

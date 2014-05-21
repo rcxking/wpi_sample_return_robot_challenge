@@ -180,10 +180,10 @@ def triangulate(matches, kpts_descs1, kpts_descs2, left_image):
     draw_3d_point(left_image, query_pt.pt, Z)
 
     #stack matched descriptor onto matched_descs
-    np.vstack((matched_descs, query_pt_desc))
+    matched_descs = np.vstack((matched_descs, query_pt_desc))
 
     #add new row to position matrix
-    np.vstack((positions, np.array([X, Y, Z])))
+    positions = np.vstack((positions, np.array([X, Y, Z])))
 
   _3d_points = [matched_descs.tolist(), positions.tolist()]
 
