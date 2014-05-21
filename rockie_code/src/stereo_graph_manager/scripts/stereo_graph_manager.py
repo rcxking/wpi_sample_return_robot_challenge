@@ -13,15 +13,13 @@ import rospy
 from std_msgs.msg import String
 from sensor_msgs.msg import Image as ros_image
 from cv_bridge import CvBridge, CvBridgeError
-from stereo_feature_identifier_db import Stereo_Pair_Keypoints, Stereo_Pair_Keypoint_Matches, Stereo_3D_Matches
+from stereo_feature_identifier_db import Stereo_Pair_Keypoints, Stereo_Pair_Keypoint_Matches, Stereo_3D_Matches, Graph_Nodes, Graph_Edges
 from stereo_historian_db import Stereo_Image_Pair, Base
 import datetime
 import cPickle as pickle
 from sqlalchemy import create_engine
 import random
 from sqlalchemy.orm import sessionmaker
-
-stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts".format(os.getenv("HOME"))
 
 engine = create_engine('mysql://root@localhost/rockie')
 Base.metadata.bind = engine
@@ -34,13 +32,12 @@ stereo_feature_matcher_topic = '/my_stereo/stereo_image_keypoint_matches'
 stereo_feature_triangulator_topic = '/my_stereo/stereo_image_3D_points'
 stereo_graph_manager_topic = '/my_stereo/stereo_graph_node_updates'
 
-pub = rospy.Publisher(stereo_graph_manager_topic, String)
+# FLANN parameters
+FLANN_INDEX_KDTREE = 0
+index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
+search_params = dict(checks=50)   # or pass empty dictionary
 
-#camera distance is 94 mm
-camera_dist = .094
-
-#focal length is 579 mm
-f = 579
+flann = cv2.FlannBasedMatcher(index_params,search_params)
 
 def update_graph_callback(_3d_matches_data_id):
     global session
@@ -88,19 +85,20 @@ def update_graph_callback(_3d_matches_data_id):
     #transformation along the path to recover the global position
 
 
-  new_pose_node = create_pose_node(sp_km_id)  
-  connect_poses(new_pose_node.node_id, new_pose_node.node_id - 1)
+  #TODO: Connect poses with wheel odometry
+  new_pose_node = create_pose_node(stereo_image_pair.stereo_image_pair_id)  
+  #connect_poses(new_pose_node.node_id, new_pose_node.node_id - 1)
 
-  new_3d_matches = get_3d_matches(sp_km_id)
   all_feature_nodes = get_all_feature_nodes()
 
   insert_new_feature_node = True
 
   for feature_node in all_feature_nodes:
-      match_matches = get_3d_match_matches(new_3d_matches, feature_node)
+      feature_node_3d_matches = get_3d_matches(feature_node.sp_3d_matches_id)
+      match_matches = get_3d_match_matches(_3d_matches, feature_node_3d_matches)
 
       #Returns true if we have enough matches to connect new pose to existing feature, false otherwise
-      if(enough_matches(match_matches, new_3d_matches, feature_node)):
+      if(enough_matches(match_matches, new_3d_matches, feature_node_3d_matches)):
           connect_pose_to_feature(new_pose_node, feature_node)
 
           #don't add new feature node if num of matches is relatively large
@@ -111,22 +109,64 @@ def update_graph_callback(_3d_matches_data_id):
       new_feature_node = add_new_feature_node()
       connect_pose_to_feature(new_pose_node, new_feature_node)
 
+def connect_pose_to_feature(new_pose_node, feature_node):
+    global session
+
+    edge = Graph_Edge()
+    edge.node_1_id = new_pose_node.node_id
+    edge.node_1_type = 'pose'
+    edge.node_2_id = feature_node.node_id
+    edge.node_2_type = 'feature'
+
+    transform = create_optimal_rigid_body_transformation(pose_3d_points, feature_3d_points, matches)
+    transform_filepath = save_transform(transform)
+    edge.optimal_transform_filepath = transform_filepath
+
+    _3d_match_matches_filepath = save_3d_match_matches(_3d_matches)
+    edge.3d_match_matches_filepath = _3d_match_matches_filepath
+
+    session.add(edge)
+    session.commit()
+
+def enough_matches(matches, _3d_matches_1, _3d_matches_2):
+    thresh = 5
+
+    len(matches) >= thresh ? True : False
+
+def create_pose_node(stereo_image_pair_id):
+    global session
+    node = Graph_Nodes()
+    node.stereo_image_pair_id = stereo_image_pair_id
+
+    session.add(node)
+    session.commit()
+
 def get_keypoints_pair(spk_id):
     global session
     query = session.query(Stereo_Pair_Keypoints)
     stereo_pair_keypoints = query.filter_by(stereo_pair_keypoint_id = int(spk_id)).first()
     return stereo_pair_keypoints
 
-def get_3d_match(_3d_match_id):
+def get_3d_matches(_3d_matches_id):
     global session
     query = session.query(Stereo_3D_Matches)
-    _3d_matches = query.filter_by(sp_3d_matches_id = _3d_match_id)
+    _3d_matches = query.filter_by(sp_3d_matches_id = _3d_matches_id)
     return _3d_matches
+
+def get_3d_match_matches(_3d_matches_1, _3d_matches_2):
+    global flann
+    [descs1, kpts1] = get_3d_matches_keypoints(_3d_matches_1)
+    [descs2, kpts2] = get_3d_matches_keypoints(_3d_matches_2)
+
+    matches = flann.match(descs1, descs2)
+
+    return matches
 
 def get_all_feature_nodes():
     global session
     query = session.query(Graph_Nodes)
-    return query.all()
+    all_feature_nodes = query.filter(Graph_Nodes.node_type == 'feature')
+    return all_feature_nodes
 
 def triangulate(matches, kpts1, kpts2):
 
