@@ -14,13 +14,8 @@ import os
 stereo_ns = 'my_stereo'
 image_name = 'image_raw'
 
-#stereo_ns = 'rrbot/camera1'
-#image_name = 'image_raw'
-#path_to_img_store = '/home/rockie/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/images'
 path_to_img_store = 'images'
 bridge = CvBridge()
-
-pub = rospy.Publisher("/{0}/stereo_image_saves".format(stereo_ns), String)
 
 engine = create_engine('mysql://root@localhost/rockie')
 Base.metadata.bind = engine
@@ -49,11 +44,11 @@ def WriteToDatabase(filepath, camera, time):
     session.close()
 
 def save_image(img, time, camera):
-
     img = ConvertToCV2Grayscale(img)
     filepath = WriteToFile(img, time, camera)
     WriteToDatabase(filepath, camera, time)
 
+    pub = rospy.Publisher("/{0}/stereo_image_saves".format(stereo_ns), String)
     pub.publish(filepath)
 
 def left_callback(left_image):
@@ -65,7 +60,6 @@ def right_callback(right_image):
     save_image(right_image, currenttime, "right")
 
 def store_stereo_images():
-
     rospy.init_node("stereo_historian")
 
     left_img_topic = stereo_ns + '/left/' + image_name
@@ -73,11 +67,8 @@ def store_stereo_images():
 
     rospy.Subscriber(left_img_topic, ros_image, left_callback)
     rospy.Subscriber(right_img_topic, ros_image, right_callback)
-
+    
     rospy.spin()
-
 if __name__ == '__main__':
-    #os.makedirs("{0}/left".format(path_to_img_store))
-    #os.makedirs("{0}/right".format(path_to_img_store))
     store_stereo_images()
 

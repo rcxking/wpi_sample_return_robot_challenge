@@ -15,48 +15,15 @@ from cv_bridge import CvBridge, CvBridgeError
 import datetime
 import cPickle as pickle
 
+stereo_imagepath_base = '/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/'
 
 stereo_historian_topic = '/my_stereo/stereo_image_saves'
 def create_and_store_features_callback(filepath):
-
-    #split_pair = filepath_pair.split("###")
-
-    #img_left_filepath = split_pair[0]
-    #img_right_filepath = split_pair[1]
-
-    #img_left = cv2.imread(img_left_filepath)
-    #img_right = cv2.imread(split_pair[1])
-
-    img = cv2.imread(filepath, 0)
-
-    #keypoints1 = CreateKeypoints(img_left)
-    #keypoints2 = CreateKeypoints(img_right)
-
+    img = cv2.imread("{0}{1}".format(stereo_imagepath_base, filepath.data), 0)
     keypoints = CreateKeypoints(img)
-
-    #SaveKeypoints(keypoints1, keypoints2, img_left_filepath, img_right_filepath)
-
     SaveKeypoints(keypoints, filepath)
 
-    #matches = FindMatches()
-
-    #SaveMatches(matches, left_img=img_left, right_img=img_right)
-
 def find_and_store_features():
-    '''
-    img = cv2.imread("/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/images/10:19:39.596026-left.jpg", 0)
-    #img = cv2.imread("/home/will/Downloads/messi5.jpg", 0)
-
-    sift = cv2.SIFT()
-    surf = cv2.SURF()
-    kp = surf.detect(img, None)
-
-    img2 = cv2.drawKeypoints(img,kp)
-
-    cv2.imshow('img', img2)
-
-    cv2.waitKey(0)
-    '''
     rospy.init_node("stereo_feature_identifier")
     rospy.Subscriber(stereo_historian_topic, String, create_and_store_features_callback)
     rospy.spin()
@@ -77,16 +44,24 @@ def ConvertToSerializableKeypoint(kp):
     return new_kp
     #return kp
 
+def CreateKeypoints(img):
+    kp = sift.detect(img, None)
+    return kp
+
+def SaveKeypoints(kp, filepath):
+    serializable_kps = ConvertToSerializableKeypoints(kp)
+    pickle.dump(serializable_kps, open("{0}.keypoints".format(filepath.data), 'wb'))
+
 def ConvertToSerializableKeypoints(kp):
     return [ConvertToSerializableKeypoint(keypoint) for keypoint in kp]
 
 if __name__ == '__main__':
-    #find_and_store_features()
-    img = cv2.imread('balloons.jpg', 0)
     sift = cv2.SIFT()
-    kp = sift.detect(img, None)
-    serializable_kp = ConvertToSerializableKeypoints(kp)
-    pickle.dump(serializable_kp, open('testdump.dump', 'wb'))
+    find_and_store_features()
+    #img = cv2.imread('balloons.jpg', 0)
+    #kp = sift.detect(img, None)
+    #serializable_kp = ConvertToSerializableKeypoints(kp)
+    #pickle.dump(serializable_kp, open('testdump.dump', 'wb'))
     #cv2.drawKeypoints(img, kp)
-    cv2.imshow('image', img)
-    cv2.waitKey(0)
+    #cv2.imshow('image', img)
+    #cv2.waitKey(0)
