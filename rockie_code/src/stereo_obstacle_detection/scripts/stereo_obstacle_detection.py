@@ -51,6 +51,42 @@ def find_and_report_obstacles_callback(stereo_image_pair_data_id):
   img_left = cv2.imread(img_left_filepath, 0)
   img_right = cv2.imread(img_right_filepath, 0)
 
+  img_left_blur = cv2.GaussianBlur(img_left, (5, 5), 0)
+  img_right_blur = cv2.GaussianBlur(img_right, (5, 5), 0)
+  
+  h = img_left.shape[0]
+
+  cv2.imshow('left', img_left_blur)
+  cv2.imshow('right', img_right_blur)
+  #cv2.imshow('img', img_diff)
+
+  ret, thresh_left = cv2.threshold(img_left_blur, 128, 255, cv2.THRESH_BINARY)
+  cv2.imshow('thresh', thresh_left)
+
+  cv2.waitKey(0)
+
+  max_disparity = 500
+
+  '''
+
+  for i in range(max_disparity):
+    padding = np.empty([h, 1])
+
+    img_left_blur = np.hstack((img_left_blur, padding))
+    img_right_blur = np.hstack((padding, img_right_blur))
+
+    img_diff = img_left_blur - img_right_blur
+    ret, thresh = cv2.threshold(img_left_blur, 128, 255, cv2.THRESH_BINARY)
+      
+    #cv2.imshow('diff', img_diff)
+    cv2.imshow('thresh', thresh)
+
+    cv2.waitKey(100)
+
+    pass 
+  '''
+
+
   #small gaussian blur on stereo frames
 
   #determine y mis-alignment by iterating over possible 
@@ -71,6 +107,10 @@ def find_and_report_obstacles_callback(stereo_image_pair_data_id):
   #re-project into image to confirm
   #publish obstacle location
 
+  #TODO: Can we use x,y,disparity gradient to simplify this?
+  #look for places with low x,y gradient, but high values of 2nd disparity derivative?
+
+
   session.close()
 
 def find_and_report_obstacles():
@@ -78,5 +118,10 @@ def find_and_report_obstacles():
   rospy.Subscriber(stereo_historian_topic, String, find_and_report_obstacles_callback)
   rospy.spin()
 
+class dummy:
+  data = 1
+
 if __name__ == '__main__':
-  find_and_report_obstacles()
+  #find_and_report_obstacles()
+  
+  find_and_report_obstacles_callback(dummy())
