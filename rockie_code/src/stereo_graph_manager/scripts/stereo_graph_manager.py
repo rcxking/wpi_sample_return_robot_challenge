@@ -60,7 +60,7 @@ def update_graph_callback(_3d_matches_data_id):
     stereo_keypoints = get_stereo_pair_keypoint(stereo_keypoint_matches.stereo_pair_keypoint_id)
     stereo_image_pair = get_stereo_image_pair(stereo_keypoints.stereo_image_pair_id)
 
-    update_graph_slam(_3d_matches, stereo_image_pair)
+    update_slam_graph(_3d_matches, stereo_image_pair)
 
   #create pose node
   #connect pose node to previous pose node
@@ -131,7 +131,7 @@ def update_slam_graph(_3d_matches, stereo_image_pair):
   [new_point_descs, new_point_positions] = _3d_matches_object
 
   new_point_descs = np.array(new_point_descs, np.float32)
-  new_point_positions = np.array(new_point_positions, np.int32)
+  new_point_positions = np.array(new_point_positions, np.float32)
 
   #TODO: Connect poses with wheel odometry
   new_pose_node = create_pose_node(stereo_image_pair.stereo_image_pair_id)  
@@ -155,6 +155,9 @@ def update_slam_graph(_3d_matches, stereo_image_pair):
 
     num_3d_matches = len(point_matches)
     num_feature_node_points = feature_point_positions.shape[0]
+
+    print("Number of 3d matches = {0}".format(num_3d_matches))
+    print("Number of feature 3d points = {0}".format(num_feature_node_points))
 
     #Returns true if we have enough matches to connect new pose to existing feature, false otherwise
     if(num_3d_matches > new_connection_threshold):
@@ -181,6 +184,7 @@ def add_new_feature_node(_3d_matches):
 
   session.add(feature_node)
   session.commit()
+  return feature_node
 
 #Look at github wiki  
 def calculate_3d_transform(matches, positions_1, positions_2):
