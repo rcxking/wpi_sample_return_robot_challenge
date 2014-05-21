@@ -189,7 +189,7 @@ def update_slam_graph(_3d_matches, stereo_image_pair):
         new_point_positions)
 
 def get_identity_transform():
-  return [np.empty([3, 3]).tolist(), np.empty([1, 3]).tolist()]
+  return [np.identity(3).tolist(), np.empty([1, 3]).tolist()]
 
 def add_new_feature_node(_3d_matches):
   global session
