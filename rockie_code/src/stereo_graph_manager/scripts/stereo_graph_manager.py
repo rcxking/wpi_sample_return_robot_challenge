@@ -44,8 +44,8 @@ new_feature_threshold = .7
 
 #If we have at least 7 matches, make a connection
 new_connection_threshold = 15 
-ransac_sample_size = 15
-ransac_iterations = 10
+ransac_sample_size = 15 
+ransac_iterations = 30 
 
 stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/images/left/".format(os.getenv("HOME"))
 
@@ -147,7 +147,7 @@ def update_slam_graph(_3d_matches, stereo_image_pair):
 
     [fn_descs, fn_positions] = feature_node_3d_points_obj
 
-    if(len(fn_positions) > 0):
+    if(len(fn_positions) > ransac_sample_size):
 
       feature_point_descs = np.array(fn_descs, np.float32)
       feature_point_positions = np.array(fn_positions, np.float32)
@@ -156,9 +156,6 @@ def update_slam_graph(_3d_matches, stereo_image_pair):
 
       num_3d_matches = len(point_matches)
       num_feature_node_points = feature_point_positions.shape[0]
-
-      #print("Number of 3d matches = {0}".format(num_3d_matches))
-      #print("Number of feature 3d points = {0}".format(num_feature_node_points))
 
       #Returns true if we have enough matches to connect new pose to existing feature, false otherwise
       if(num_3d_matches > new_connection_threshold):
@@ -203,7 +200,6 @@ def add_new_feature_node(_3d_matches):
 
 #Look at github wiki  
 def calculate_3d_transform(matches, positions_1, positions_2):
-
   
   min_error = float("inf")
 
@@ -211,31 +207,43 @@ def calculate_3d_transform(matches, positions_1, positions_2):
   opt_R = np.empty([3, 3])
 
   for i in range(ransac_iterations):
+
     ransac_matches = rand_sampled_matches(matches, ransac_sample_size)
     [rand_positions_1, rand_positions_2] = get_rand_positions(ransac_matches, positions_1, positions_2)
 
     centroid_1 = get_centroid(rand_positions_1)
     centroid_2 = get_centroid(rand_positions_2)
 
-    t = centroid_2 - centroid_1
-
     H = get_covariance_matrix(rand_positions_1, rand_positions_2, centroid_1, centroid_2)
 
     [U, S, V] = np.linalg.svd(H, full_matrices=True)
 
-    R = V*U.T
+    R = V*(U.transpose())
 
+    if np.linalg.det(R) < 0:
+      V[0, 2] = -V[0, 2]
+      V[1, 2] = -V[1, 2]
+      V[2, 2] = -V[2, 2]
+      R = V*(U.transpose())
+
+
+    t = -R*centroid_1 + centroid_2
+    
     error = calculate_transform_error(R, t, rand_positions_1, rand_positions_2)
 
-    #print("---------------------------------")
-    #print("centroid 1 = {0}".format(centroid_1))
-    #print("centroid 2 = {0}".format(centroid_2))
-    #print("t = {0}".format(t))
-    #print("R = {0}".format(R))
+    '''
 
-    #print("error = {0}".format(error))
+    print("---------------------------------")
+    print("centroid 1 = {0}".format(centroid_1))
+    print("centroid 2 = {0}".format(centroid_2))
+    print("t = {0}".format(t))
+    print("R = {0}".format(R))
+    print("H = {0}".format(H))
+    print("error = {0}".format(error))
 
-    #print("---------------------------------")
+    print("---------------------------------")
+    
+    '''
 
     if(error < min_error):
       opt_t = t
@@ -255,12 +263,15 @@ def calculate_transform_error(R, t, positions_1, positions_2):
   cum_error = 0
 
   for i in range(len(positions_1)):
-    pt_1 = np.asmatrix(positions_1[i, :]).T
-    pt_2 = np.asmatrix(positions_2[i, :]).T
+    pt_1 = np.asmatrix(positions_1[i, :])
+    pt_2 = np.asmatrix(positions_2[i, :])
     
-    transformed_pt_2 = R*pt_2 + t
+    pt_1 = pt_1.transpose()
+    pt_2 = pt_2.transpose()
 
-    cum_error += ((transformed_pt_2 - pt_1).T)*(transformed_pt_2 - pt_1)
+    transformed_pt_1 = (R*pt_1) + t
+
+    cum_error += np.linalg.norm((transformed_pt_1 - pt_2))**2
 
   return cum_error
 
@@ -290,7 +301,7 @@ def get_centroid(positions):
 
   centroid_mat = np.asmatrix(summed_points_average)
 
-  return centroid_mat.T
+  return centroid_mat.transpose()
 
 def get_covariance_matrix(positions_1, positions_2, centroid_1, centroid_2):
   H = np.asmatrix(np.empty([3, 3]))
@@ -299,7 +310,21 @@ def get_covariance_matrix(positions_1, positions_2, centroid_1, centroid_2):
     point_1 = np.asmatrix(positions_1[i, :])
     point_2 = np.asmatrix(positions_2[i, :])
 
-    H += (point_1 - centroid_1)*((point_2 - centroid_2).T)
+    point_1 = point_1.transpose()
+    point_2 = point_2.transpose()
+
+    '''
+
+    print("point 1 = {0}".format(point_1))
+    print("point 2 = {0}".format(point_2))
+    print("centroid 1 = {0}".format(centroid_1))
+    print("centroid 2 = {0}".format(centroid_2))
+    
+    '''
+
+    H += (point_1 - centroid_1)*((point_2 - centroid_2).transpose())
+
+    #print(H)
 
   return H
 
