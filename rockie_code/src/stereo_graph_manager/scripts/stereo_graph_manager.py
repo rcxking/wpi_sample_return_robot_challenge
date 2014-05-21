@@ -188,35 +188,92 @@ def add_new_feature_node(_3d_matches):
 
 #Look at github wiki  
 def calculate_3d_transform(matches, positions_1, positions_2):
-  centroid_1 = get_centroid(positions_1)
-  centroid_2 = get_centroid(positions_2)
 
-  t = centroid_2 - centroid_1
+  ransac_iterations = 10
+  ransac_sample_size = 15
 
-  H = get_covariance_matrix(matches, positions_1, positions_2, centroid_1, centroid_2)
+  min_error = float("inf")
 
-  [U, S, V] = np.linalg.svd(H, full_matrices=True)
+  opt_t = np.empty([1, 3])
+  opt_R = np.empty([3, 3])
 
-  R = V*U.T
+  for i in range(ransac_iterations):
+    ransac_matches = rand_sampled_matches(matches, ransac_sample_size)
+    [rand_positions_1, rand_positions_2] = get_rand_positions(ransac_matches, positions_1, positions_2)
 
-  print("R = {0}".format(R))
-  print("t = {0}".format(t))
+    centroid_1 = get_centroid(rand_positions_1)
+    centroid_2 = get_centroid(rand_positions_2)
 
-  return [R.tolist(), t.tolist()]
+    t = centroid_2 - centroid_1
+
+    H = get_covariance_matrix(rand_positions_1, rand_positions_2, centroid_1, centroid_2)
+
+    [U, S, V] = np.linalg.svd(H, full_matrices=True)
+
+    R = V*U.T
+
+    error = calculate_transform_error(R, t, rand_positions_1, rand_positions_2)
+
+    if(error < min_error):
+      opt_t = t
+      opt_R = R
+      min_error = error
+
+  print("R = {0}".format(opt_R))
+  print("t = {0}".format(opt_t))
+
+  return [opt_R.tolist(), opt_t.tolist()]
+
+def calculate_transform_error(R, t, positions_1, positions_2):
+
+  cum_error = 0
+
+  for i in range(len(positions_1)):
+    pt_1 = np.asmatrix(positions_1[i, :]).T
+    pt_2 = np.asmatrix(positions_2[i, :]).T
+    
+    transformed_pt_2 = R*pt_2 + t
+
+    cum_error += ((transformed_pt_2 - pt_1).T)*(transformed_pt_2 - pt_1)
+
+  return cum_error
+
+def rand_sampled_matches(matches, ransac_sample_size):
+
+  random_indexes = random.sample(range(len(matches)), ransac_sample_size)
+  return [matches[i] for i in random_indexes]
+
+def get_rand_positions(ransac_matches, positions_query, positions_train):
+  
+  sampled_train_positions = np.empty([0, 3])
+  sampled_query_positions = np.empty([0, 3])
+
+  for match in ransac_matches:
+    query_pt = positions_query[match.queryIdx]
+    train_pt = positions_train[match.trainIdx]
+
+    sampled_train_positions = np.vstack((sampled_train_positions, train_pt))
+    sampled_query_positions = np.vstack((sampled_query_positions, query_pt))
+
+  return [sampled_query_positions, sampled_train_positions]
 
 def get_centroid(positions):
   num_points = positions.shape[0]
   summed_points = np.sum(positions, axis=0)
-  return np.divide(summed_points, num_points)
+  summed_points_average = np.divide(summed_points, num_points)
 
-def get_covariance_matrix(matches, positions_1, positions_2, centroid_1, centroid_2):
-  H = np.empty([3, 3])
+  centroid_mat = np.asmatrix(summed_points_average)
 
-  for match in matches:
-    point_1 = positions_1[match.queryIdx, :]
-    point_2 = positions_2[match.trainIdx, :]
+  return centroid_mat.T
 
-    H += (point_1 - centroid_1)*(point_2 - centroid_2)
+def get_covariance_matrix(positions_1, positions_2, centroid_1, centroid_2):
+  H = np.asmatrix(np.empty([3, 3]))
+
+  for i in range(len(positions_1)):
+    point_1 = np.asmatrix(positions_1[i, :])
+    point_2 = np.asmatrix(positions_2[i, :])
+
+    H += (point_1 - centroid_1)*((point_2 - centroid_2).T)
 
   return H
 
