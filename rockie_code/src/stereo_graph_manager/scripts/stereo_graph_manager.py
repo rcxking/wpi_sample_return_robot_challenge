@@ -48,6 +48,9 @@ def update_graph_callback(_3d_matches_data_id):
     global pub
     
     _3d_matches = get_3d_matches(_3d_matches_data_id.data)
+    stereo_keypoint_matches = get_matches(_3d_matches.sp_matches_id)
+    stereo_keypoints = get_keypoints(stereo_keypoint_matches.stereo_pair_keypoint_id)
+    stereo_image_pair = get_stereo_image_pair(stereo_keypoints.stereo_image_pair_id)
 
     #create pose node
     #connect pose node to previous pose node
