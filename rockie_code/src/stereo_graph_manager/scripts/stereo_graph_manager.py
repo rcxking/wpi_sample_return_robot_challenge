@@ -32,8 +32,9 @@ stereo_historian_topic = '/my_stereo/stereo_image_saves'
 stereo_feature_identifier_topic = '/my_stereo/stereo_image_keypoint_saves'
 stereo_feature_matcher_topic = '/my_stereo/stereo_image_keypoint_matches'
 stereo_feature_triangulator_topic = '/my_stereo/stereo_image_3D_points'
+stereo_graph_manager_topic = '/my_stereo/stereo_graph_node_updates'
 
-pub = rospy.Publisher(stereo_feature_triangulator_topic, String)
+pub = rospy.Publisher(stereo_graph_manager_topic, String)
 
 #camera distance is 94 mm
 camera_dist = .094
@@ -41,12 +42,12 @@ camera_dist = .094
 #focal length is 579 mm
 f = 579
 
-def update_graph_callback(sp_keypoint_matches_data_id):
+def update_graph_callback(_3d_matches_data_id):
     global session
     global DBSession
     global pub
     
-    sp_km_id = sp_keypoint_matches_data_id.data
+    _3d_matches = get_3d_matches(_3d_matches_data_id.data)
 
     #create pose node
     #connect pose node to previous pose node
@@ -112,6 +113,17 @@ def get_keypoints_pair(spk_id):
     query = session.query(Stereo_Pair_Keypoints)
     stereo_pair_keypoints = query.filter_by(stereo_pair_keypoint_id = int(spk_id)).first()
     return stereo_pair_keypoints
+
+def get_3d_match(_3d_match_id):
+    global session
+    query = session.query(Stereo_3D_Matches)
+    _3d_matches = query.filter_by(sp_3d_matches_id = _3d_match_id)
+    return _3d_matches
+
+def get_all_feature_nodes():
+    global session
+    query = session.query(Graph_Nodes)
+    return query.all()
 
 def triangulate(matches, kpts1, kpts2):
 
@@ -190,7 +202,7 @@ def get_sp_keypoint_matches(sp_keypoint_matches_id):
 
 def update_graph():
     rospy.init_node("stereo_graph_manager")
-    rospy.Subscriber(stereo_graph_manager_topic, String, update_graph_callback)
+    rospy.Subscriber(stereo_feature_triangulator_topic, String, update_graph_callback)
     rospy.spin()
 
 class SerializableKeypoint():

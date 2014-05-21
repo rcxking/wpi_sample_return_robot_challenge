@@ -29,6 +29,24 @@ class Stereo_3D_Matches(Base):
   sp_matches_id = Column(Integer)
   sp_3d_matches_filepath = Column(VARCHAR(6500))
 
+class Graph_Nodes(Base):
+  __tablename__='graph_nodes'
+  node_id = Column(Integer, primary_key=True, autoincrement=True)
+  node_type = Column(VARCHAR(6500))
+  sp_3d_matches_id = Column(VARCHAR(6500))
+  rigid_body_transformation_filepath = Column(VARCHAR(6500))
+  x = Column(Double)
+  y = Column(Double)
+  z = Column(Double)
+
+class Graph_Edges(Base):
+  __tablename__='graph_edges'
+  edge_id = Column(Integer, primary_key=True, autoincrement=True)
+  node_1_id = Column(Integer)
+  node_2_id = Column(Integer)
+  3d_match_matches_filepath = Column(VARCHAR(6500))
+  rigid_body_transform_filepath = Column(VARCHAR(6500))
+
 if __name__ == '__main__':
   engine = create_engine('mysql://root@localhost/rockie')
   Base.metadata.create_all(engine)
