@@ -12,9 +12,9 @@ Base = declarative_base()
 class Image_Frame(Base):
     __tablename__='image_frame'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    is_left = Column(Boolean)
     capture_time = Column(DATETIME)
-    filepath = Column(VARCHAR(65000))
+    left_filepath = Column(VARCHAR(6500))
+    right_filepath = Column(VARCHAR(6500))
 
 if __name__ == '__main__':
     engine = create_engine('mysql://root@localhost/rockie')

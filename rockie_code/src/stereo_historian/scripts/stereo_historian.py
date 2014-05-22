@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import numpy as np
+import math
 import cv2
 import rospy
 from std_msgs.msg import String
@@ -11,8 +12,18 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import os
 
-stereo_ns = 'my_stereo'
+#stereo_ns = 'my_stereo'
+#image_name = 'image_raw'
+
+stereo_ns = 'rrbot/camera1'
 image_name = 'image_raw'
+
+#Max number of seconds allowed for approx sync
+#1/framerate should be the max diff in timestamps for stereo pairs
+max_sync_period = .01
+
+left_timestamp = None
+right_timestamp = None
 
 path_to_img_store = 'images'
 bridge = CvBridge()
@@ -31,33 +42,63 @@ def WriteToFile(img, time, camera):
     cv2.imwrite(img_file_string, img)
     return img_file_string
 
-def WriteToDatabase(filepath, camera, time):
+def WriteToDatabase(left_filepath, right_filepath, time):
     session = DBSession()
 
     new_frame = Image_Frame()
-    new_frame.filepath = filepath
-    new_frame.is_left = True if camera == 'left' else False
-    new_frame.capture_time = datetime.datetime.now()
+    new_frame.left_filepath = left_filepath
+    new_frame.right_filepath = right_filepath
+    new_frame.capture_time = time 
 
     session.add(new_frame)
     session.commit()
     session.close()
 
 def save_image(img, time, camera):
-    img = ConvertToCV2Grayscale(img)
-    filepath = WriteToFile(img, time, camera)
-    WriteToDatabase(filepath, camera, time)
+
+    global left_timestamp
+    global right_timestamp
+    global left_img
+    global right_img
+
+    if left_timestamp == None or right_timestamp == None:
+        return
+
+    total_time_left = left_timestamp.secs + left_timestamp.nsecs*math.pow(10, -9) 
+    total_time_right = right_timestamp.secs + right_timestamp.nsecs*math.pow(10, -9) 
+
+    time_diff_between_stereo_cams = math.fabs(total_time_left - total_time_right)
+
+    if time_diff_between_stereo_cams > max_sync_period:
+        return
+
+    left_img = ConvertToCV2Grayscale(left_img)
+    right_img = ConvertToCV2Grayscale(right_img)
+
+    left_filepath = WriteToFile(left_img, left_timestamp, 'left')
+    right_filepath = WriteToFile(right_img, right_timestamp, 'right')
+
+    WriteToDatabase(left_filepath, right_filepath, datetime.datetime.now())
 
     pub = rospy.Publisher("/{0}/stereo_image_saves".format(stereo_ns), String)
-    pub.publish(filepath)
+    pub.publish(left_filepath)
+    pub.publish(right_filepath)
 
 def left_callback(left_image):
-    currenttime = datetime.datetime.now()
-    save_image(left_image, currenttime, "left")
+    global left_timestamp
+    global left_img
+
+    left_timestamp = left_image.header.stamp #datetime.datetime.now()
+    left_img = left_image
+    save_image(left_image, left_timestamp, "left")
 
 def right_callback(right_image):
-    currenttime = datetime.datetime.now()
-    save_image(right_image, currenttime, "right")
+    global right_timestamp
+    global right_img
+
+    right_timestamp= right_image.header.stamp #datetime.datetime.now()
+    right_img = right_image
+    save_image(right_image, right_timestamp, "right")
 
 def store_stereo_images():
     rospy.init_node("stereo_historian")
@@ -70,5 +111,11 @@ def store_stereo_images():
     
     rospy.spin()
 if __name__ == '__main__':
-    store_stereo_images()
+  try:
+    os.makedirs('images/left')
+    os.makedirs('images/right')
+  except:
+    pass
+
+  store_stereo_images()
 
