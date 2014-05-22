@@ -42,7 +42,6 @@ def ConvertToSerializableKeypoint(kp):
     new_kp.class_id = kp.class_id
 
     return new_kp
-    #return kp
 
 def CreateKeypoints(img):
     kp = sift.detect(img, None)
@@ -56,6 +55,12 @@ def ConvertToSerializableKeypoints(kp):
     return [ConvertToSerializableKeypoint(keypoint) for keypoint in kp]
 
 if __name__ == '__main__':
+    try:
+        os.makedirs('images/left')
+        os.makedirs('images/right')
+    except:
+        pass
+
     sift = cv2.SIFT()
     find_and_store_features()
     #img = cv2.imread('balloons.jpg', 0)
