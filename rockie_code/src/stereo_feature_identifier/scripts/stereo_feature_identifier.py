@@ -14,15 +14,45 @@ from sensor_msgs.msg import Image as ros_image
 from cv_bridge import CvBridge, CvBridgeError
 import datetime
 import cPickle as pickle
+import Image_Frame_Keypoint
 
 stereo_imagepath_base = '/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/'
 
-stereo_historian_topic = '/my_stereo/stereo_image_saves'
-def create_and_store_features_callback(filepath):
-    img = cv2.imread("{0}{1}".format(stereo_imagepath_base, filepath.data), 0)
-    keypoints = CreateKeypoints(img)
-    SaveKeypoints(keypoints, filepath)
+engine = create_engine('mysql://root@localhost/rockie')
+Base.metadata.bind = engine
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
 
+stereo_historian_topic = '/my_stereo/stereo_image_saves'
+stereo_feature_identifier_topic = '/my_stereo/stereo_image_keypoint_saves'
+
+def create_and_store_features_callback(image_frame_data_id):
+    global session
+    
+    image_frame_id = image_frame_data_id.data
+    image_frame = session.query(Image_Frame.id = image_frame_id).one()
+
+    img_left = cv2.imread("{0}{1}".format(stereo_imagepath_base, image_frame.left_filepath), 0)
+    img_right = cv2.imread("{0}{1}".format(stereo_imagepath_base, image_frame.right_filepath), 0)
+
+    left_keypoints = CreateKeypoints(img_left)
+    right_keypoints = CreateKeypoints(img_right)
+    
+    left_img_keypoints_filepath = SaveKeypoints(left_keypoints, 'left')
+    right_img_keypoints_filepath = SaveKeypoints(right_keypoints, 'right')
+
+    image_frame_keypoints = Image_Frame_Keypoints()
+
+    image_frame_keypoints.left_keypoints_filepath
+    image_frame_keypoints.right_keypoints_filepath
+    image_frame_keypoints.image_frame_id = image_frame_id
+
+    session.commit()
+
+    image_frame_keypoints_id = image_frame_keypoints.id
+
+    #publish image_frame_keypoints_id
+    
 def find_and_store_features():
     rospy.init_node("stereo_feature_identifier")
     rospy.Subscriber(stereo_historian_topic, String, create_and_store_features_callback)
@@ -48,6 +78,7 @@ def CreateKeypoints(img):
     return kp
 
 def SaveKeypoints(kp, filepath):
+    
     serializable_kps = ConvertToSerializableKeypoints(kp)
     pickle.dump(serializable_kps, open("{0}.keypoints".format(filepath.data), 'wb'))
 

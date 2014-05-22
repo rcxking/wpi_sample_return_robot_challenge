@@ -12,11 +12,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import os
 
-#stereo_ns = 'my_stereo'
-#image_name = 'image_raw'
-
-stereo_ns = 'rrbot/camera1'
+stereo_ns = 'my_stereo'
 image_name = 'image_raw'
+
+#stereo_ns = 'rrbot/camera1'
+#image_name = 'image_raw'
 
 #Max number of seconds allowed for approx sync
 #1/framerate should be the max diff in timestamps for stereo pairs
@@ -52,7 +52,10 @@ def WriteToDatabase(left_filepath, right_filepath, time):
 
     session.add(new_frame)
     session.commit()
+    id = new_frame.id
     session.close()
+
+    return id
 
 def save_image(img, time, camera):
 
@@ -78,11 +81,12 @@ def save_image(img, time, camera):
     left_filepath = WriteToFile(left_img, left_timestamp, 'left')
     right_filepath = WriteToFile(right_img, right_timestamp, 'right')
 
-    WriteToDatabase(left_filepath, right_filepath, datetime.datetime.now())
+    stereo_pair_db_id = WriteToDatabase(left_filepath, right_filepath, datetime.datetime.now())
 
     pub = rospy.Publisher("/{0}/stereo_image_saves".format(stereo_ns), String)
-    pub.publish(left_filepath)
-    pub.publish(right_filepath)
+    pub.publish(str(stereo_pair_db_id))
+    #pub.publish(left_filepath)
+    #pub.publish(right_filepath)
 
 def left_callback(left_image):
     global left_timestamp
