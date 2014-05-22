@@ -47,6 +47,19 @@ new_connection_threshold = 15
 ransac_sample_size = 7 
 ransac_iterations = 30 
 
+#pillar_1 is feature 1020
+#pillar_2 is feature 1021
+#East is X, North is Y, Z is Z
+pillar_1_location = [60.33, 40.72, 0]
+pillar_2_location = [70.97, 40.23, 0]
+
+#stage column 1 is feature 1002
+#stage column 2 is feature 1003
+#stage column 3 is feature 1004
+stage_column_1_location = [60.88, -29.33, 0]
+stage_column_2_location = [51.12, -16.44, 0]
+stage_column_3_location = [42.43, -23.02, 0]
+
 stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/images/left/".format(os.getenv("HOME"))
 
 def update_graph_callback(_3d_matches_data_id):
@@ -487,6 +500,126 @@ class SerializableKeypoint():
   pass
 
 def create_stage_1_node(path):
+  _3d_points = []
+
+  img = cv2.imread(path)
+  img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+  pillar_1_top = 250
+  pillar_1_bottom = 424
+  pillar_1_left = 67
+  pillar_1_right = 97
+
+  pillar_2_top = 250 
+  pillar_2_bottom = 420
+  pillar_2_left = 663
+  pillar_2_right = 693
+
+  all_kpts, all_descs = sift.detectAndCompute(img_gray, None)
+  descriptor_length = all_descs.shape[1]
+  descriptor_dtype = all_descs.dtype
+
+  _3d_descs = np.empty([0, descriptor_length], dtype=descriptor_dtype)
+  positions = np.empty([0, 3])
+
+  for index, kp in all_kpts:
+    x = kp.pt[0]
+    y = kp.pt[1]
+
+    #pillar_1 check
+    if between(y, pillar_1_bottom, pillar_1_top) and between(x, pillar_1_left, pillar_1_right):
+      coordinates = pillar_1_location
+      desc = all_descs[index, :]
+
+      #set Z to something reasonable?
+      #coordinates[2] = (pillar_1_bottom - y)*pixel_scale
+
+      _3d_descs = np.vstack((_3d_descs, desc))
+      positions = np.vstack((positions, pillar_1_location))
+
+    #pillar_2 check
+    if between(y, pillar_2_bottom, pillar_2_top) and between(x, pillar_2_left, pillar_2_right):
+      coordinates = pillar_2_location 
+      desc = all_descs[index, :]
+
+      #set Z to something reasonable?
+      #coordinates[2] = (pillar_2_bottom - y)*pixel_scale
+
+      _3d_descs = np.vstack((_3d_descs, desc))
+      positions = np.vstack((positions, pillar_1_location))
+  
+  _3d_keypoints = [_3d_descs.tolist(), positions.tolist()]
+    
+  add_new_feature_node(_3d_keypoints)
+
+def create_stage_2_node(path):
+  cv2.imread(path)
+
+def between(arg, num_1, num_2):
+  if (num_1 <= arg <= num_2) or (num_1 >= arg >= num_2):
+    return True
+  else:
+    return False
+
+def create_two_pillars_1_node(path):
+  _3d_points = []
+
+  img = cv2.imread(path)
+  img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+  pillar_1_top = 96
+  pillar_1_bottom = 440
+  pillar_1_left = 114
+  pillar_1_right = 157
+
+  pillar_2_top = 27
+  pillar_2_bottom = 478
+  pillar_2_left = 506
+  pillar_2_right = 586
+
+  all_kpts, all_descs = sift.detectAndCompute(img_gray, None)
+  descriptor_length = all_descs.shape[1]
+  descriptor_dtype = all_descs.dtype
+
+  _3d_descs = np.empty([0, descriptor_length], dtype=descriptor_dtype)
+  positions = np.empty([0, 3])
+
+  for index, kp in all_kpts:
+    x = kp.pt[0]
+    y = kp.pt[1]
+
+    #pillar_1 check
+    if between(y, pillar_1_bottom, pillar_1_top) and between(x, pillar_1_left, pillar_1_right):
+      coordinates = pillar_1_location
+      desc = all_descs[index, :]
+
+      #set Z to something reasonable?
+      #coordinates[2] = (pillar_1_bottom - y)*pixel_scale
+
+      _3d_descs = np.vstack((_3d_descs, desc))
+      positions = np.vstack((positions, pillar_1_location))
+
+    #pillar_2 check
+    if between(y, pillar_2_bottom, pillar_2_top) and between(x, pillar_2_left, pillar_2_right):
+      coordinates = pillar_2_location 
+      desc = all_descs[index, :]
+
+      #set Z to something reasonable?
+      #coordinates[2] = (pillar_2_bottom - y)*pixel_scale
+
+      _3d_descs = np.vstack((_3d_descs, desc))
+      positions = np.vstack((positions, pillar_1_location))
+  
+  _3d_keypoints = [_3d_descs.tolist(), positions.tolist()]
+    
+  add_new_feature_node(_3d_keypoints)
+
+
+
+def create_two_pillars_2_node(path):
+  cv2.imread(path)
+
+def create_stage_1_node(path):
   cv2.imread(path)
 
 def create_wpi_feature_nodes(folder):
@@ -495,6 +628,8 @@ def create_wpi_feature_nodes(folder):
 
   create_two_pillars_1_node(folder + "two_pillars_1.png")
   create_two_pillars_2_node(folder + "two_pillars_2.png")
+  
+
 
   #TODO: create a one pillar node in case we can't match both?
   #create_one_pillar_node(folder + "stage_1.png")
