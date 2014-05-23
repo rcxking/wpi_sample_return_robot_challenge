@@ -7,7 +7,7 @@ from std_msgs.msg import String
 from sensor_msgs.msg import Image as ros_image
 from cv_bridge import CvBridge, CvBridgeError
 import datetime
-from stereo_historian_db import Image_Frame, Base
+from stereo_historian_db import Stereo_Image_Pair, Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import os
@@ -32,6 +32,8 @@ engine = create_engine('mysql://root@localhost/rockie')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 
+pub = rospy.Publisher("/{0}/stereo_image_saves".format(stereo_ns), String)
+
 def ConvertToCV2Grayscale(img):
     cv2_img = bridge.imgmsg_to_cv2(img, "bgr8")
     cv2_img_gray = cv2.cvtColor(cv2_img, cv2.COLOR_BGR2GRAY)
@@ -45,24 +47,24 @@ def WriteToFile(img, time, camera):
 def WriteToDatabase(left_filepath, right_filepath, time):
     session = DBSession()
 
-    new_frame = Image_Frame()
-    new_frame.left_filepath = left_filepath
-    new_frame.right_filepath = right_filepath
-    new_frame.capture_time = time 
+    stereo_pair = Stereo_Image_Pair()
+    stereo_pair.left_filepath = left_filepath
+    stereo_pair.right_filepath = right_filepath
+    stereo_pair.capture_time = time 
 
-    session.add(new_frame)
+    session.add(stereo_pair)
     session.commit()
-    id = new_frame.id
+    id = stereo_pair.id
     session.close()
 
     return id
 
 def save_image(img, time, camera):
-
     global left_timestamp
     global right_timestamp
     global left_img
     global right_img
+    global pub
 
     if left_timestamp == None or right_timestamp == None:
         return
@@ -83,10 +85,7 @@ def save_image(img, time, camera):
 
     stereo_pair_db_id = WriteToDatabase(left_filepath, right_filepath, datetime.datetime.now())
 
-    pub = rospy.Publisher("/{0}/stereo_image_saves".format(stereo_ns), String)
     pub.publish(str(stereo_pair_db_id))
-    #pub.publish(left_filepath)
-    #pub.publish(right_filepath)
 
 def left_callback(left_image):
     global left_timestamp

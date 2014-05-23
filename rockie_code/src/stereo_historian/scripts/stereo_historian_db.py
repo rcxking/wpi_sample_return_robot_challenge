@@ -9,8 +9,8 @@ from sqlalchemy import create_engine
 
 Base = declarative_base()
 
-class Image_Frame(Base):
-    __tablename__='image_frame'
+class Stereo_Image_Pair(Base):
+    __tablename__='stereo_image_pair'
     id = Column(Integer, primary_key=True, autoincrement=True)
     capture_time = Column(DATETIME)
     left_filepath = Column(VARCHAR(6500))
