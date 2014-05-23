@@ -12,10 +12,13 @@ import rospy
 from std_msgs.msg import String
 from sensor_msgs.msg import Image as ros_image
 from cv_bridge import CvBridge, CvBridgeError
+from stereo_feature_identifier_db import Stereo_Pair_Keypoints
+from stereo_historian_db import Stereo_Image_Pair, Base
 import datetime
 import cPickle as pickle
-import Stereo_Image_Pair
-import Stereo_Pair_Keypoints
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
 
 stereo_imagepath_base = '/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/'
 
@@ -36,7 +39,10 @@ def create_and_store_features_callback(stereo_image_pair_data_id):
     global pub
     
     stereo_image_pair_id = stereo_image_pair_data_id.data
-    stereo_image_pair = session.query(Stereo_Image_Pair.id = stereo_image_pair_id).one()
+    query = session.query(Stereo_Image_Pair)
+    stereo_image_pair = query.filter(Stereo_Image_Pair.id == stereo_image_pair_id).first()
+    
+    '''
 
     img_left_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_image_pair.left_filepath)
     img_right_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_image_pair.right_filepath)
@@ -57,10 +63,12 @@ def create_and_store_features_callback(stereo_image_pair_data_id):
     stereo_pair_keypoints.stereo_image_pair_id = stereo_image_pair_id
 
     session.commit()
-
     stereo_pair_keypoints_id = stereo_pair_keypoints.id
     pub.publish(str(stereo_pair_keypoints_id))
-    
+ '''
+
+    pub.publish(stereo_image_pair.id)
+
 def find_and_store_features():
     rospy.init_node("stereo_feature_identifier")
     rospy.Subscriber(stereo_historian_topic, String, create_and_store_features_callback)
