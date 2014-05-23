@@ -12,11 +12,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import os
 
-stereo_ns = 'my_stereo'
-image_name = 'image_raw'
-
-#stereo_ns = 'rrbot/camera1'
+#stereo_ns = 'my_stereo'
 #image_name = 'image_raw'
+
+stereo_ns = 'rrbot/camera1'
+image_name = 'image_raw'
 
 #Max number of seconds allowed for approx sync
 #1/framerate should be the max diff in timestamps for stereo pairs
@@ -32,7 +32,7 @@ engine = create_engine('mysql://root@localhost/rockie')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 
-pub = rospy.Publisher("/{0}/stereo_image_saves".format(stereo_ns), String)
+pub = rospy.Publisher("/my_stereo/stereo_image_saves", String)
 
 def ConvertToCV2Grayscale(img):
     cv2_img = bridge.imgmsg_to_cv2(img, "bgr8")
@@ -54,10 +54,10 @@ def WriteToDatabase(left_filepath, right_filepath, time):
 
     session.add(stereo_pair)
     session.commit()
-    id = stereo_pair.id
+    stereo_image_pair_id = stereo_pair.stereo_image_pair_id
     session.close()
 
-    return id
+    return stereo_image_pair_id
 
 def save_image(img, time, camera):
     global left_timestamp

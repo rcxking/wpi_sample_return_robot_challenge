@@ -11,7 +11,7 @@ Base = declarative_base()
 
 class Stereo_Pair_Keypoints(Base):
   __tablename__='stereo_pair_keypoints'
-  id = Column(Integer, primary_key=True, autoincrement=True)
+  stereo_pair_keypoint_id = Column(Integer, primary_key=True, autoincrement=True)
   stereo_image_pair_id = Column(Integer)
   left_keypoints_filepath = Column(VARCHAR(6500))
   right_keypoints_filepath = Column(VARCHAR(6500))

@@ -11,7 +11,7 @@ Base = declarative_base()
 
 class Stereo_Image_Pair(Base):
     __tablename__='stereo_image_pair'
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    stereo_image_pair_id = Column(Integer, primary_key=True, autoincrement=True)
     capture_time = Column(DATETIME)
     left_filepath = Column(VARCHAR(6500))
     right_filepath = Column(VARCHAR(6500))

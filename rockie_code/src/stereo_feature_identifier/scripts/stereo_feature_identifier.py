@@ -36,20 +36,20 @@ pub = rospy.Publisher(stereo_feature_identifier_topic, String)
 
 def create_and_store_features_callback(stereo_image_pair_data_id):
     global session
+    global DBSession
     global pub
-    
+   
+    session = DBSession()
+
     stereo_image_pair_id = stereo_image_pair_data_id.data
     query = session.query(Stereo_Image_Pair)
-    #stereo_image_pair = query.filter(Stereo_Image_Pair.id == stereo_image_pair_id).first()
-    stereo_image_pair = query.first()
-    
-    '''
+    stereo_image_pair = query.filter_by(stereo_image_pair_id = int(stereo_image_pair_id)).first()
 
     img_left_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_image_pair.left_filepath)
     img_right_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_image_pair.right_filepath)
 
     img_left = cv2.imread(img_left_filepath, 0)
-    img_right = cs2.imread(img_right_filepath, 0)
+    img_right = cv2.imread(img_right_filepath, 0)
 
     left_keypoints = CreateKeypoints(img_left)
     right_keypoints = CreateKeypoints(img_right)
@@ -64,11 +64,10 @@ def create_and_store_features_callback(stereo_image_pair_data_id):
     stereo_pair_keypoints.stereo_image_pair_id = stereo_image_pair_id
 
     session.commit()
-    stereo_pair_keypoints_id = stereo_pair_keypoints.id
-    pub.publish(str(stereo_pair_keypoints_id))
- '''
+    stereo_pair_keypoint_id = stereo_pair_keypoints.stereo_pair_keypoint_id
+    pub.publish(str(stereo_pair_keypoint_id))
 
-    pub.publish(str(stereo_image_pair.id))
+    session.close()
 
 def find_and_store_features():
     rospy.init_node("stereo_feature_identifier")
