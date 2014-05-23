@@ -4,7 +4,7 @@
  * RPI Rock Raiders
  * 5/2/14
  *
- * Last Updated: Bryant Pong: 5/3/14 - 12:28 PM
+ * Last Updated: Bryant Pong: 5/14/14 - 3:24 PM
  */
  
 // AVR Libraries:
@@ -12,9 +12,7 @@
  
 // ROS Libraries
 #include <ros.h>
-#include <std_msgs/Empty.h>
 #include <std_msgs/String.h>
-#include <std_msgs/Float32.h>
 
 // Arduino Libraries
 #include <Servo.h>
@@ -25,11 +23,16 @@
  * Right Encoder: Digital Pin 21 (Interrupt 2)
  */
 
-#define LEFTENCODER 20
-#define RIGHTENCODER 21
+const int LEFTENCODER = 20;
+const int RIGHTENCODER = 21;
 
-#define LEFTMOTOR 52
-#define RIGHTMOTOR 53
+const int LEFTMOTOR = 52;
+const int RIGHTMOTOR = 53;
+
+const int POT = 50;
+const int ENABLE = 45;
+const int INPUT1 = 42;
+const int INPUT2 = 22;
 
 Servo leftMotor, rightMotor;
 
@@ -38,7 +41,7 @@ volatile int leftEncoderTicks = 0;
 volatile int rightEncoderTicks = 0;
 
 // Variables for the PD Velocity control loop:
-double kp = 10.0;
+double kp = 0.1;
 double kd = 0.5;
 
 // Variables to keep track of time elapsed since the PD Loop was last called:
@@ -53,21 +56,17 @@ double angVelocityError = 0.0;
 double deltaLinear = 0.0;
 double deltaAngular = 0.0;
 
-double currentLeftVelocity = 90.0;
-double currentRightVelocity = 90.0;
+double currentLeftVelocity = 91.0;
+double currentRightVelocity = 91.0;
 
 // The ROS NodeHandler for the Arduino.
 ros::NodeHandle nh;
 
-// These are the ROS Publishers for the encoder data.  One channel per encoder.
-std_msgs::String leftEncoderData, rightEncoderData;
-ros::Publisher leftEncoder("left_encoder_data", &leftEncoderData);
-ros::Publisher rightEncoder("right_encoder_data", &rightEncoderData);
-
 // ROS Publisher for debug and error messages:
-std_msgs::String debugMsg, errorMsg;
+std_msgs::String debugMsg;
 ros::Publisher debugChannel("debug_channel", &debugMsg);
-ros::Publisher errorChannel("error_channel", &errorMsg);
+
+/*** INTERRUPTS ***/
 
 // Interrupts for encoders:
 void leftencoderinterrupt() {
@@ -78,12 +77,23 @@ void rightencoderinterrupt() {
   rightEncoderTicks++;
 } // End interrupt rightencoderinterrupt()
 
+/*** END SECTION INTERRUPTS **/
+
 // PD Loop function to control motor velocity:
-void pdVelLoop(double targetLinVel, double targetAngVel) {
+void pdVelLoop(double targetLinVel, double targetAngVel, int power) {
   
   // Let's get the number of left and right encoder ticks:
   double lEncTicks = leftEncoderTicks;
   double rEncTicks = rightEncoderTicks;
+  
+  // Flag to determine if we're going forward or backward:
+  boolean forward = true;
+  if(targetLinVel < 0) {
+    forward = false;
+  } // End if
+  
+  Serial.println("forward is: ");
+  Serial.println(forward);
   
   Serial.println("lEncTicks");
   Serial.println(lEncTicks);
@@ -110,7 +120,12 @@ void pdVelLoop(double targetLinVel, double targetAngVel) {
   double rightWheelLinearVel = rightWheelAngularVel * 0.1525;
   
   // Now we can calculate the current linear and angular velocity of Rockie:
-  double currentLinVel = (leftWheelLinearVel + rightWheelLinearVel) / 2.0;
+  double currentLinVel;
+  if(forward) {
+    currentLinVel = (leftWheelLinearVel + rightWheelLinearVel) / 2.0;
+  } else {
+    currentLinVel = -1 * ((leftWheelLinearVel + rightWheelLinearVel) / 2.0);
+  } // End else
   double currentAngVel = (rightWheelAngularVel - leftWheelAngularVel) / (0.5 * 0.71);
   
   Serial.println("currentLinVel: ");
@@ -123,20 +138,19 @@ void pdVelLoop(double targetLinVel, double targetAngVel) {
   linVelocityError = currentLinVel - targetLinVel;
   angVelocityError = currentAngVel - targetAngVel;
   
-  
-  
   // Next we have to calculate the change in linear and angular velocity:
   deltaLinear = kp * linVelocityError;
   deltaAngular = kp * angVelocityError;
   
   Serial.println("deltaLinear: ");
   Serial.println(deltaLinear);
-  
+  /*
   Serial.println("deltaAngular: ");
   Serial.println(deltaAngular);
+  */
   
-  currentLeftVelocity = 90 + 90 * deltaLinear;
-  currentRightVelocity = 90 + 90 * deltaLinear;
+  currentLeftVelocity = currentLeftVelocity + double(deltaLinear);
+  currentRightVelocity = currentLeftVelocity + double(deltaLinear);
     
   if(currentLeftVelocity > 120) {
     currentLeftVelocity = 120.0;
@@ -156,8 +170,9 @@ void pdVelLoop(double targetLinVel, double targetAngVel) {
   Serial.println("currentRightVelocity: ");
   Serial.println(currentRightVelocity);
   
+  
   leftMotor.write(currentLeftVelocity);
-  rightMotor.write(currentLeftVelocity);
+  rightMotor.write(currentRightVelocity);
   
 #ifdef DEBUG
   currentLeftVelocity + 90 * deltaAngular;
@@ -169,19 +184,13 @@ void pdVelLoop(double targetLinVel, double targetAngVel) {
   
   // Now set our start time to be our end time:
   timeStart = timeStop;
- 
 } // End PD Loop
 
 /*
  *  Callback for the ROS Publisher node.
  */
 void messageCb(const std_msgs::String& nextCommand) {
- 
-  // Log the next message received in the DEBUG channel:
-  char buffer[1024] = "[DEBUG CHANNEL] Received msg: ";
-  strcat(buffer, nextCommand.data);
-  debugMsg.data = buffer;
-  debugChannel.publish(&debugMsg);
+  
   
   // Store the actual command from the nextCommand message:
   char nextCommandMsg[1024];
@@ -199,45 +208,35 @@ void messageCb(const std_msgs::String& nextCommand) {
     commandWords[i] = temp;
   } // End for
   
-  debugMsg.data = "Now tokenizing command: ";
-  debugChannel.publish(&debugMsg);
-  
   nextWord = strtok(nextCommandMsg, " ");
   while(nextWord != NULL) { 
     // Add the next command to the commandWords array:
-    //strcpy(temp, nextWord);
     strcpy(commandWords[nextWordPos], nextWord);
     nextWordPos++;
-    //free(temp);
-    
-    sprintf(debugMsg.data, "%d", nextWordPos);
-    debugChannel.publish(&debugMsg);
-    
-    //debugMsg.data = "Now getting next word";
-    //debugChannel.publish(&debugMsg);
     nextWord = strtok(NULL, " ");
   } // End while
   
   // Now that we got the commands, let's go and parse them!
   debugMsg.data = "Now parsing commands";
   debugChannel.publish(&debugMsg);
-  if( (strcmp("GET", commandWords[0]) == 0)) {
-    debugMsg.data = "This is a GET message!";
+  if( (strcmp("SET", commandWords[0]) == 0)) {
+    
+    /*
+     * We're expecting the SET command to have the following syntax:
+     *
+     * SET <new left motor velocity> <new right motor velocity>
+     */
+     
+    currentLeftVelocity = atof(commandWords[1]);
+    currentRightVelocity = atof(commandWords[2]);
+    
+    debugMsg.data = "SET ";
+    strcat(debugMsg.data, commandWords[1]);
+    strcat(debugMsg.data, " ");
+    strcat(debugMsg.data, commandWords[2]);
     debugChannel.publish(&debugMsg);
-      
-    // We're expecting that the command word after the "GET" is "leftEncoderData" or "rightEncoderData":
-    if(strcmp("leftEncoderData", commandWords[1]) == 0) {
-      char lev[10] = "";
-      leftEncoderData.data = "";
-      sprintf(leftEncoderData.data, "%d", leftEncoderTicks);
-      leftEncoder.publish(&leftEncoderData);
-    } else {
-      char lev[10] = "";
-      rightEncoderData.data = "";
-      sprintf(rightEncoderData.data, "%d", rightEncoderTicks);
-      rightEncoder.publish(&rightEncoderData);
-    } // End else
-  } else if(strcmp("MOTOR", commandWords[0]) == 0) {
+    
+  } else if(strcmp("DRIVE", commandWords[0]) == 0) {
     
     /*
      * This is a MOTOR message asking for a change in velocity to the motors:
@@ -248,12 +247,19 @@ void messageCb(const std_msgs::String& nextCommand) {
     
     char linVel[10];
     char angVel[10];
+    char duration[10];
     
     strcpy(linVel, commandWords[1]);
     strcpy(angVel, commandWords[2]);
+    strcpy(duration, commandWords[3]);
     
     double linVelo = atof(linVel);
     double angVelo = atof(angVel);
+    double dur = atof(duration);
+    
+    leftMotor.write(currentLeftVelocity);
+    rightMotor.write(currentRightVelocity);
+    delay(dur);
     
     debugMsg.data = "linVel: ";
     debugChannel.publish(&debugMsg);
@@ -264,8 +270,39 @@ void messageCb(const std_msgs::String& nextCommand) {
     strcpy(debugMsg.data, angVel);
     debugChannel.publish(&debugMsg);
     
-    pdVelLoop(linVelo, angVelo);
+  } else if(strcmp("GO", commandWords[0]) == 0) {
+    debugMsg.data = "This is a GO Command";
+    debugChannel.publish(&debugMsg);  
     
+    // Go forward 5 meters at 0.3333 m/sec:
+    leftMotor.write(50);
+    rightMotor.write(60);
+    delay(5000);
+    
+    leftMotor.write(90);
+    rightMotor.write(90);
+    
+    /*
+    digitalWrite(INPUT1, LOW);
+    digitalWrite(INPUT2, HIGH);
+    delay(10);
+    */
+    
+    leftMotor.write(40);
+    rightMotor.write(30);
+    delay(15000);
+    
+    // Stop the motors after we're done:
+    leftMotor.write(90);
+    rightMotor.write(90);    
+  } else if(strcmp("UP", commandWords[0]) == 0) {
+    digitalWrite(INPUT1, HIGH);
+    digitalWrite(INPUT2, LOW);
+    delay(2000);
+  } else if(strcmp("DOWN", commandWords[0]) == 0) {
+    digitalWrite(INPUT1, LOW);
+    digitalWrite(INPUT2, HIGH);
+    delay(2000);
   }
   debugMsg.data = "Done parsing command";
   debugChannel.publish(&debugMsg);
@@ -282,8 +319,6 @@ void messageCb(const std_msgs::String& nextCommand) {
 
 ros::Subscriber<std_msgs::String> sub("arduino", &messageCb);
 
-
-
 void setup() {
   //Serial.begin(9600);
   
@@ -298,38 +333,74 @@ void setup() {
   attachInterrupt(3, leftencoderinterrupt, CHANGE);
   attachInterrupt(2, rightencoderinterrupt, CHANGE);
     
-   /*
   // Start the ROS Node:
   nh.initNode();
-  
-  // Advertise the ROS Publishers for the Encoder Data:
-  nh.advertise(leftEncoder);
-  nh.advertise(rightEncoder);
-  
+ 
   // Advertise the debug and error channels:
   nh.advertise(debugChannel);
-  nh.advertise(errorChannel);
   
   nh.subscribe(sub);
-  */
-   
+  
   leftMotor.attach(LEFTMOTOR);
   rightMotor.attach(RIGHTMOTOR);
   
   leftMotor.write(90);
   rightMotor.write(90);
   
-  Serial.begin(9600);
+  //Serial.begin(9600);
+  
+  pinMode(POT, INPUT);
+  pinMode(ENABLE, OUTPUT);
+  pinMode(INPUT1, OUTPUT);
+  pinMode(INPUT2, OUTPUT);
+  
+  digitalWrite(ENABLE, HIGH);
+  
+  /*
+  // Go forward 5 meters at 0.3333 m/sec:
+    leftMotor.write(130);
+    rightMotor.write(120);
+    delay(15000);
+    
+    for(int i = 130; i > 90; i -= 10) {
+      leftMotor.write(i);
+      rightMotor.write(i);
+      delay(250);
+    }
+    
+    leftMotor.write(90);
+    rightMotor.write(90);
+    delay(1000);
+    
+    
+    digitalWrite(INPUT1, LOW);
+    digitalWrite(INPUT2, HIGH);
+    delay(16000);
+    
+    digitalWrite(INPUT1, HIGH);
+    digitalWrite(INPUT2, LOW);
+    delay(16000);
+    
+    leftMotor.write(60);
+    rightMotor.write(50);
+    delay(15000);
+    
+    for(int i = 50; i < 90; i+=10) {
+      leftMotor.write(i);
+      rightMotor.write(i);
+      delay(250);
+    }
+    
+    // Stop the motors after we're done:
+    leftMotor.write(90);
+    rightMotor.write(90);   
+    delay(1000);*/
+    
+    
 }
 
 void loop() {
- 
-  //leftMotor.write(120);
-  //rightMotor.write(120);
   
   // Have the ROS Nodes update themselves:
   nh.spinOnce();
-  
-  pdVelLoop(0.5, 0);
-  delay(1000);
 }
