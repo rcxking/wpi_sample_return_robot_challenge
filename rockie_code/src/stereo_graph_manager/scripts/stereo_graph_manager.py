@@ -524,18 +524,8 @@ def get_3d_points(_3d_matches_id):
 def get_3d_point_matches(descs1, descs2):
   global flann
 
-  #[descs1, positions1] = _3d_points_1
-  #[descs2, positions2] = _3d_points_2
-
   matches = flann.match(descs1, descs2)
 
-  #get descriptor matches for 3d_matches_1 and 3d_matches_2
-  #match
-  #return matches
-
-  #[descs1, kpts1] = get_3d_points_keypoints(_3d_matches_1)
-  #[descs2, kpts2] = get_3d_points_keypoints(_3d_matches_2)
-  
   return matches
 
 def get_all_feature_nodes(is_wpi_feature_node):

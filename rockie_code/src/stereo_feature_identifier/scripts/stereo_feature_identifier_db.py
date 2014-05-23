@@ -43,7 +43,7 @@ class Graph_Edges(Base):
   node_1_id = Column(Integer)
   node_2_id = Column(Integer)
   _3d_matches_filepath = Column(VARCHAR(6500))
-  rigid_body_transform_filepath = Column(VARCHAR(6500))
+  opt_transform_1_to_2_filepath = Column(VARCHAR(6500))
 
 if __name__ == '__main__':
   engine = create_engine('mysql://root@localhost/rockie')

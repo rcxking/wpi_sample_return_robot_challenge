@@ -92,9 +92,11 @@ def set_node_global_transform(node, position):
 
   session.commit()
 
-def percolate_global_transform(edge, node):
+def percolate_global_transform(edge, node, traversed_edges):
   #node1 has x,y,z. if node2 doesn't have x,y,z, apply transform in edge to get node2 x,y,z.
   #find edges connected to node2. for each connected node, recurse
+  
+  traversed_edges.append(edge)
 
   connected_node = get_connected_node(node, edge)
 
@@ -113,14 +115,17 @@ def percolate_global_transform(edge, node):
     edges = get_node_edges(connected_node)
 
   for edge in edges:
-    percolate_global_transform(edge, connected_node)
+    if edge not in traversed_edges:
+      percolate_global_transform(edge, connected_node, traversed_edges)
 
 def get_global_transform():
   wpi_node = get_wpi_node()
   wpi_node_edges = get_node_edges(wpi_node)
 
+  traversed_edges = []
+
   for edge in wpi_node_edges:
-    percolate_global_transform(wpi_node, edge)
+    percolate_global_transform(wpi_node, edge, traversed_edges)
 
   current_pose_node = get_latest_pose_node_with_global_transform()
 
