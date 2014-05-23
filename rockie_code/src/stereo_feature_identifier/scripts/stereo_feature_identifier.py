@@ -40,7 +40,8 @@ def create_and_store_features_callback(stereo_image_pair_data_id):
     
     stereo_image_pair_id = stereo_image_pair_data_id.data
     query = session.query(Stereo_Image_Pair)
-    stereo_image_pair = query.filter(Stereo_Image_Pair.id == stereo_image_pair_id).first()
+    #stereo_image_pair = query.filter(Stereo_Image_Pair.id == stereo_image_pair_id).first()
+    stereo_image_pair = query.first()
     
     '''
 
@@ -67,7 +68,7 @@ def create_and_store_features_callback(stereo_image_pair_data_id):
     pub.publish(str(stereo_pair_keypoints_id))
  '''
 
-    pub.publish(stereo_image_pair.id)
+    pub.publish(str(stereo_image_pair.id))
 
 def find_and_store_features():
     rospy.init_node("stereo_feature_identifier")
