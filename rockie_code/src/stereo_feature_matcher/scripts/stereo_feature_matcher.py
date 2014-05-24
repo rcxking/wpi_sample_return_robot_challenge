@@ -12,17 +12,14 @@ import rospy
 from std_msgs.msg import String
 from sensor_msgs.msg import Image as ros_image
 from cv_bridge import CvBridge, CvBridgeError
-from stereo_feature_identifier_db import Stereo_Pair_Keypoints
+from stereo_feature_identifier_db import Stereo_Pair_Keypoints, Stereo_Pair_Keypoint_Matches
 from stereo_historian_db import Stereo_Image_Pair, Base
 import datetime
 import cPickle as pickle
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-
 stereo_imagepath_base = '/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/'
-
-sift = cv2.SIFT()
 
 engine = create_engine('mysql://root@localhost/rockie')
 Base.metadata.bind = engine
@@ -35,40 +32,73 @@ stereo_feature_matcher_topic = '/my_stereo/stereo_image_keypoint_matches'
 
 pub = rospy.Publisher(stereo_feature_matcher_topic, String)
 
+# FLANN parameters
+FLANN_INDEX_KDTREE = 0
+index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
+search_params = dict(checks=50)   # or pass empty dictionary
+
+flann = cv2.FlannBasedMatcher(index_params,search_params)
+
 def match_and_store_features_callback(stereo_pair_keypoint_data_id):
     global session
     global DBSession
     global pub
    
+    #get left keypoints filepath
+    #get right keypoints filepath
+
+    #perform matches and return matches
+    #save matches
+    #publish
+
     session = DBSession()
 
-    stereo_pair_keypoint_id = stereo_pair_keypoint_data_id.data
-    query = session.query(Stereo_Pair_Keypoint)
-    stereo_pair_keypoint = query.filter_by(stereo_pair_keypoint_id = int(stereo_pair_keypoint_id)).first()
+    stereo_pair_keypoint = get_stereo_pair_keypoint(stereo_pair_keypoint_data_id.data)
 
-    img_left_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_pair_keypoint.left_filepath)
-    img_right_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_pair_keypoint.right_filepath)
+    left_keypoints = get_left_keypoints(stereo_pair_keypoint)
+    right_keypoints = get_right_keypoints(stereo_pair_keypoint)
 
-    img_left = cv2.imread(img_left_filepath, 0)
-    img_right = cv2.imread(img_right_filepath, 0)
+    matches = get_matches(left_keypoints, right_keypoints)
 
-    left_keypoints = CreateKeypoints(img_left)
-    right_keypoints = CreateKeypoints(img_right)
-    
-    left_img_keypoints_filepath = SaveKeypoints(left_keypoints, img_left_filepath)
-    right_img_keypoints_filepath = SaveKeypoints(right_keypoints, img_right_filepath)
-
-    stereo_pair_keypoints = Stereo_Pair_Keypoints()
-
-    stereo_pair_keypoints.left_keypoints_filepath
-    stereo_pair_keypoints.right_keypoints_filepath
-    stereo_pair_keypoints.stereo_pair_keypoint_id = stereo_pair_keypoint_id
-
-    session.commit()
-    stereo_pair_keypoint_id = stereo_pair_keypoints.stereo_pair_keypoint_id
-    pub.publish(str(stereo_pair_keypoint_id))
+    sp_matches = Stereo_Pair_Keypoint_Matches()
+    sp_matches.sp_keypoint_id_1 = left_keypoints.stereo_pair_keypoint_id
+    sp_matches.sp_keypoint_id_2 = right_keypoints.stereo_pair_keypoint_id
+    sp_matches.sp_keypoint_matches_filepath = save_keypoint_matches(matches)
+   
+    #session.commit()
+    #stereo_pair_keypoint_matches_id = sp_matches.sp_keypoint_matches_id
+    #pub.publish(str(stereo_pair_keypoint_matches_id))
 
     session.close()
+
+def save_keypoint_matches(matches):
+   pass 
+
+def get_matches(kp1, kp2):
+    global flann
+
+    kpts1 = kp1[0]
+    des1 = kp1[1]
+
+    kpts2 = kp2[0]
+    des2 = kp2[1]
+
+    matches = flann.knnMatch(des1,des2,k=2)
+    return matches
+
+def get_left_keypoint(stereo_pair_keypoint):
+    left_keypoints_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_pair_keypoint.left_filepath)
+    return pickle.load(open(left_keypoints_filepath, "rb")
+
+def get_right_keypoint(stereo_pair_keypoint):
+    right_keypoints_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_pair_keypoint.right_filepath)
+    return pickle.load(open(right_keypoints_filepath, "rb")
+
+
+def get_stereo_pair_keypoint(stereo_pair_keypoint_id):
+    global session
+    query = session.query(Stereo_Pair_Keypoint)
+    stereo_pair_keypoint = query.filter_by(stereo_pair_keypoint_id = int(stereo_pair_keypoint_id)).first()
 
 def match_features():
     rospy.init_node("stereo_feature_matcher")

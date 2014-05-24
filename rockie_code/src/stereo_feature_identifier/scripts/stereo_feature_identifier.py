@@ -19,8 +19,8 @@ import cPickle as pickle
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-
-stereo_imagepath_base = '/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/'
+#stereo_imagepath_base = '/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/'
+stereo_imagepath_base = '/home/rockie/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/'
 
 sift = cv2.SIFT()
 
@@ -51,18 +51,19 @@ def create_and_store_features_callback(stereo_image_pair_data_id):
     img_left = cv2.imread(img_left_filepath, 0)
     img_right = cv2.imread(img_right_filepath, 0)
 
-    left_keypoints = CreateKeypoints(img_left)
-    right_keypoints = CreateKeypoints(img_right)
+    left_keypoints = CreateKeypointsAndDescriptors(img_left)
+    right_keypoints = CreateKeypointsAndDescriptors(img_right)
     
     left_img_keypoints_filepath = SaveKeypoints(left_keypoints, img_left_filepath)
     right_img_keypoints_filepath = SaveKeypoints(right_keypoints, img_right_filepath)
 
     stereo_pair_keypoints = Stereo_Pair_Keypoints()
 
-    stereo_pair_keypoints.left_keypoints_filepath
-    stereo_pair_keypoints.right_keypoints_filepath
+    stereo_pair_keypoints.left_keypoints_filepath = left_img_keypoints_filepath
+    stereo_pair_keypoints.right_keypoints_filepath = right_img_keypoints_filepath
     stereo_pair_keypoints.stereo_image_pair_id = stereo_image_pair_id
 
+    session.add(stereo_pair_keypoints)
     session.commit()
     stereo_pair_keypoint_id = stereo_pair_keypoints.stereo_pair_keypoint_id
     pub.publish(str(stereo_pair_keypoint_id))
@@ -75,12 +76,11 @@ def find_and_store_features():
     rospy.spin()
 
 class SerializableKeypoint():
-    pass
+    pt = []
 
 def ConvertToSerializableKeypoint(kp):
     new_kp = SerializableKeypoint()
-    new_kp.x = kp.pt[0]
-    new_kp.y = kp.pt[1]
+    new_kp.pt = kp.pt 
     new_kp.size = kp.size
     new_kp.angle = kp.angle
     new_kp.response = kp.response
@@ -89,10 +89,10 @@ def ConvertToSerializableKeypoint(kp):
 
     return new_kp
 
-def CreateKeypoints(img):
+def CreateKeypointsAndDescriptors(img):
     global sift
-    kp = sift.detect(img, None)
-    return kp
+    kp, desc = sift.detectAndCompute(img, None)
+    return [kp, desc]
 
 def SaveKeypoints(kp, image_filepath):
     serializable_kps = ConvertToSerializableKeypoints(kp)
@@ -100,8 +100,8 @@ def SaveKeypoints(kp, image_filepath):
     pickle.dump(serializable_kps, open(filepath, 'wb'))
     return filepath
 
-def ConvertToSerializableKeypoints(kp):
-    return [ConvertToSerializableKeypoint(keypoint) for keypoint in kp]
+def ConvertToSerializableKeypoints(kps_descs):
+    return [ConvertToSerializableKeypoint(keypoint) for keypoint in kps_descs[0]]
 
 if __name__ == '__main__':
     try:

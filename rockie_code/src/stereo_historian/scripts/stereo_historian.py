@@ -12,11 +12,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import os
 
-#stereo_ns = 'my_stereo'
-#image_name = 'image_raw'
-
-stereo_ns = 'rrbot/camera1'
+stereo_ns = 'my_stereo'
 image_name = 'image_raw'
+
+#stereo_ns = 'rrbot/camera1'
+#image_name = 'image_raw'
 
 #Max number of seconds allowed for approx sync
 #1/framerate should be the max diff in timestamps for stereo pairs
