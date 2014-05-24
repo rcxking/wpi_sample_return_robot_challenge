@@ -26,9 +26,32 @@ def initialize():
                 if pint_count == 24:
                     print("DEAD")
 
+
+### Approach object zone
+def Approach_Object_Zone():
+    print("Traveling toward object zone...")
+
+### Discover object
+def Discover_Object():
+    print("Looking for object in zone")
+
+### Aquire_Object()
+def Aquire_Object():
+    print("Aquiring object...")
+
+### Return to platform
+def Return_To_Platform(): 
+    print("The parcel is in the bag, returning home...")
+
 ### Primary operation 
 def operate():
     print("Starting primary operations...")
+    #Platform_Egress()
+    Approach_Object_Zone() 
+    Discover_Object()
+    Aquire_Object()
+    Return_To_Platform()
+
 
 ### Main function
 def main():
@@ -38,3 +61,21 @@ def main():
 ### 
 if __name__=="__main__":
     main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
