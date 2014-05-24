@@ -19,7 +19,8 @@ import cPickle as pickle
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-stereo_imagepath_base = '/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/'
+#stereo_imagepath_base = '/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/'
+stereo_imagepath_base = '/home/rockie/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/'
 
 engine = create_engine('mysql://root@localhost/rockie')
 Base.metadata.bind = engine
@@ -72,28 +73,28 @@ def match_and_store_features_callback(stereo_pair_keypoint_data_id):
     session.close()
 
 def save_keypoint_matches(matches):
-   pass 
+    pass 
 
-def get_matches(kp1, kp2):
+def get_matches(kps_descs_1, kps_descs_2):
     global flann
 
-    kpts1 = kp1[0]
-    des1 = kp1[1]
+    kpts1 = kps_descs_1[0]
+    des1 = kps_descs_1[1]
 
-    kpts2 = kp2[0]
-    des2 = kp2[1]
+    kpts2 = kps_descs_2[0]
+    des2 = kps_descs_2[1]
 
-    matches = flann.knnMatch(des1,des2,k=2)
+    #matches = flann.knnMatch(des1,des2,k=2)
+    matches = flann.knnMatch(des1, des2, 3)
     return matches
 
 def get_left_keypoint(stereo_pair_keypoint):
     left_keypoints_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_pair_keypoint.left_filepath)
-    return pickle.load(open(left_keypoints_filepath, "rb")
+    return pickle.load(open(left_keypoints_filepath, "rb"))
 
 def get_right_keypoint(stereo_pair_keypoint):
     right_keypoints_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_pair_keypoint.right_filepath)
-    return pickle.load(open(right_keypoints_filepath, "rb")
-
+    return pickle.load(open(right_keypoints_filepath, "rb"))
 
 def get_stereo_pair_keypoint(stereo_pair_keypoint_id):
     global session
@@ -120,11 +121,6 @@ def ConvertToSerializableKeypoint(kp):
 
     return new_kp
 
-def CreateKeypoints(img):
-    global sift
-    kp = sift.detect(img, None)
-    return kp
-
 def SaveKeypoints(kp, image_filepath):
     serializable_kps = ConvertToSerializableKeypoints(kp)
     filepath = "{0}.keypoints".format(image_filepath)
@@ -135,4 +131,10 @@ def ConvertToSerializableKeypoints(kp):
     return [ConvertToSerializableKeypoint(keypoint) for keypoint in kp]
 
 if __name__ == '__main__':
-    match_features()
+    #match_features()
+    left_filename = "1400960287109987484.jpg"
+    right_filename = "1400960287265802411.jpg"
+    left_kpts = pickle.load(open("{0}images/left/{1}.keypoints".format(stereo_imagepath_base, left_filename), "rb"))
+    right_kpts = pickle.load(open("{0}images/right/{1}.keypoints".format(stereo_imagepath_base, right_filename), "rb"))
+
+    get_matches(left_kpts, right_kpts) 
