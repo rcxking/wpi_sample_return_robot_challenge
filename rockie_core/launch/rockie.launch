@@ -1,0 +1,13 @@
+
+<launch>
+
+    <!-- Cameras -->
+    <node pkg="camera_capture" name="cam_capture" type="camera_capture_node"/>
+    <node pkg="camera_display" name="cam_display" type="camera_display_node"/>
+
+    <!-- Executive node -->
+    <node pkg="rockie_executive" name="rockie_exec" type="rockie_executive_node.py" output="screen"/>
+
+</launch>  
+
+
