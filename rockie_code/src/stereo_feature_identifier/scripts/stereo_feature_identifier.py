@@ -101,7 +101,8 @@ def SaveKeypoints(kp, image_filepath):
     return filepath
 
 def ConvertToSerializableKeypoints(kps_descs):
-    return [ConvertToSerializableKeypoint(keypoint) for keypoint in kps_descs[0]]
+    kps_desc[0] = [ConvertToSerializableKeypoint(keypoint) for keypoint in kps_descs[0]]
+    return kps_descs
 
 if __name__ == '__main__':
     try:
