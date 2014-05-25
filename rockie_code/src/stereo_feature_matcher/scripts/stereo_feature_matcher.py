@@ -73,8 +73,9 @@ def match_and_store_features_callback(stereo_pair_keypoint_data_id):
     session.close()
 
 def save_keypoint_matches(matches):
+    
     filepath = "{0}.keypoint_matches".format(stereo_imagepath_base)
-    pickle.dump(serializable_kps, open(filepath, 'wb'))
+    pickle.dump(matches, open(filepath, 'wb'))
     return filepath
 
 def get_matches(kps_descs_1, kps_descs_2):
