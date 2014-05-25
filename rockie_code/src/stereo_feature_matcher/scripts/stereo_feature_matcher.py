@@ -73,7 +73,9 @@ def match_and_store_features_callback(stereo_pair_keypoint_data_id):
     session.close()
 
 def save_keypoint_matches(matches):
-    pass 
+    filepath = "{0}.keypoint_matches".format(stereo_imagepath_base)
+    pickle.dump(serializable_kps, open(filepath, 'wb'))
+    return filepath
 
 def get_matches(kps_descs_1, kps_descs_2):
     global flann
@@ -84,13 +86,17 @@ def get_matches(kps_descs_1, kps_descs_2):
     kpts2 = kps_descs_2[0]
     des2 = kps_descs_2[1]
 
-    #matches = flann.knnMatch(des1,des2,k=2)
     matches = flann.knnMatch(des1, des2, 3)
     return matches
 
+def recreate_keypoints(kp):
+    return cv2.KeyPoint(x=kp.pt[0], y=kp.pt[1], _size=kp.size, _angle=kp.angle, _response=kp.response, _octave=kp.octave, _class_id=kp.class_id) 
+
 def get_left_keypoint(stereo_pair_keypoint):
-    left_keypoints_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_pair_keypoint.left_filepath)
-    return pickle.load(open(left_keypoints_filepath, "rb"))
+    left_keypoints_filepathn = "{0}{1}".format(stereo_imagepath_base, stereo_pair_keypoint.left_filepath)
+    kpts_descs = pickle.load(open(left_keypoints_filepath, "rb"))
+    kpts_descs[0] = [recreate_keypoints(kp) for kp in kpts_descs[0]]
+    return kpts_descs
 
 def get_right_keypoint(stereo_pair_keypoint):
     right_keypoints_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_pair_keypoint.right_filepath)
@@ -109,32 +115,22 @@ def match_features():
 class SerializableKeypoint():
     pass
 
-def ConvertToSerializableKeypoint(kp):
-    new_kp = SerializableKeypoint()
-    new_kp.x = kp.pt[0]
-    new_kp.y = kp.pt[1]
-    new_kp.size = kp.size
-    new_kp.angle = kp.angle
-    new_kp.response = kp.response
-    new_kp.octave = kp.octave
-    new_kp.class_id = kp.class_id
-
-    return new_kp
-
-def SaveKeypoints(kp, image_filepath):
-    serializable_kps = ConvertToSerializableKeypoints(kp)
-    filepath = "{0}.keypoints".format(image_filepath)
-    pickle.dump(serializable_kps, open(filepath, 'wb'))
-    return filepath
-
-def ConvertToSerializableKeypoints(kp):
-    return [ConvertToSerializableKeypoint(keypoint) for keypoint in kp]
-
 if __name__ == '__main__':
     #match_features()
-    left_filename = "1400960287109987484.jpg"
-    right_filename = "1400960287265802411.jpg"
+    left_filename = "1401033910962120122.jpg"
+    right_filename = "1401033910962120122.jpg"
     left_kpts = pickle.load(open("{0}images/left/{1}.keypoints".format(stereo_imagepath_base, left_filename), "rb"))
     right_kpts = pickle.load(open("{0}images/right/{1}.keypoints".format(stereo_imagepath_base, right_filename), "rb"))
 
-    get_matches(left_kpts, right_kpts) 
+    matches = get_matches(left_kpts, right_kpts) 
+
+    gray = cv2.imread("{0}images/left/{1}".format(stereo_imagepath_base, left_filename), 0)
+    kpts = left_kpts[0]
+
+    kpts = [recreate_keypoints(kp) for kp in kpts]
+    
+    img=cv2.drawKeypoints(gray,kpts)
+    cv2.imshow('img', img)
+    cv2.waitKey(0)
+
+
