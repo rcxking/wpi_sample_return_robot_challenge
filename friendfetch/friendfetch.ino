@@ -4,18 +4,22 @@
  * RPI Rock Raiders
  * 5/2/14
  *
- * Last Updated: Bryant Pong: 5/14/14 - 3:24 PM
+ * Last Updated: Bryant Pong: 5/26/14 - 4:52 PM
  */
  
 // AVR Libraries:
-#include <avr/interrupt.h>
+#include <avr/interrupt.h> // Support for interrupts
  
 // ROS Libraries
-#include <ros.h>
-#include <std_msgs/String.h>
+#include <ros.h> // Core ROS Arduino Library
+#include <std_msgs/String.h> // ROS std_msgs - String message
+#include <nav_msgs/Odometry.h> // ROS nav_msgs - Odometry message
+#include <geometry_msgs/Twist.h> // ROS geometry_msgs - Twist message
 
 // Arduino Libraries
 #include <Servo.h>
+
+/** CONSTANTS AND DEFINITIONS **/
 
 /*
  * Pin Mappings:
@@ -34,6 +38,7 @@ const int ENABLE = 45;
 const int INPUT1 = 42;
 const int INPUT2 = 22;
 
+// Servo motor objects
 Servo leftMotor, rightMotor;
 
 // Volatile variables to hold the number of encoder ticks:
@@ -41,8 +46,8 @@ volatile int leftEncoderTicks = 0;
 volatile int rightEncoderTicks = 0;
 
 // Variables for the PD Velocity control loop:
-double kp = 0.1;
-double kd = 0.5;
+const double kp = 0.1;
+const double kd = 0.5;
 
 // Variables to keep track of time elapsed since the PD Loop was last called:
 unsigned long timeStart = 0;
@@ -59,14 +64,32 @@ double deltaAngular = 0.0;
 double currentLeftVelocity = 91.0;
 double currentRightVelocity = 91.0;
 
-// The ROS NodeHandler for the Arduino.
+// The ROS Arduino Node object
 ros::NodeHandle nh;
 
 // ROS Publisher for debug and error messages:
 std_msgs::String debugMsg;
 ros::Publisher debugChannel("debug_channel", &debugMsg);
 
-/*** INTERRUPTS ***/
+/** END SECTION CONSTANTS AND DEFINITIONS **/
+
+/** FUNCTION AND INTERRUPT PROTOTYPES **/
+
+// Interrupt Prototypes:
+void leftencoderinterrupt();
+void rightencoderinterrupt();
+
+// PI Motor Control Loop prototype:
+void piVelLoop(const double targetLinVel, const double targetAngVel, const int power);
+
+// Callback Prototypes:
+
+// This callback is for receiving velocity commands from the 
+void messageCb(const std_msgs::String& nextCommand);
+
+/** END SECTION FUNCTION AND INTERRUPT PROTOTYPES **/
+
+/** INTERRUPTS **/
 
 // Interrupts for encoders:
 void leftencoderinterrupt() {
@@ -77,7 +100,7 @@ void rightencoderinterrupt() {
   rightEncoderTicks++;
 } // End interrupt rightencoderinterrupt()
 
-/*** END SECTION INTERRUPTS **/
+/** END SECTION INTERRUPTS **/
 
 // PD Loop function to control motor velocity:
 void pdVelLoop(double targetLinVel, double targetAngVel, int power) {
@@ -230,11 +253,13 @@ void messageCb(const std_msgs::String& nextCommand) {
     currentLeftVelocity = atof(commandWords[1]);
     currentRightVelocity = atof(commandWords[2]);
     
+    /*
     debugMsg.data = "SET ";
     strcat(debugMsg.data, commandWords[1]);
     strcat(debugMsg.data, " ");
     strcat(debugMsg.data, commandWords[2]);
     debugChannel.publish(&debugMsg);
+    */
     
   } else if(strcmp("DRIVE", commandWords[0]) == 0) {
     
