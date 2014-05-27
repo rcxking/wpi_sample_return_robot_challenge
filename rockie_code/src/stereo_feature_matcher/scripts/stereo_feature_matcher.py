@@ -20,7 +20,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 #stereo_imagepath_base = '/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/'
-stereo_imagepath_base = '/home/rockie/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/'
+stereo_imagepath_base = '/home/rockie/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts'
 
 engine = create_engine('mysql://root@localhost/rockie')
 Base.metadata.bind = engine
@@ -60,21 +60,40 @@ def match_and_store_features_callback(stereo_pair_keypoint_data_id):
     right_keypoints = get_right_keypoints(stereo_pair_keypoint)
 
     matches = get_matches(left_keypoints, right_keypoints)
+    matches_filepath = save_keypoint_matches(matches, stereo_pair_keypoint)
 
     sp_matches = Stereo_Pair_Keypoint_Matches()
-    sp_matches.sp_keypoint_id_1 = left_keypoints.stereo_pair_keypoint_id
-    sp_matches.sp_keypoint_id_2 = right_keypoints.stereo_pair_keypoint_id
-    sp_matches.sp_keypoint_matches_filepath = save_keypoint_matches(matches)
+    sp_matches.stereo_pair_keypoint_id = stereo_pair_keypoint_data_id.data
+    sp_matches.sp_keypoint_matches_filepath = matches_filepath
    
-    #session.commit()
-    #stereo_pair_keypoint_matches_id = sp_matches.sp_keypoint_matches_id
-    #pub.publish(str(stereo_pair_keypoint_matches_id))
+    session.add(sp_matches)
+    session.commit()
+
+    stereo_pair_keypoint_matches_id = sp_matches.sp_keypoint_matches_id
+    
+    pub.publish(str(stereo_pair_keypoint_matches_id))
 
     session.close()
 
-def save_keypoint_matches(matches):
+class py_match:
+  pass
+
+def convert_match(match):
+    new_match = py_match()
+    new_match.distance = match.distance
+    new_match.imgIdx = match.imgIdx
+    new_match.queryIdx = match.queryIdx
+    new_match.trainIdx = match.trainIdx
+
+    return new_match
+
+def save_keypoint_matches(matches, stereo_pair_keypoint):
     
-    filepath = "{0}.keypoint_matches".format(stereo_imagepath_base)
+    #filepath = "{0}{1}.keypoint_matches".format(stereo_imagepath_base, stereo_pair_keypoint.left_keypoints_filepath)
+    filepath = "{0}.keypoint_matches".format(stereo_pair_keypoint.left_keypoints_filepath)
+    
+    matches = [convert_match(match) for match in matches]
+
     pickle.dump(matches, open(filepath, 'wb'))
     return filepath
 
@@ -87,26 +106,33 @@ def get_matches(kps_descs_1, kps_descs_2):
     kpts2 = kps_descs_2[0]
     des2 = kps_descs_2[1]
 
-    matches = flann.knnMatch(des1, des2, 3)
+    #matches = flann.knnMatch(des1, des2, 3)
+    matches = flann.match(des1, des2)
+
     return matches
 
 def recreate_keypoints(kp):
     return cv2.KeyPoint(x=kp.pt[0], y=kp.pt[1], _size=kp.size, _angle=kp.angle, _response=kp.response, _octave=kp.octave, _class_id=kp.class_id) 
 
-def get_left_keypoint(stereo_pair_keypoint):
-    left_keypoints_filepathn = "{0}{1}".format(stereo_imagepath_base, stereo_pair_keypoint.left_filepath)
+def get_left_keypoints(stereo_pair_keypoint):
+    #left_keypoints_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_pair_keypoint.left_keypoints_filepath)
+    left_keypoints_filepath = "{0}".format(stereo_pair_keypoint.left_keypoints_filepath)
+
     kpts_descs = pickle.load(open(left_keypoints_filepath, "rb"))
     kpts_descs[0] = [recreate_keypoints(kp) for kp in kpts_descs[0]]
     return kpts_descs
 
-def get_right_keypoint(stereo_pair_keypoint):
-    right_keypoints_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_pair_keypoint.right_filepath)
+def get_right_keypoints(stereo_pair_keypoint):
+    #right_keypoints_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_pair_keypoint.right_keypoints_filepath)
+    right_keypoints_filepath = "{0}".format(stereo_pair_keypoint.right_keypoints_filepath)
+
     return pickle.load(open(right_keypoints_filepath, "rb"))
 
 def get_stereo_pair_keypoint(stereo_pair_keypoint_id):
     global session
-    query = session.query(Stereo_Pair_Keypoint)
+    query = session.query(Stereo_Pair_Keypoints)
     stereo_pair_keypoint = query.filter_by(stereo_pair_keypoint_id = int(stereo_pair_keypoint_id)).first()
+    return stereo_pair_keypoint
 
 def match_features():
     rospy.init_node("stereo_feature_matcher")
@@ -117,7 +143,9 @@ class SerializableKeypoint():
     pass
 
 if __name__ == '__main__':
-    #match_features()
+    match_features()
+
+    '''
     left_filename = "1401033910962120122.jpg"
     right_filename = "1401033910962120122.jpg"
     left_kpts = pickle.load(open("{0}images/left/{1}.keypoints".format(stereo_imagepath_base, left_filename), "rb"))
@@ -133,5 +161,5 @@ if __name__ == '__main__':
     img=cv2.drawKeypoints(gray,kpts)
     cv2.imshow('img', img)
     cv2.waitKey(0)
-
+    '''
 

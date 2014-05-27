@@ -32,6 +32,11 @@ engine = create_engine('mysql://root@localhost/rockie')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 
+#Capture every nth frame
+rate = 10
+left_iteration = 0
+right_iteration = 0
+
 pub = rospy.Publisher("/my_stereo/stereo_image_saves", String)
 
 def ConvertToCV2Grayscale(img):
@@ -90,16 +95,30 @@ def save_image(img, time, camera):
 def left_callback(left_image):
     global left_timestamp
     global left_img
+    global left_iteration
+    global rate
 
-    left_timestamp = left_image.header.stamp #datetime.datetime.now()
+    left_iteration += 1
+  
+    if left_iteration % rate != 0:
+        return
+
+    left_timestamp = left_image.header.stamp 
     left_img = left_image
     save_image(left_image, left_timestamp, "left")
 
 def right_callback(right_image):
     global right_timestamp
     global right_img
+    global right_iteration
+    global rate
 
-    right_timestamp= right_image.header.stamp #datetime.datetime.now()
+    right_iteration += 1
+
+    if right_iteration % rate != 0:
+        return
+
+    right_timestamp= right_image.header.stamp
     right_img = right_image
     save_image(right_image, right_timestamp, "right")
 

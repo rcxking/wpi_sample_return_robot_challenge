@@ -19,8 +19,7 @@ class Stereo_Pair_Keypoints(Base):
 class Stereo_Pair_Keypoint_Matches(Base):
   __tablename__='stereo_pair_keypoint_matches'
   sp_keypoint_matches_id = Column(Integer, primary_key=True, autoincrement=True)
-  sp_keypoint_id_1 = Column(Integer)
-  sp_keypoint_id_2 = Column(Integer)
+  stereo_pair_keypoint_id = Column(Integer)
   sp_keypoint_matches_filepath = Column(VARCHAR(6500))
 
 if __name__ == '__main__':
