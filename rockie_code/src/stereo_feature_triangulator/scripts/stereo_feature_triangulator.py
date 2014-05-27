@@ -40,38 +40,26 @@ search_params = dict(checks=50)   # or pass empty dictionary
 
 flann = cv2.FlannBasedMatcher(index_params,search_params)
 
-def match_and_store_features_callback(stereo_pair_keypoint_data_id):
+def triangulate_matches_callback(stereo_pair_keypoint_data_id):
     global session
     global DBSession
     global pub
    
-    #get left keypoints filepath
-    #get right keypoints filepath
-
-    #perform matches and return matches
-    #save matches
-    #publish
-
     session = DBSession()
 
-    stereo_pair_keypoint = get_stereo_pair_keypoint(stereo_pair_keypoint_data_id.data)
-
-    left_keypoints = get_left_keypoints(stereo_pair_keypoint)
-    right_keypoints = get_right_keypoints(stereo_pair_keypoint)
-
-    matches = get_matches(left_keypoints, right_keypoints)
-    matches_filepath = save_keypoint_matches(matches, stereo_pair_keypoint)
-
-    sp_matches = Stereo_Pair_Keypoint_Matches()
-    sp_matches.stereo_pair_keypoint_id = stereo_pair_keypoint_data_id.data
-    sp_matches.sp_keypoint_matches_filepath = matches_filepath
-   
-    session.add(sp_matches)
-    session.commit()
-
-    stereo_pair_keypoint_matches_id = sp_matches.sp_keypoint_matches_id
+    #get matches
+    #get left and right keypoints
+    #triangulate matches based on focal length and baseline
+    #create 3D point data for each keypoint
+    #store to file and db
     
-    pub.publish(str(stereo_pair_keypoint_matches_id))
+    matches = get_matches()
+    left_keypoints = get_left_keypoints()
+    right_keypoints = get_right_keypoints()
+
+    3d_points = triangulate(matches, left_keypoints, right_keypoints)
+  
+    store_3d_points()
 
     session.close()
 
@@ -134,16 +122,16 @@ def get_stereo_pair_keypoint(stereo_pair_keypoint_id):
     stereo_pair_keypoint = query.filter_by(stereo_pair_keypoint_id = int(stereo_pair_keypoint_id)).first()
     return stereo_pair_keypoint
 
-def match_features():
-    rospy.init_node("stereo_feature_matcher")
-    rospy.Subscriber(stereo_feature_identifier_topic, String, match_and_store_features_callback)
+def triangulate_matches():
+    rospy.init_node("stereo_feature_match_triangulator")
+    rospy.Subscriber(stereo_feature_matcher_topic, String, triangulate_matches_callback)
     rospy.spin()
 
 class SerializableKeypoint():
     pass
 
 if __name__ == '__main__':
-    match_features()
+    triangulate_matches()
 
     '''
     left_filename = "1401033910962120122.jpg"
