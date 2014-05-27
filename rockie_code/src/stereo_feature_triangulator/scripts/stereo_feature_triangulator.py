@@ -40,6 +40,12 @@ search_params = dict(checks=50)   # or pass empty dictionary
 
 flann = cv2.FlannBasedMatcher(index_params,search_params)
 
+#camera distance is 94 mm
+camera_dist = .094
+
+#focal length is 579 mm
+camera_focal_length = 579
+
 def triangulate_matches_callback(stereo_pair_keypoint_data_id):
     global session
     global DBSession
@@ -57,14 +63,28 @@ def triangulate_matches_callback(stereo_pair_keypoint_data_id):
     left_keypoints = get_left_keypoints()
     right_keypoints = get_right_keypoints()
 
-    3d_points = triangulate(matches, left_keypoints, right_keypoints)
+    _3d_points = triangulate(matches, left_keypoints, right_keypoints)
   
     store_3d_points()
 
     session.close()
 
+def triangulate(match, kpts1, kpts2):
+
+    query_pt = kpts1[match.queryIdx]
+    train_pt = kpts2[match.trainIdx]
+
+    disparity = query_pt.pt[0] - train_pt.pt[0]
+
+    Z = (camera_focal_length*camera_dist)/disparity
+
+    return Z
+
+def store_3d_points():
+    pass
+
 class py_match:
-  pass
+    pass
 
 def convert_match(match):
     new_match = py_match()
@@ -130,23 +150,62 @@ class SerializableKeypoint():
     pass
 
 if __name__ == '__main__':
-    triangulate_matches()
+    #triangulate_matches()
 
-    '''
-    left_filename = "1401033910962120122.jpg"
-    right_filename = "1401033910962120122.jpg"
-    left_kpts = pickle.load(open("{0}images/left/{1}.keypoints".format(stereo_imagepath_base, left_filename), "rb"))
-    right_kpts = pickle.load(open("{0}images/right/{1}.keypoints".format(stereo_imagepath_base, right_filename), "rb"))
+    #get cam0
+    #get cam1
 
-    matches = get_matches(left_kpts, right_kpts) 
+    #get img1
+    #get img2
 
-    gray = cv2.imread("{0}images/left/{1}".format(stereo_imagepath_base, left_filename), 0)
-    kpts = left_kpts[0]
+    #get kpts1
+    #get kpts2
 
-    kpts = [recreate_keypoints(kp) for kp in kpts]
-    
-    img=cv2.drawKeypoints(gray,kpts)
-    cv2.imshow('img', img)
-    cv2.waitKey(0)
-    '''
+    #get matches
+
+    #triangulate matches
+
+    #display on imgs
+
+    cam0 = cv2.VideoCapture(0)
+    cam1 = cv2.VideoCapture(1)
+
+    cam0.set(3, 640)
+    cam0.set(4, 360)
+    cam0.set(cv2.cv.CV_CAP_PROP_FOURCC, cv2.cv.CV_FOURCC('Y', 'U', 'Y', 'V'))
+
+    cam1.set(3, 640)
+    cam1.set(4, 360)
+    cam1.set(cv2.cv.CV_CAP_PROP_FOURCC, cv2.cv.CV_FOURCC('Y', 'U', 'Y', 'V'))
+
+    while True:
+
+        ret1, img1 = cam0.read()
+        ret2, img2 = cam1.read()
+
+        #gray1 = cv2.imread('box.png',0)          # queryImage
+        #gray2 = cv2.imread('box_in_scene.png',0) # trainImage
+
+        gray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
+        gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
+
+        sift = cv2.SIFT()
+
+        kpts1, descs1  = sift.detectAndCompute(gray1, None)
+        kpts2, descs2  = sift.detectAndCompute(gray2, None)
+
+        matches = flann.match(descs1, descs2)
+
+        for match in matches:
+            z = triangulate(match, kpts1, kpts2)
+            pt = kpts1[match.queryIdx].pt
+            
+            cv2.circle(gray1, (int(pt[0]), int(pt[1])), 3, (255, 255, 255), 1) 
+
+            if z > 0:
+                cv2.circle(gray1, (int(pt[0]), int(pt[1])), int(z), (0, 0, 255), 1) 
+
+        cv2.imshow('img', gray1)
+        cv2.waitKey(1000)
+            
 
