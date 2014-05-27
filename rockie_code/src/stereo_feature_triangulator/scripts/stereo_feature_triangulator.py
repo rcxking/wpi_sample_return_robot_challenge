@@ -194,6 +194,25 @@ if __name__ == '__main__':
         kpts1, descs1  = sift.detectAndCompute(gray1, None)
         kpts2, descs2  = sift.detectAndCompute(gray2, None)
 
+        filtered_kpts1 = []
+        filtered_descs1 = []
+
+        filtered_kpts2 = []
+        filtered_descs2 = []
+
+        for index, desc in descs1.iteritems():
+            if kpts1[index].response > 100:
+                filtered_kpts1.add(kpts1[index])
+                filtered_descs1.add(desc)
+
+        for index, desc in descs2.iteritems():
+            if kpts2[index].response > 100:
+                filtered_kpts2.add(kpts2[index])
+                filtered_descs2.add(desc)
+
+        descs1 = filtered_descs1
+        descs2 = filtered_descs2
+
         matches = flann.match(descs1, descs2)
 
         for match in matches:
