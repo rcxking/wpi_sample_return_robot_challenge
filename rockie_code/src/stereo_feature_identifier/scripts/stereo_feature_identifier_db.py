@@ -21,6 +21,7 @@ class Stereo_Pair_Keypoint_Matches(Base):
   sp_keypoint_matches_id = Column(Integer, primary_key=True, autoincrement=True)
   stereo_pair_keypoint_id = Column(Integer)
   sp_keypoint_matches_filepath = Column(VARCHAR(6500))
+  sp_matches_3d_points_filepath = Column(VARCHAR(6500))
 
 if __name__ == '__main__':
   engine = create_engine('mysql://root@localhost/rockie')
