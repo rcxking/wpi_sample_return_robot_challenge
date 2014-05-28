@@ -9,6 +9,7 @@ import numpy as np
 import cv2
 import math
 import cv
+import os
 import rospy
 from std_msgs.msg import String
 from sensor_msgs.msg import Image as ros_image
@@ -21,8 +22,7 @@ from sqlalchemy import create_engine
 import random
 from sqlalchemy.orm import sessionmaker
 
-#stereo_imagepath_base = '/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/'
-stereo_imagepath_base = '/home/rockie/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts'
+stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts".format(os.getenv("HOME"))
 
 engine = create_engine('mysql://root@localhost/rockie')
 Base.metadata.bind = engine
@@ -81,8 +81,6 @@ def drawMatches(gray1, kpts1, gray2, kpts2, matches):
             cv2.circle(vis, pt2, 5, (int(z), int(z), int(z)), -1)
             cv2.circle(vis, pt1, 5, (int(z), int(z), int(z)), -1)
 
-        
-
     cv2.imshow('img', vis)
 
     cv2.waitKey(100)
@@ -94,7 +92,8 @@ def triangulate_matches_callback(stereo_pair_keypoint_data_id):
    
     session = DBSession()
     
-    session
+    sp_keypoint_matches = get_sp_keypoint_matches(stereo_pair_keypoint_data_id.data)
+    matches = pickle.load(open(sp_keypoint_matches.sp_keypoint_matches_filepath, "rb"))
 
     #get matches
     #get left and right keypoints
@@ -102,28 +101,43 @@ def triangulate_matches_callback(stereo_pair_keypoint_data_id):
     #create 3D point data for each keypoint
     #store to file and db
     
-    left_keypoints = get_left_keypoints()
-    right_keypoints = get_right_keypoints()
+    stereo_pair_keypoints = get_keypoints_pair(sp_keypoint_matches.stereo_pair_keypoint_id)
 
-    matches = get_matches(left_keypoints, right_keypoints)
+    left_keypoints = get_left_keypoints(stereo_pair_keypoints)
+    right_keypoints = get_right_keypoints(stereo_pair_keypoints)
 
-    _3d_points = triangulate(matches, left_keypoints, right_keypoints)
+    _3d_points = triangulate(matches, left_keypoints[0], right_keypoints[0])
   
     #store_3d_points()
 
     session.close()
 
-def triangulate(match, kpts1, kpts2):
+def get_keypoints_pair(spk_id):
+    global session
+    query = session.query(Stereo_Pair_Keypoints)
+    stereo_pair_keypoints = query.filter_by(stereo_pair_keypoint_id = int(spk_id)).first()
+    return stereo_pair_keypoints
 
-    query_pt = kpts1[match.queryIdx]
-    train_pt = kpts2[match.trainIdx]
+def triangulate(matches, kpts1, kpts2):
 
-    disparity = math.fabs(query_pt.pt[0] - train_pt.pt[0])
+    _3d_points = []
 
-    Z = (camera_focal_length*camera_dist)/disparity
-    #Z = 100/disparity
+    for match in matches:    
 
-    return Z
+        query_pt = kpts1[match.queryIdx]
+        train_pt = kpts2[match.trainIdx]
+
+        #should check against epipolar line        
+        if(math.fabs(query_pt.pt[1] - train_pt.pt[1]) > 10):
+            continue
+
+        disparity = math.fabs(query_pt.pt[0] - train_pt.pt[0])
+
+        Z = (camera_focal_length*camera_dist)/disparity
+
+        _3d_points.append(Z)
+
+    return _3d_points
 
 def store_3d_points():
     pass
@@ -149,24 +163,10 @@ def save_keypoint_matches(matches, stereo_pair_keypoint):
     pickle.dump(matches, open(filepath, 'wb'))
     return filepath
 
-def get_matches(kps_descs_1, kps_descs_2):
-    global flann
-
-    kpts1 = kps_descs_1[0]
-    des1 = kps_descs_1[1]
-
-    kpts2 = kps_descs_2[0]
-    des2 = kps_descs_2[1]
-
-    matches = flann.match(des1, des2)
-
-    return matches
-
 def recreate_keypoints(kp):
     return cv2.KeyPoint(x=kp.pt[0], y=kp.pt[1], _size=kp.size, _angle=kp.angle, _response=kp.response, _octave=kp.octave, _class_id=kp.class_id) 
 
 def get_left_keypoints(stereo_pair_keypoint):
-    #left_keypoints_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_pair_keypoint.left_keypoints_filepath)
     left_keypoints_filepath = "{0}".format(stereo_pair_keypoint.left_keypoints_filepath)
 
     kpts_descs = pickle.load(open(left_keypoints_filepath, "rb"))
@@ -174,16 +174,16 @@ def get_left_keypoints(stereo_pair_keypoint):
     return kpts_descs
 
 def get_right_keypoints(stereo_pair_keypoint):
-    #right_keypoints_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_pair_keypoint.right_keypoints_filepath)
     right_keypoints_filepath = "{0}".format(stereo_pair_keypoint.right_keypoints_filepath)
 
     return pickle.load(open(right_keypoints_filepath, "rb"))
 
-def get_stereo_pair_keypoint(stereo_pair_keypoint_matches_id):
+def get_sp_keypoint_matches(sp_keypoint_matches_id):
     global session
     query = session.query(Stereo_Pair_Keypoint_Matches)
-    stereo_pair_keypoint_matches = query.filter_by(stereo_pair_keypoint_id = int(stereo_pair_keypoint_id)).first()
-    return stereo_pair_keypoint
+    sp_keypoint_matches = query.filter_by(sp_keypoint_matches_id = int(sp_keypoint_matches_id)).first()
+    return sp_keypoint_matches
+    #return pickle.load(open(sp_keypoint_matches.sp_keypoint_matches_filepath, "rb"))
 
 def triangulate_matches():
     rospy.init_node("stereo_feature_match_triangulator")

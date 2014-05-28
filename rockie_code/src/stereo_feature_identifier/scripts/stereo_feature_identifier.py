@@ -22,8 +22,6 @@ from sqlalchemy.orm import sessionmaker
 
 stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/".format(os.getenv("HOME"))
 
-print(stereo_imagepath_base)
-
 sift = cv2.SIFT()
 
 engine = create_engine('mysql://root@localhost/rockie')
@@ -47,8 +45,11 @@ def create_and_store_features_callback(stereo_image_pair_data_id):
     query = session.query(Stereo_Image_Pair)
     stereo_image_pair = query.filter_by(stereo_image_pair_id = int(stereo_image_pair_id)).first()
 
-    img_left_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_image_pair.left_filepath)
-    img_right_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_image_pair.right_filepath)
+    #img_left_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_image_pair.left_filepath)
+    #img_right_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_image_pair.right_filepath)
+
+    img_left_filepath = stereo_image_pair.left_filepath
+    img_right_filepath = stereo_image_pair.right_filepath
 
     img_left = cv2.imread(img_left_filepath, 0)
     img_right = cv2.imread(img_right_filepath, 0)

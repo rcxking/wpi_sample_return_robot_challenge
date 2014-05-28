@@ -15,6 +15,8 @@ import os
 stereo_ns = 'my_stereo'
 image_name = 'image_raw'
 
+stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/".format(os.getenv("HOME"))
+
 #stereo_ns = 'rrbot/camera1'
 ##image_name = 'image_raw'
 
@@ -25,7 +27,7 @@ max_sync_period = .01
 left_timestamp = None
 right_timestamp = None
 
-path_to_img_store = 'images'
+path_to_img_store = "{0}images".format(stereo_imagepath_base)
 bridge = CvBridge()
 
 engine = create_engine('mysql://root@localhost/rockie')
@@ -134,8 +136,8 @@ def store_stereo_images():
     rospy.spin()
 if __name__ == '__main__':
   try:
-    os.makedirs('images/left')
-    os.makedirs('images/right')
+    os.makedirs("{0}images/left".format(stereo_imagepath_base))
+    os.makedirs("{0}images/right".format(stereo_imagepath_base))
   except:
     pass
 

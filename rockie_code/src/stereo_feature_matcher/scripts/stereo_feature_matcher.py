@@ -89,7 +89,6 @@ def convert_match(match):
 
 def save_keypoint_matches(matches, stereo_pair_keypoint):
     
-    #filepath = "{0}{1}.keypoint_matches".format(stereo_imagepath_base, stereo_pair_keypoint.left_keypoints_filepath)
     filepath = "{0}.keypoint_matches".format(stereo_pair_keypoint.left_keypoints_filepath)
     
     matches = [convert_match(match) for match in matches]
