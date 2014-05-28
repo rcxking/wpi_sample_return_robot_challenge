@@ -6,7 +6,7 @@
 # RPI Rock Raiders
 # 5/12/14
 #
-# Last Updated: Bryant Pong: 5/13/14 - 5:12 PM
+# Last Updated: Bryant Pong: 5/27/14 - 3:35 PM
 
 # ROS Libraries:
 import rospy
@@ -42,9 +42,6 @@ def random_commands():
 		twistMsg = Twist(linearVel, angularVel)		 
 		pub.publish(twistMsg)
 		r.sleep()
-
-		
-
 
 if __name__ == '__main__':
 	try:
