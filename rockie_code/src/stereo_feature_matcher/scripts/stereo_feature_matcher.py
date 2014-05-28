@@ -8,6 +8,7 @@ database
 import numpy as np
 import cv2
 import cv
+import os
 import rospy
 from std_msgs.msg import String
 from sensor_msgs.msg import Image as ros_image
@@ -19,8 +20,7 @@ import cPickle as pickle
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-stereo_imagepath_base = '/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/'
-#stereo_imagepath_base = '/home/rockie/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts'
+stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts".format(os.getenv("HOME"))
 
 engine = create_engine('mysql://root@localhost/rockie')
 Base.metadata.bind = engine

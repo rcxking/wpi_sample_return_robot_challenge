@@ -8,18 +8,24 @@
     <param name="fps" value="1" />
   </node>
 
+  <!--SLAM nodes-->
+  <node name="stereo_historian" pkg="stereo_historian" type="stereo_historian.py" />
+  <node name="stereo_feature_identifier" pkg="stereo_feature_identifier" type="stereo_feature_identifier.py" />
+  <node name="stereo_feature_matcher" pkg="stereo_feature_matcher" type="stereo_feature_matcher.py" />
+  <node name="stereo_feature_triangulator" pkg="stereo_feature_triangulator" type="stereo_feature_triangulator.py" />
+
   <!--stereo image processing, produces disparity image, point cloud data from stereo images-->
-  <node name="stereo_image_proc" pkg="stereo_image_proc" type="stereo_image_proc" ns="my_stereo" />
+  <!--node name="stereo_image_proc" pkg="stereo_image_proc" type="stereo_image_proc" ns="my_stereo" /-->
 
   <!--map server, serves and saves 2D occupancy grid map for motion planning, navigation, search-->
-  <node name="map_server" pkg="map_server" type="map_server" args="wpi_map.yaml" />
+  <!--node name="map_server" pkg="map_server" type="map_server" args="wpi_map.yaml" /-->
 
   <!--obstacle detection node, identifies obstacles from disparity image and writes to map_server-->
-  <node name="obstacle_detection" pkg="obstacle_detection" type="obstacle_detection" />
+  <!--node name="obstacle_detection" pkg="obstacle_detection" type="obstacle_detection" /-->
 
   <!--wpi feature finder, finds wpi features to triangulate a transform from RGBDSLAM frame to the
         global wpi frame-->
-  <node name="wpi_feature_finder" type="wpi_feature_finder" pkg="wpi_feature_finder" />
+  <!--node name="wpi_feature_finder" type="wpi_feature_finder" pkg="wpi_feature_finder" /-->
 
   <!--executive state-machine node-->
   <!--obstacle detection node-->

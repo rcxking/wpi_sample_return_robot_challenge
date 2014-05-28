@@ -7,6 +7,7 @@ database
 '''
 import numpy as np
 import cv2
+import os
 import cv
 import rospy
 from std_msgs.msg import String
@@ -19,8 +20,9 @@ import cPickle as pickle
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-stereo_imagepath_base = '/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/'
-#stereo_imagepath_base = '/home/rockie/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/'
+stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/".format(os.getenv("HOME"))
+
+print(stereo_imagepath_base)
 
 sift = cv2.SIFT()
 
