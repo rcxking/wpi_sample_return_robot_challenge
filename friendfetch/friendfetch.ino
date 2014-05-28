@@ -4,7 +4,7 @@
  * RPI Rock Raiders
  * 5/2/14
  *
- * Last Updated: Bryant Pong: 5/26/14 - 4:52 PM
+ * Last Updated: Bryant Pong: 5/27/14 - 3:34 PM
  */
  
 // AVR Libraries:
@@ -38,6 +38,9 @@ const int ENABLE = 45;
 const int INPUT1 = 42;
 const int INPUT2 = 22;
 
+// Amount of time (in milliseconds) to raise/lower the scoop:
+const int SCOOPTIME = 15000;
+
 // Servo motor objects
 Servo leftMotor, rightMotor;
 
@@ -64,46 +67,101 @@ double deltaAngular = 0.0;
 double currentLeftVelocity = 91.0;
 double currentRightVelocity = 91.0;
 
-// The ROS Arduino Node object
-ros::NodeHandle nh;
-
-// ROS Publisher for debug and error messages:
-std_msgs::String debugMsg;
-ros::Publisher debugChannel("debug_channel", &debugMsg);
-
 /** END SECTION CONSTANTS AND DEFINITIONS **/
 
 /** FUNCTION AND INTERRUPT PROTOTYPES **/
 
 // Interrupt Prototypes:
-void leftencoderinterrupt();
-void rightencoderinterrupt();
+void leftencoderinterrupt(); 
+void rightencoderinterrupt(); 
 
-// PI Motor Control Loop prototype:
-void piVelLoop(const double targetLinVel, const double targetAngVel, const int power);
+// PI Motor Control Loop prototype: - IN PROGRESS
+void piVelLoop(const double targetLinVel, const double targetAngVel);
 
-// Callback Prototypes:
+// Functions for the Linear Actuator Scoop + Lifter:
+void raiseScoop(void);
+void lowerScoop(void);
 
-// This callback is for receiving velocity commands from the 
-void messageCb(const std_msgs::String& nextCommand);
+void extendScoop(void);
+void retractScoop(void);
+
+// Callbacks:
+
+// This callback is for receiving velocity commands from the SLAM navigation node:
+void velCommandCallback(const geometry_msgs::Twist& nextVelocityCommand);
 
 /** END SECTION FUNCTION AND INTERRUPT PROTOTYPES **/
+
+/** ROS Objects **/
+// ros::Subscriber<std_msgs::String> sub("arduino", &messageCb);
+
+// The ROS Arduino Node object
+ros::NodeHandle nh;
+
+/*
+ * ROS Publishers:
+ *
+ * debugChannel - This publisher publishes debug messages.
+ * 
+ */
+
+// ROS Messages to Publish:
+std_msgs::String debugMsg;
+nav_msgs::Odometry odomData;
+
+ros::Publisher debugChannel("debug_channel", &debugMsg);
+ros::Publisher odometryData("odometry_data", &odomData);
+
+
+/*
+ * ROS Subscribers:
+ *
+ * velCommandSubscriber - This subscriber listens for geometry_msgs/Twist messages 
+ *                        from the cmd_vel topic to drive Rockie.
+ */
+ros::Subscriber<geometry_msgs::Twist> velCommandSubscriber("cmd_vel", &velCommandCallback);
+/** END SECTION ROS OBJECTS **/
 
 /** INTERRUPTS **/
 
 // Interrupts for encoders:
-void leftencoderinterrupt() {
+void leftencoderinterrupt(void) {
   leftEncoderTicks++;
 } // End interrupt leftencoderinterrupt()
 
-void rightencoderinterrupt() {
+void rightencoderinterrupt(void) {
   rightEncoderTicks++;
 } // End interrupt rightencoderinterrupt()
 
 /** END SECTION INTERRUPTS **/
 
-// PD Loop function to control motor velocity:
-void pdVelLoop(double targetLinVel, double targetAngVel, int power) {
+/** SCOOP AND LIFTER FUNCTIONS **/
+
+void raiseScoop(void) {
+  digitalWrite(INPUT1, HIGH);
+  digitalWrite(INPUT2, LOW);
+  delay(SCOOPTIME);
+  
+  // Stop the Scoop:
+  digitalWrite(INPUT1, LOW);
+  digitalWrite(INPUT2, LOW);
+} // End function raiseScoop();
+
+void lowerScoop(void) {
+  digitalWrite(INPUT1, LOW);
+  digitalWrite(INPUT2, HIGH);
+  delay(SCOOPTIME);
+  
+  // Stop the Scoop:
+  digitalWrite(INPUT1, LOW);
+  digitalWrite(INPUT2, LOW);
+  
+} // End function lowerScoop();
+
+/** END SECTION SCOOP AND LIFTER FUNCTIONS **/
+
+// PI Loop function to control motor velocity:
+void piVelLoop(double targetLinVel, double targetAngVel) {
   
   // Let's get the number of left and right encoder ticks:
   double lEncTicks = leftEncoderTicks;
@@ -150,12 +208,6 @@ void pdVelLoop(double targetLinVel, double targetAngVel, int power) {
     currentLinVel = -1 * ((leftWheelLinearVel + rightWheelLinearVel) / 2.0);
   } // End else
   double currentAngVel = (rightWheelAngularVel - leftWheelAngularVel) / (0.5 * 0.71);
-  
-  Serial.println("currentLinVel: ");
-  Serial.println(currentLinVel);
-  
-  Serial.println("currentAngVel: ");
-  Serial.println(currentAngVel);
   
   // We can now calculate our error in velocities:
   linVelocityError = currentLinVel - targetLinVel;
@@ -210,90 +262,26 @@ void pdVelLoop(double targetLinVel, double targetAngVel, int power) {
 } // End PD Loop
 
 /*
- *  Callback for the ROS Publisher node.
+ * This callback allows the SLAM Node to send Twist messages to Rockie.
+ * When this callback is called, the PI Control loop will be called with 
+ * the target linear and angular velocity.  
+ *
+ * Since this callback relies on a geometry_msgs::Twist message, the
+ * linear velocity is in the Vector3 "linear" X datafield while the
+ * angular velocity is in the Vector3 "angular" Z datafield.
  */
-void messageCb(const std_msgs::String& nextCommand) {
+void velCommandCallback(const geometry_msgs::Twist& nextVelocityCommand) {
   
+  // Let's get the designated linear and angular velocities:
+  const double targetLinearVelocity = nextVelocityCommand.linear.x;
+  const double targetAngularVelocity = nextVelocityCommand.angular.z;
   
-  // Store the actual command from the nextCommand message:
-  char nextCommandMsg[1024];
-  strcpy(nextCommandMsg, nextCommand.data);
+  // Call the PI Velocity Control Loop with the target velocities:
+  piVelLoop(targetLinearVelocity, targetAngularVelocity);
   
-  // Parse the nextCommandMsg using string tokenization:
-  char *nextWord;
-  
-  // String array to hold each word of the next command:
-  char **commandWords = (char**) malloc(sizeof(char *) * 10);
-  int commandWordsSize = 10;
-  int nextWordPos = 0;
-  for(int i = 0; i < commandWordsSize; i++) {
-    char *temp = (char *) malloc(sizeof(char) * 100);
-    commandWords[i] = temp;
-  } // End for
-  
-  nextWord = strtok(nextCommandMsg, " ");
-  while(nextWord != NULL) { 
-    // Add the next command to the commandWords array:
-    strcpy(commandWords[nextWordPos], nextWord);
-    nextWordPos++;
-    nextWord = strtok(NULL, " ");
-  } // End while
-  
-  // Now that we got the commands, let's go and parse them!
-  debugMsg.data = "Now parsing commands";
-  debugChannel.publish(&debugMsg);
-  if( (strcmp("SET", commandWords[0]) == 0)) {
-    
-    /*
-     * We're expecting the SET command to have the following syntax:
-     *
-     * SET <new left motor velocity> <new right motor velocity>
-     */
-     
-    currentLeftVelocity = atof(commandWords[1]);
-    currentRightVelocity = atof(commandWords[2]);
-    
-    /*
-    debugMsg.data = "SET ";
-    strcat(debugMsg.data, commandWords[1]);
-    strcat(debugMsg.data, " ");
-    strcat(debugMsg.data, commandWords[2]);
-    debugChannel.publish(&debugMsg);
-    */
-    
-  } else if(strcmp("DRIVE", commandWords[0]) == 0) {
-    
-    /*
-     * This is a MOTOR message asking for a change in velocity to the motors:
-     *
-     * A motor message has the following form:
-     * MOTOR <New Linear Velocity> <New Angular Velocity>
-     */
-    
-    char linVel[10];
-    char angVel[10];
-    char duration[10];
-    
-    strcpy(linVel, commandWords[1]);
-    strcpy(angVel, commandWords[2]);
-    strcpy(duration, commandWords[3]);
-    
-    double linVelo = atof(linVel);
-    double angVelo = atof(angVel);
-    double dur = atof(duration);
-    
-    leftMotor.write(currentLeftVelocity);
-    rightMotor.write(currentRightVelocity);
-    delay(dur);
-    
-    debugMsg.data = "linVel: ";
-    debugChannel.publish(&debugMsg);
-    strcpy(debugMsg.data, linVel);
-    debugChannel.publish(&debugMsg);
-    debugMsg.data = "angVel: ";
-    debugChannel.publish(&debugMsg);
-    strcpy(debugMsg.data, angVel);
-    debugChannel.publish(&debugMsg);
+} // End callback velCommandCallback()
+
+#ifdef DEBUG
     
   } else if(strcmp("GO", commandWords[0]) == 0) {
     debugMsg.data = "This is a GO Command";
@@ -341,11 +329,12 @@ void messageCb(const std_msgs::String& nextCommand) {
   } // End for
   free(commandWords);
 } // End callback messageCb()
+#endif
 
-ros::Subscriber<std_msgs::String> sub("arduino", &messageCb);
+/** SETUP Function **/
 
 void setup() {
-  //Serial.begin(9600);
+  
   
   // The Encoders are set as inputs:
   pinMode(LEFTENCODER, INPUT);
@@ -364,15 +353,15 @@ void setup() {
   // Advertise the debug and error channels:
   nh.advertise(debugChannel);
   
-  nh.subscribe(sub);
+  nh.subscribe(velCommandSubscriber);
   
+  // Initialize Rockie's main left and right motors:
   leftMotor.attach(LEFTMOTOR);
   rightMotor.attach(RIGHTMOTOR);
   
+  // We want Rockie to brake when starting:
   leftMotor.write(90);
   rightMotor.write(90);
-  
-  //Serial.begin(9600);
   
   pinMode(POT, INPUT);
   pinMode(ENABLE, OUTPUT);
@@ -422,10 +411,15 @@ void setup() {
     delay(1000);*/
     
     
-}
+} 
 
+/** END SETUP FUNCTION **/
+
+/** LOOP Function **/
 void loop() {
   
   // Have the ROS Nodes update themselves:
   nh.spinOnce();
 }
+
+/** END LOOP FUNCTION **/
