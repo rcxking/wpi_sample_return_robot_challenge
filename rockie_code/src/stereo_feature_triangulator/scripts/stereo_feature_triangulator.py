@@ -18,6 +18,7 @@ from stereo_historian_db import Stereo_Image_Pair, Base
 import datetime
 import cPickle as pickle
 from sqlalchemy import create_engine
+import random
 from sqlalchemy.orm import sessionmaker
 
 #stereo_imagepath_base = '/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/'
@@ -57,19 +58,30 @@ def drawMatches(gray1, kpts1, gray2, kpts2, matches):
     vis = cv2.cvtColor(vis, cv2.COLOR_GRAY2BGR)
 
     for match in matches:
-        pt1 = (int(kpts1[match.queryIdx].pt[0] + gray1.shape[1]), int(kpts1[match.queryIdx].pt[1]))
-        pt2  = (int(kpts2[match.trainIdx].pt[0]), int(kpts2[match.trainIdx].pt[1]))
+        pt1 = (int(kpts1[match.queryIdx].pt[0]), int(kpts1[match.queryIdx].pt[1]))
+        pt2  = (int(kpts2[match.trainIdx].pt[0] + w1), int(kpts2[match.trainIdx].pt[1]))
 
         #should check against epipolar line
-        if math.fabs(pt1[1] - pt2[1]) > 20:
+        if math.fabs(pt1[1] - pt2[1]) > 10:
             continue
         
-        cv2.line(vis, pt1, pt2, (0, 0, 255), 1) 
+        #cv2.circle(gray1, (int(kpts1[match.queryIdx].pt[0]), int(kpts1[match.queryIdx].pt[1])), 5, (0, 0, 255), -1)
+        #cv2.circle(gray2, (int(kpts2[match.trainIdx].pt[0]), int(kpts2[match.trainIdx].pt[1])), 5, (0, 0, 255), -1)
+
+        #cv2.imshow('img2', gray1)
+        #cv2.imshow('img3', gray2)
+
+        
+        cv2.line(vis, pt1, pt2, (int(255*random.random()), int(255*random.random()), int(255*random.random())), 1) 
         z = triangulate(match, kpts1, kpts2)
 
         if z > 0:
-            cv2.circle(vis, pt1, 5, (int(z), int(z), int(z)), -1) 
+            cv2.putText(vis, str(z), pt1, cv2.FONT_HERSHEY_SIMPLEX, 2, 255, 2)
+            #cv2.putText(vis, str(z), pt1, 
+            cv2.circle(vis, pt2, 5, (int(z), int(z), int(z)), -1)
+            cv2.circle(vis, pt1, 5, (int(z), int(z), int(z)), -1)
 
+        
 
     cv2.imshow('img', vis)
 
@@ -81,6 +93,8 @@ def triangulate_matches_callback(stereo_pair_keypoint_data_id):
     global pub
    
     session = DBSession()
+    
+    session
 
     #get matches
     #get left and right keypoints
@@ -88,13 +102,14 @@ def triangulate_matches_callback(stereo_pair_keypoint_data_id):
     #create 3D point data for each keypoint
     #store to file and db
     
-    matches = get_matches()
     left_keypoints = get_left_keypoints()
     right_keypoints = get_right_keypoints()
 
+    matches = get_matches(left_keypoints, right_keypoints)
+
     _3d_points = triangulate(matches, left_keypoints, right_keypoints)
   
-    store_3d_points()
+    #store_3d_points()
 
     session.close()
 
@@ -105,8 +120,8 @@ def triangulate(match, kpts1, kpts2):
 
     disparity = math.fabs(query_pt.pt[0] - train_pt.pt[0])
 
-    #Z = (camera_focal_length*camera_dist)/disparity
-    Z = 100/disparity
+    Z = (camera_focal_length*camera_dist)/disparity
+    #Z = 100/disparity
 
     return Z
 
@@ -143,7 +158,6 @@ def get_matches(kps_descs_1, kps_descs_2):
     kpts2 = kps_descs_2[0]
     des2 = kps_descs_2[1]
 
-    #matches = flann.knnMatch(des1, des2, 3)
     matches = flann.match(des1, des2)
 
     return matches
@@ -165,10 +179,10 @@ def get_right_keypoints(stereo_pair_keypoint):
 
     return pickle.load(open(right_keypoints_filepath, "rb"))
 
-def get_stereo_pair_keypoint(stereo_pair_keypoint_id):
+def get_stereo_pair_keypoint(stereo_pair_keypoint_matches_id):
     global session
-    query = session.query(Stereo_Pair_Keypoints)
-    stereo_pair_keypoint = query.filter_by(stereo_pair_keypoint_id = int(stereo_pair_keypoint_id)).first()
+    query = session.query(Stereo_Pair_Keypoint_Matches)
+    stereo_pair_keypoint_matches = query.filter_by(stereo_pair_keypoint_id = int(stereo_pair_keypoint_id)).first()
     return stereo_pair_keypoint
 
 def triangulate_matches():
@@ -180,7 +194,7 @@ class SerializableKeypoint():
     pass
 
 if __name__ == '__main__':
-    #triangulate_matches()
+    triangulate_matches()
 
     #get cam0
     #get cam1
@@ -197,6 +211,8 @@ if __name__ == '__main__':
 
     #display on imgs
 
+    '''
+
     cam0 = cv2.VideoCapture(0)
     cam1 = cv2.VideoCapture(1)
 
@@ -207,7 +223,8 @@ if __name__ == '__main__':
     cam1.set(3, 640)
     cam1.set(4, 360)
     cam1.set(cv2.cv.CV_CAP_PROP_FOURCC, cv2.cv.CV_FOURCC('Y', 'U', 'Y', 'V'))
-    descriptor = cv2.SIFT(50)
+    #descriptor = cv2.SIFT(50)
+    descriptor = cv2.SIFT(100)
 
     while True:
 
@@ -228,7 +245,8 @@ if __name__ == '__main__':
 
         drawMatches(gray1, kpts1, gray2, kpts2, matches)
 
-        '''
+    '''
+    '''
         for match in matches:
             z = triangulate(match, kpts1, kpts2)
             pt = kpts1[match.queryIdx].pt
@@ -243,6 +261,6 @@ if __name__ == '__main__':
 
         cv2.imshow('img', gray1)
         cv2.waitKey(100)
-        '''
+    '''
             
 

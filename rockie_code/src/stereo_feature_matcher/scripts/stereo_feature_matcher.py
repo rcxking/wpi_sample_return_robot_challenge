@@ -19,8 +19,8 @@ import cPickle as pickle
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-#stereo_imagepath_base = '/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/'
-stereo_imagepath_base = '/home/rockie/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts'
+stereo_imagepath_base = '/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/'
+#stereo_imagepath_base = '/home/rockie/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts'
 
 engine = create_engine('mysql://root@localhost/rockie')
 Base.metadata.bind = engine
