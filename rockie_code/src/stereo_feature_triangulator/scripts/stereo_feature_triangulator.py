@@ -41,10 +41,33 @@ search_params = dict(checks=50)   # or pass empty dictionary
 flann = cv2.FlannBasedMatcher(index_params,search_params)
 
 #camera distance is 94 mm
-camera_dist = .094
+#camera_dist = .094
+camera_dist = 10 
 
 #focal length is 579 mm
 camera_focal_length = 579
+
+def drawMatches(gray1, kpts1, gray2, kpts2, matches):
+
+    h1, w1 = gray1.shape[:2]
+    h2, w2 = gray2.shape[:2]
+    vis = np.zeros((max(h1, h2), w1+w2), np.uint8)
+    vis[:h1, :w1] = gray1
+    vis[:h2, w1:w1+w2] = gray2
+    vis = cv2.cvtColor(vis, cv2.COLOR_GRAY2BGR)
+
+    #joined_img = np.hstack((gray1, gray2))
+    
+    for match in matches:
+        pt1 = (int(kpts1[match.queryIdx].pt[0] + gray1.shape[1]), int(kpts1[match.queryIdx].pt[1]))
+        pt2  = (int(kpts2[match.trainIdx].pt[0]), int(kpts2[match.trainIdx].pt[1]))
+
+        cv2.line(vis, pt1, pt2, (0, 0, 255), 1) 
+        #cv2.line(vis, (0,0), (300, 300), (0, 0, 255), 1)
+
+    cv2.imshow('img', vis)
+
+    cv2.waitKey(100)
 
 def triangulate_matches_callback(stereo_pair_keypoint_data_id):
     global session
@@ -177,6 +200,7 @@ if __name__ == '__main__':
     cam1.set(3, 640)
     cam1.set(4, 360)
     cam1.set(cv2.cv.CV_CAP_PROP_FOURCC, cv2.cv.CV_FOURCC('Y', 'U', 'Y', 'V'))
+    descriptor = cv2.SIFT(10)
 
     while True:
 
@@ -189,42 +213,66 @@ if __name__ == '__main__':
         gray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
         gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 
-        sift = cv2.SIFT()
-
-        kpts1, descs1  = sift.detectAndCompute(gray1, None)
-        kpts2, descs2  = sift.detectAndCompute(gray2, None)
-
+        kpts1, descs1  = descriptor.detectAndCompute(gray1, None)
+        kpts2, descs2  = descriptor.detectAndCompute(gray2, None)
+        
+        '''
         filtered_kpts1 = []
-        filtered_descs1 = []
+        filtered_descs1 = np.empty(descs1.shape)
 
         filtered_kpts2 = []
-        filtered_descs2 = []
+        filtered_descs2 = np.empty(descs2.shape)
+        
+        print(type(kpts1))
 
-        for index, desc in descs1.iteritems():
-            if kpts1[index].response > 100:
-                filtered_kpts1.add(kpts1[index])
-                filtered_descs1.add(desc)
+        response_threshold = 100
 
-        for index, desc in descs2.iteritems():
-            if kpts2[index].response > 100:
-                filtered_kpts2.add(kpts2[index])
-                filtered_descs2.add(desc)
+        i = 0
+        
+        for kpt in kpts1:
+            if kpt.response > response_threshold:
+                filtered_kpts1.append(kpt)
+                filtered_descs1 = np.vstack([filtered_descs1, descs1[i, :]])
+                i += 1
+
+        i = 0
+
+        for kpt in kpts2:
+            if kpt.response > response_threshold:
+                filtered_kpts2.append(kpt)
+                filtered_descs2 = np.vstack([filtered_descs2, descs2[i, :]])
+                i += 1
 
         descs1 = filtered_descs1
         descs2 = filtered_descs2
 
-        matches = flann.match(descs1, descs2)
+        kpts1 = filtered_kpts1
+        kpts2 = filtered_kpts2
+        '''
 
+        try:
+            matches = flann.match(descs1, descs2)
+        except:
+            continue
+
+
+        drawMatches(gray1, kpts1, gray2, kpts2, matches)
+
+        '''
         for match in matches:
             z = triangulate(match, kpts1, kpts2)
             pt = kpts1[match.queryIdx].pt
             
-            cv2.circle(gray1, (int(pt[0]), int(pt[1])), 3, (255, 255, 255), 1) 
+            #cv2.circle(gray1, (int(pt[0]), int(pt[1])), 3, (255, 255, 255), 1) 
 
             if z > 0:
-                cv2.circle(gray1, (int(pt[0]), int(pt[1])), int(z), (0, 0, 255), 1) 
+                cv2.circle(gray1, (int(pt[0]), int(pt[1])), 5, (int(z), int(z), int(z)), -1) 
+            else:
+                cv2.circle(gray1, (int(pt[0]), int(pt[1])), 5, (0, 0, 255), -1) 
+
 
         cv2.imshow('img', gray1)
-        cv2.waitKey(1000)
+        cv2.waitKey(100)
+        '''
             
 
