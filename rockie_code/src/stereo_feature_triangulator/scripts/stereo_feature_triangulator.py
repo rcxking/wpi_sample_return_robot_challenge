@@ -7,6 +7,7 @@ database
 '''
 import numpy as np
 import cv2
+import math
 import cv
 import rospy
 from std_msgs.msg import String
@@ -62,6 +63,9 @@ def drawMatches(gray1, kpts1, gray2, kpts2, matches):
         pt1 = (int(kpts1[match.queryIdx].pt[0] + gray1.shape[1]), int(kpts1[match.queryIdx].pt[1]))
         pt2  = (int(kpts2[match.trainIdx].pt[0]), int(kpts2[match.trainIdx].pt[1]))
 
+        if math.fabs(pt1[1] - pt2[1]) > 20:
+            continue
+        
         cv2.line(vis, pt1, pt2, (0, 0, 255), 1) 
         #cv2.line(vis, (0,0), (300, 300), (0, 0, 255), 1)
 
@@ -200,7 +204,7 @@ if __name__ == '__main__':
     cam1.set(3, 640)
     cam1.set(4, 360)
     cam1.set(cv2.cv.CV_CAP_PROP_FOURCC, cv2.cv.CV_FOURCC('Y', 'U', 'Y', 'V'))
-    descriptor = cv2.SIFT(10)
+    descriptor = cv2.SIFT(25)
 
     while True:
 
@@ -216,40 +220,6 @@ if __name__ == '__main__':
         kpts1, descs1  = descriptor.detectAndCompute(gray1, None)
         kpts2, descs2  = descriptor.detectAndCompute(gray2, None)
         
-        '''
-        filtered_kpts1 = []
-        filtered_descs1 = np.empty(descs1.shape)
-
-        filtered_kpts2 = []
-        filtered_descs2 = np.empty(descs2.shape)
-        
-        print(type(kpts1))
-
-        response_threshold = 100
-
-        i = 0
-        
-        for kpt in kpts1:
-            if kpt.response > response_threshold:
-                filtered_kpts1.append(kpt)
-                filtered_descs1 = np.vstack([filtered_descs1, descs1[i, :]])
-                i += 1
-
-        i = 0
-
-        for kpt in kpts2:
-            if kpt.response > response_threshold:
-                filtered_kpts2.append(kpt)
-                filtered_descs2 = np.vstack([filtered_descs2, descs2[i, :]])
-                i += 1
-
-        descs1 = filtered_descs1
-        descs2 = filtered_descs2
-
-        kpts1 = filtered_kpts1
-        kpts2 = filtered_kpts2
-        '''
-
         try:
             matches = flann.match(descs1, descs2)
         except:
