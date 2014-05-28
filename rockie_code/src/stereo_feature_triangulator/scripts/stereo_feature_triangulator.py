@@ -133,9 +133,16 @@ def triangulate(matches, kpts1, kpts2):
 
         disparity = math.fabs(query_pt.pt[0] - train_pt.pt[0])
 
-        Z = (camera_focal_length*camera_dist)/disparity
+        #consider query image as origin
+        x = query_pt[0]
+        y = query_pt[1]
 
-        _3d_points.append(Z)
+        #see pg 371 and 416 of O'REILLY "Learning OpenCV" 2008
+        Z = (camera_focal_length*camera_dist)/disparity
+        Y = -(y*Z)/f
+        X = -(x*Z)/f
+
+        _3d_points.append([match, X, Y, Z])
 
     return _3d_points
 
