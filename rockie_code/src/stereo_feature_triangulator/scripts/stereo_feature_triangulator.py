@@ -14,7 +14,7 @@ import rospy
 from std_msgs.msg import String
 from sensor_msgs.msg import Image as ros_image
 from cv_bridge import CvBridge, CvBridgeError
-from stereo_feature_identifier_db import Stereo_Pair_Keypoints, Stereo_Pair_Keypoint_Matches
+from stereo_feature_identifier_db import Stereo_Pair_Keypoints, Stereo_Pair_Keypoint_Matches, Stereo_3D_Matches
 from stereo_historian_db import Stereo_Image_Pair, Base
 import datetime
 import cPickle as pickle
@@ -32,21 +32,15 @@ session = DBSession()
 stereo_historian_topic = '/my_stereo/stereo_image_saves'
 stereo_feature_identifier_topic = '/my_stereo/stereo_image_keypoint_saves'
 stereo_feature_matcher_topic = '/my_stereo/stereo_image_keypoint_matches'
+stereo_feature_triangulator_topic = '/my_stereo/stereo_image_3D_points'
 
-pub = rospy.Publisher(stereo_feature_matcher_topic, String)
-
-# FLANN parameters
-FLANN_INDEX_KDTREE = 0
-index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
-search_params = dict(checks=50)   # or pass empty dictionary
-
-flann = cv2.FlannBasedMatcher(index_params,search_params)
+pub = rospy.Publisher(stereo_feature_triangulator_topic, String)
 
 #camera distance is 94 mm
 camera_dist = .094
 
 #focal length is 579 mm
-camera_focal_length = 579
+f = 579
 
 def drawMatches(gray1, kpts1, gray2, kpts2, matches):
 
@@ -65,19 +59,11 @@ def drawMatches(gray1, kpts1, gray2, kpts2, matches):
         if math.fabs(pt1[1] - pt2[1]) > 10:
             continue
         
-        #cv2.circle(gray1, (int(kpts1[match.queryIdx].pt[0]), int(kpts1[match.queryIdx].pt[1])), 5, (0, 0, 255), -1)
-        #cv2.circle(gray2, (int(kpts2[match.trainIdx].pt[0]), int(kpts2[match.trainIdx].pt[1])), 5, (0, 0, 255), -1)
-
-        #cv2.imshow('img2', gray1)
-        #cv2.imshow('img3', gray2)
-
-        
         cv2.line(vis, pt1, pt2, (int(255*random.random()), int(255*random.random()), int(255*random.random())), 1) 
         z = triangulate(match, kpts1, kpts2)
 
         if z > 0:
             cv2.putText(vis, str(z), pt1, cv2.FONT_HERSHEY_SIMPLEX, 2, 255, 2)
-            #cv2.putText(vis, str(z), pt1, 
             cv2.circle(vis, pt2, 5, (int(z), int(z), int(z)), -1)
             cv2.circle(vis, pt1, 5, (int(z), int(z), int(z)), -1)
 
@@ -85,22 +71,22 @@ def drawMatches(gray1, kpts1, gray2, kpts2, matches):
 
     cv2.waitKey(100)
 
-def triangulate_matches_callback(stereo_pair_keypoint_data_id):
+def triangulate_matches_callback(sp_keypoint_matches_data_id):
     global session
     global DBSession
     global pub
-   
-    session = DBSession()
-    
-    sp_keypoint_matches = get_sp_keypoint_matches(stereo_pair_keypoint_data_id.data)
-    matches = pickle.load(open(sp_keypoint_matches.sp_keypoint_matches_filepath, "rb"))
 
     #get matches
     #get left and right keypoints
     #triangulate matches based on focal length and baseline
     #create 3D point data for each keypoint
     #store to file and db
+  
+    session = DBSession()
     
+    sp_keypoint_matches = get_sp_keypoint_matches(sp_keypoint_matches_data_id.data)
+    matches = pickle.load(open(sp_keypoint_matches.sp_keypoint_matches_filepath, "rb"))
+
     stereo_pair_keypoints = get_keypoints_pair(sp_keypoint_matches.stereo_pair_keypoint_id)
 
     left_keypoints = get_left_keypoints(stereo_pair_keypoints)
@@ -108,7 +94,16 @@ def triangulate_matches_callback(stereo_pair_keypoint_data_id):
 
     _3d_points = triangulate(matches, left_keypoints[0], right_keypoints[0])
   
-    #store_3d_points()
+    filepath = store_3d_points(_3d_points, sp_keypoint_matches.sp_keypoint_matches_filepath)
+
+    _3d_matches = Stereo_3D_Matches()
+    _3d_matches.sp_matches_id = sp_keypoint_matches.sp_keypoint_matches_id
+    _3d_matches.sp_3d_matches_filepath = filepath
+
+    session.add(_3d_matches)
+    session.commit()
+    sp_3d_matches_id = _3d_matches.sp_3d_matches_id
+    pub.publish(str(sp_3d_matches_id))
 
     session.close()
 
@@ -134,20 +129,22 @@ def triangulate(matches, kpts1, kpts2):
         disparity = math.fabs(query_pt.pt[0] - train_pt.pt[0])
 
         #consider query image as origin
-        x = query_pt[0]
-        y = query_pt[1]
+        x = query_pt.pt[0]
+        y = query_pt.pt[1]
 
         #see pg 371 and 416 of O'REILLY "Learning OpenCV" 2008
-        Z = (camera_focal_length*camera_dist)/disparity
-        Y = -(y*Z)/f
-        X = -(x*Z)/f
+        Z = (f*camera_dist)/disparity
+        Y = (y*Z)/f
+        X = (x*Z)/f
 
         _3d_points.append([match, X, Y, Z])
 
     return _3d_points
 
-def store_3d_points():
-    pass
+def store_3d_points(_3d_points, matches_filepath):
+    filepath = "{0}.3d_points".format(matches_filepath)
+    pickle.dump(_3d_points, open(filepath, 'wb'))
+    return filepath
 
 class py_match:
     pass
@@ -190,7 +187,6 @@ def get_sp_keypoint_matches(sp_keypoint_matches_id):
     query = session.query(Stereo_Pair_Keypoint_Matches)
     sp_keypoint_matches = query.filter_by(sp_keypoint_matches_id = int(sp_keypoint_matches_id)).first()
     return sp_keypoint_matches
-    #return pickle.load(open(sp_keypoint_matches.sp_keypoint_matches_filepath, "rb"))
 
 def triangulate_matches():
     rospy.init_node("stereo_feature_match_triangulator")
@@ -202,21 +198,6 @@ class SerializableKeypoint():
 
 if __name__ == '__main__':
     triangulate_matches()
-
-    #get cam0
-    #get cam1
-
-    #get img1
-    #get img2
-
-    #get kpts1
-    #get kpts2
-
-    #get matches
-
-    #triangulate matches
-
-    #display on imgs
 
     '''
 

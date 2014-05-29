@@ -23,6 +23,12 @@ class Stereo_Pair_Keypoint_Matches(Base):
   sp_keypoint_matches_filepath = Column(VARCHAR(6500))
   sp_matches_3d_points_filepath = Column(VARCHAR(6500))
 
+class Stereo_3D_Matches(Base):
+  __tablename__='stereo_3d_matches'
+  sp_3d_matches_id = Column(Integer, primary_key=True, autoincrement=True)
+  sp_matches_id = Column(Integer)
+  sp_3d_matches_filepath = Column(VARCHAR(6500))
+
 if __name__ == '__main__':
   engine = create_engine('mysql://root@localhost/rockie')
   Base.metadata.create_all(engine)
