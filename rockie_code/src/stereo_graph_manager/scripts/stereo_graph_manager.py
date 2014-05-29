@@ -47,6 +47,8 @@ def update_graph_callback(sp_keypoint_matches_data_id):
     global DBSession
     global pub
     
+    sp_km_id = sp_keypoint_matches_data_id.data
+
     #create pose node
     #connect pose node to previous pose node
 
@@ -59,6 +61,30 @@ def update_graph_callback(sp_keypoint_matches_data_id):
         #else
           #add new 3d_matches as new feature node to graph
           #connect this new node to new pose node
+
+
+  new_pose_node = create_pose_node(sp_km_id)  
+  connect_poses(new_pose_node.node_id, new_pose_node.node_id - 1)
+
+  new_3d_matches = get_3d_matches(sp_km_id)
+  all_feature_nodes = get_all_feature_nodes()
+
+  insert_new_feature_node = True
+
+  for feature_node in all_feature_nodes:
+      match_matches = get_3d_match_matches(new_3d_matches, feature_node)
+
+      #Returns true if we have enough matches to connect new pose to existing feature, false otherwise
+      if(enough_matches(match_matches, new_3d_matches, feature_node)):
+          connect_pose_to_feature(new_pose_node, feature_node)
+
+          #don't add new feature node if num of matches is relatively large
+          if(new_feature_not_needed(match_matches, new_3d_matches, 3d_matches):
+              insert_new_feature_node = False
+
+  if(insert_new_feature_node):
+      new_feature_node = add_new_feature_node()
+      connect_pose_to_feature(new_pose_node, new_feature_node)
 
 def get_keypoints_pair(spk_id):
     global session
