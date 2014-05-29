@@ -103,6 +103,7 @@ def triangulate_matches_callback(sp_keypoint_matches_data_id):
     session.add(_3d_matches)
     session.commit()
     sp_3d_matches_id = _3d_matches.sp_3d_matches_id
+
     pub.publish(str(sp_3d_matches_id))
 
     session.close()
