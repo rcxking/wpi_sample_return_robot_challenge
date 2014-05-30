@@ -4,7 +4,7 @@
  * RPI Rock Raiders
  * 5/2/14
  *
- * Last Updated: Bryant Pong: 5/27/14 - 3:34 PM
+ * Last Updated: Bryant Pong: 5/29/14 - 9:24 PM
  */
  
 // AVR Libraries:
@@ -12,7 +12,7 @@
  
 // ROS Libraries
 #include <ros.h> // Core ROS Arduino Library
-#include <std_msgs/String.h> // ROS std_msgs - String message
+#include <std_msgs/String.h> // ROS std_msgs - String message (used for debugging messages)
 #include <nav_msgs/Odometry.h> // ROS nav_msgs - Odometry message
 #include <geometry_msgs/Twist.h> // ROS geometry_msgs - Twist message
 
@@ -25,6 +25,12 @@
  * Pin Mappings:
  * Left Encoder: Digital Pin 20 (Interrupt 3)
  * Right Encoder: Digital Pin 21 (Interrupt 2)
+ *
+ * Rockie's Main Left Motor: Digital Pin 52
+ * Rockie's Main Right Motor: Digital Pin 53
+ *
+ * Lifter Motor:
+ * 
  */
 
 const int LEFTENCODER = 20;
@@ -48,9 +54,9 @@ Servo leftMotor, rightMotor;
 volatile int leftEncoderTicks = 0;
 volatile int rightEncoderTicks = 0;
 
-// Variables for the PD Velocity control loop:
+// Variables for the PI Velocity control loop:
 const double kp = 0.1;
-const double kd = 0.5;
+const double ki = 0.5;
 
 // Variables to keep track of time elapsed since the PD Loop was last called:
 unsigned long timeStart = 0;
@@ -79,11 +85,11 @@ void rightencoderinterrupt();
 void piVelLoop(const double targetLinVel, const double targetAngVel);
 
 // Functions for the Linear Actuator Scoop + Lifter:
-void raiseScoop(void);
-void lowerScoop(void);
+void raiseScoop(void); // Implemented, not tested
+void lowerScoop(void); // Implemented, not tested
 
-void extendScoop(void);
-void retractScoop(void);
+void extendScoop(void); // Not implemented
+void retractScoop(void); // Not implemented
 
 // Callbacks:
 
@@ -111,7 +117,6 @@ nav_msgs::Odometry odomData;
 
 ros::Publisher debugChannel("debug_channel", &debugMsg);
 ros::Publisher odometryData("odometry_data", &odomData);
-
 
 /*
  * ROS Subscribers:
@@ -348,27 +353,27 @@ void setup() {
   attachInterrupt(2, rightencoderinterrupt, CHANGE);
     
   // Start the ROS Node:
-  nh.initNode();
+  //nh.initNode();
  
   // Advertise the debug and error channels:
-  nh.advertise(debugChannel);
+  //nh.advertise(debugChannel);
   
-  nh.subscribe(velCommandSubscriber);
+  //nh.subscribe(velCommandSubscriber);
   
   // Initialize Rockie's main left and right motors:
-  leftMotor.attach(LEFTMOTOR);
-  rightMotor.attach(RIGHTMOTOR);
+  //leftMotor.attach(LEFTMOTOR);
+  //rightMotor.attach(RIGHTMOTOR);
   
   // We want Rockie to brake when starting:
-  leftMotor.write(90);
-  rightMotor.write(90);
+  //leftMotor.write(90);
+  //rightMotor.write(90);
   
-  pinMode(POT, INPUT);
-  pinMode(ENABLE, OUTPUT);
-  pinMode(INPUT1, OUTPUT);
-  pinMode(INPUT2, OUTPUT);
+  //pinMode(POT, INPUT);
+  //pinMode(ENABLE, OUTPUT);
+  //pinMode(INPUT1, OUTPUT);
+  //pinMode(INPUT2, OUTPUT);
   
-  digitalWrite(ENABLE, HIGH);
+  //digitalWrite(ENABLE, HIGH);
   
   /*
   // Go forward 5 meters at 0.3333 m/sec:
@@ -410,7 +415,7 @@ void setup() {
     rightMotor.write(90);   
     delay(1000);*/
     
-    
+    Serial.begin(9600);
 } 
 
 /** END SETUP FUNCTION **/
@@ -418,8 +423,22 @@ void setup() {
 /** LOOP Function **/
 void loop() {
   
+  Serial.println("Please enter the target linear velocity");
+  while(!Serial.available());
+  double targetLinearVelocity = Serial.parseFloat();
+  Serial.println("The new target linear velocity is: ");
+  Serial.println(targetLinearVelocity);
+  Serial.println("Now enter the target angular velocity");
+  while(!Serial.available());
+  double targetAngularVelocity = Serial.parseFloat();
+  Serial.println("The new target angular velocity is: ");
+  Serial.println(targetAngularVelocity);
+  
+  Serial.println("Now beginning PI loop:");
+  piVelLoop(targetLinearVelocity, targetAngularVelocity);
+  
   // Have the ROS Nodes update themselves:
-  nh.spinOnce();
+  //nh.spinOnce();
 }
 
 /** END LOOP FUNCTION **/
