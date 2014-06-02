@@ -39,6 +39,12 @@ search_params = dict(checks=50)   # or pass empty dictionary
 
 flann = cv2.FlannBasedMatcher(index_params,search_params)
 
+#if we can match 70% of the 3D points, don't create a new feature node
+new_feature_threshold = .7
+
+#If we have at least 7 matches, make a connection
+new_connection_threshold = 7 
+
 def update_graph_callback(_3d_matches_data_id):
   global session
   global DBSession
@@ -84,7 +90,7 @@ def update_graph_callback(_3d_matches_data_id):
   #we should be able to just find a path through the graph to our current position, and apply the
   #transformation along the path to recover the global position
 
-[new_point_descs, new_point_positions] = __3d_matches
+[new_point_descs, new_point_positions] = _3d_matches
 
 #TODO: Connect poses with wheel odometry
 new_pose_node = create_pose_node(stereo_image_pair.stereo_image_pair_id)  
@@ -100,19 +106,33 @@ for feature_node in all_feature_nodes:
 
   point_matches = get_3d_point_matches(new_point_descs, feature_node_descs)
 
+  num_3d_matches = point_matches.shape[0]
+  num_feature_node_points = feature_node_positions.shape[0]
+
   #Returns true if we have enough matches to connect new pose to existing feature, false otherwise
-  if(enough_matches(point_matches, new_3d_matches, feature_node_3d_matches)):
+  #if(enough_matches(point_matches, new_3d_matches, feature_node_3d_matches)):
+  if(num_3d_matches > new_connection_threshold)
     transform = calculate_3d_transform(point_matches, new_point_positions, feature_node_positions)
 
     connect_pose_to_feature(new_pose_node, feature_node, transform, point_matches)
 
     #don't add new feature node if num of matches is relatively large
-    if(new_feature_not_needed(point_matches, new_3d_matches, 3d_matches):
+    #if(new_feature_not_needed(point_matches, new_3d_matches, 3d_matches):
+    if(num_3d_matches > new_feature_threshold*num_feature_node_points)
       insert_new_feature_node = False
 
 if(insert_new_feature_node):
   new_feature_node = add_new_feature_node()
   connect_pose_to_feature(new_pose_node, new_feature_node)
+
+def add_new_feature_node(_3d_matches)
+  global session
+  feature_node = Graph_Nodes()
+  feature_node.node_type = 'feature'
+  feature_node.sp_3d_matches_id = _3d_matches.sp_3d_matches_id
+
+  session.add(feature_node)
+  session.commit()
 
 #Look at github wiki  
 def calculate_3d_transform(matches, positions_1, positions_2):
@@ -128,6 +148,20 @@ def calculate_3d_transform(matches, positions_1, positions_2):
   R = V*U.T
 
   return [R, t]
+
+def get_centroid(positions):
+  num_points = positions.shape[0]
+  summed_points = np.sum(positions, axis=0)
+  return np.divide(summed_points, num_points)
+
+def get_covariance_match(matches, positions_1, positions_2):
+  for match in matches:
+    point_1 = positions_1[matches.queryIdx, :]
+    point_2 = positions_2[matches.trainIdx, :]
+
+    H += (point_1 - centroid_1).T*(point_2 - centroid_2)
+  
+  return H
 
 def get_covariance_matrix(matches, positions_1, positions_2, centroid_1, centroid_2):
   H = np.empty([3, 3])

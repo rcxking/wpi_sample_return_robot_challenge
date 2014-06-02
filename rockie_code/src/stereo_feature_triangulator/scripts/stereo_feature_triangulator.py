@@ -127,7 +127,7 @@ def triangulate(matches, kpts1, kpts2):
   descriptor_dtype = descs1.dtype
 
   matched_descs = np.empty([descriptor_length, 0], dtype=descriptor_dtype)
-  positions = []
+  positions = np.empty([0, 3])
 
   _3d_points = []
 
@@ -160,9 +160,8 @@ def triangulate(matches, kpts1, kpts2):
     #stack matched descriptor onto matched_descs
     np.vstack((matched_descs, query_pt_desc))
 
-    positions.append([X, Y, Z])
-
-     # _3d_points.append([match, X, Y, Z])
+    #add new row to position matrix
+    np.vstack((positions, np.array([X, Y, Z])))
 
   _3d_points = [matched_descs, positions]
   return _3d_points
