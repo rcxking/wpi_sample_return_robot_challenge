@@ -96,6 +96,9 @@ def update_graph(_3d_matches):
 
   [new_point_descs, new_point_positions] = _3d_matches
 
+  new_point_descs = np.array(new_point_descs, np.float32)
+  new_point_positions = np.array(new_point_positions, np.int32)
+
   #TODO: Connect poses with wheel odometry
   new_pose_node = create_pose_node(stereo_image_pair.stereo_image_pair_id)  
   #connect_poses(new_pose_node.node_id, new_pose_node.node_id - 1)
@@ -114,12 +117,12 @@ def update_graph(_3d_matches):
     num_feature_node_points = feature_node_positions.shape[0]
 
     #Returns true if we have enough matches to connect new pose to existing feature, false otherwise
-    if(num_3d_matches > new_connection_threshold)
+    if(num_3d_matches > new_connection_threshold):
       transform = calculate_3d_transform(point_matches, new_point_positions, feature_node_positions)
       connect_pose_to_feature(new_pose_node, feature_node, transform, point_matches)
 
       #don't add new feature node if num of matches is relatively large
-      if(num_3d_matches > new_feature_threshold*num_feature_node_points)
+      if(num_3d_matches > new_feature_threshold*num_feature_node_points):
         insert_new_feature_node = False
 
   if(insert_new_feature_node):

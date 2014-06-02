@@ -33,8 +33,12 @@ stereo_historian_topic = '/my_stereo/stereo_image_saves'
 stereo_feature_identifier_topic = '/my_stereo/stereo_image_keypoint_saves'
 stereo_feature_matcher_topic = '/my_stereo/stereo_image_keypoint_matches'
 stereo_feature_triangulator_topic = '/my_stereo/stereo_image_3D_points'
+triangulator_visualization_topic = '/my_stereo/3d_points'
 
 pub = rospy.Publisher(stereo_feature_triangulator_topic, String)
+pub_vis = rospy.Publisher(triangulator_visualization_topic, ros_image)
+
+bridge = CvBridge()
 
 #camera distance is 94 mm
 camera_dist = .094
@@ -59,15 +63,19 @@ def drawMatches(gray1, kpts1, gray2, kpts2, matches):
     if math.fabs(pt1[1] - pt2[1]) > 10:
       continue
     
-    cv2.line(vis, pt1, pt2, (int(255*random.random()), int(255*random.random()), int(255*random.random())), 1) 
+    #cv2.line(vis, pt1, pt2, (int(255*random.random()), int(255*random.random()), int(255*random.random())), 1) 
     z = triangulate(match, kpts1, kpts2)
 
     if z > 0:
-      cv2.putText(vis, str(z), pt1, cv2.FONT_HERSHEY_SIMPLEX, 2, 255, 2)
-      cv2.circle(vis, pt2, 5, (int(z), int(z), int(z)), -1)
-      cv2.circle(vis, pt1, 5, (int(z), int(z), int(z)), -1)
+      cv2.putText(gray1, str(z), pt1, cv2.FONT_KERSHEY_SIMPLEX, 2, 255, 2)
+      cv2.circle(gray1, pt1, 5, (int(z), int(z), int(z)), -1)
 
-  cv2.imshow('img', vis)
+      #cv2.putText(vis, str(z), pt1, cv2.FONT_HERSHEY_SIMPLEX, 2, 255, 2)
+      #cv2.circle(vis, pt2, 5, (int(z), int(z), int(z)), -1)
+      #cv2.circle(vis, pt1, 5, (int(z), int(z), int(z)), -1)
+
+  #cv2.imshow('img', vis)
+  cv2.imshow('img', gray1)
 
   cv2.waitKey(100)
 
@@ -92,8 +100,10 @@ def triangulate_matches_callback(sp_keypoint_matches_data_id):
   left_keypoints = get_left_keypoints(stereo_pair_keypoints)
   right_keypoints = get_right_keypoints(stereo_pair_keypoints)
 
-  #_3d_points = triangulate(matches, left_keypoints[0], right_keypoints[0])
-  _3d_points = triangulate(matches, left_keypoints, right_keypoints)
+  ############3####For debugging/visualization#############
+  left_image = get_left_image(stereo_pair_keypoints.stereo_image_pair_id)
+
+  _3d_points = triangulate(matches, left_keypoints, right_keypoints, left_image)
   
   filepath = store_3d_points(_3d_points, sp_keypoint_matches.sp_keypoint_matches_filepath)
 
@@ -109,24 +119,33 @@ def triangulate_matches_callback(sp_keypoint_matches_data_id):
 
   session.close()
 
+def get_left_image(image_pair_id):
+  global session
+
+  query = session.query(Stereo_Image_Pair)
+  stereo_image_pair = query.filter_by(stereo_image_pair_id = int(image_pair_id)).first()
+  img = cv2.imread(stereo_image_pair.left_filepath, 0)
+  return img
+
 def get_keypoints_pair(spk_id):
   global session
   query = session.query(Stereo_Pair_Keypoints)
   stereo_pair_keypoints = query.filter_by(stereo_pair_keypoint_id = int(spk_id)).first()
   return stereo_pair_keypoints
 
-def triangulate(matches, kpts1, kpts2):
+def triangulate(matches, kpts_descs1, kpts_descs2, left_image):
+  global pub_vis
 
-  kpts1 = kpts1[0]
-  descs1 = kpts1[1]
+  kpts1 = kpts_descs1[0]
+  descs1 = kpts_descs1[1]
 
-  kpts2 = kpts2[0]
-  descs2 = kpts2[1]
+  kpts2 = kpts_descs2[0]
+  descs2 = kpts_descs2[1]
 
-  descriptor_length = descs1.shape[0]
+  descriptor_length = descs1.shape[1]
   descriptor_dtype = descs1.dtype
 
-  matched_descs = np.empty([descriptor_length, 0], dtype=descriptor_dtype)
+  matched_descs = np.empty([0, descriptor_length], dtype=descriptor_dtype)
   positions = np.empty([0, 3])
 
   _3d_points = []
@@ -157,14 +176,38 @@ def triangulate(matches, kpts1, kpts2):
     Y = (y*Z)/f
     X = (x*Z)/f
 
+    #######draw and publish 3d points#########
+    draw_3d_point(left_image, query_pt.pt, Z)
+
     #stack matched descriptor onto matched_descs
     np.vstack((matched_descs, query_pt_desc))
 
     #add new row to position matrix
     np.vstack((positions, np.array([X, Y, Z])))
 
-  _3d_points = [matched_descs, positions]
+  _3d_points = [matched_descs.tolist(), positions.tolist()]
+
+  try:
+    pub_vis.publish(ConvertCV2ToROSGrayscale(left_image))
+  except CvBridgeError, e:
+    print e
+
   return _3d_points
+
+def draw_3d_point(left_image, pt, z):
+  cv2.circle(left_image, (int(pt[0]), int(pt[1])), 5, int(z))
+  cv2.putText(left_image, str(z), (int(pt[0]), int(pt[1])), cv2.FONT_HERSHEY_SIMPLEX, 2, 255, 2)
+
+def ConvertCV2ToROSGrayscale(img):
+  global bridge
+
+  color = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
+  ros_img = bridge.cv2_to_imgmsg(color, "bgr8")
+  return ros_img
+
+  #cv2_img = bridge.imgmsg_to_cv2(img, "bgr8")
+  #cv2_img_gray = cv2.cvtColor(cv2_img, cv2.COLOR_BGR2GRAY)
+  #return cv2_img_gray
 
 def store_3d_points(_3d_points, matches_filepath):
   filepath = "{0}.3d_points".format(matches_filepath)
@@ -200,12 +243,18 @@ def get_left_keypoints(stereo_pair_keypoint):
 
   kpts_descs = pickle.load(open(left_keypoints_filepath, "rb"))
   kpts_descs[0] = [recreate_keypoints(kp) for kp in kpts_descs[0]]
+  kpts_descs[1] = np.array(kpts_descs[1], np.float32)
+
   return kpts_descs
 
 def get_right_keypoints(stereo_pair_keypoint):
   right_keypoints_filepath = "{0}".format(stereo_pair_keypoint.right_keypoints_filepath)
 
-  return pickle.load(open(right_keypoints_filepath, "rb"))
+  kpts_descs = pickle.load(open(right_keypoints_filepath, "rb"))
+  kpts_descs[0] = [recreate_keypoints(kp) for kp in kpts_descs[0]]
+  kpts_descs[1] = np.array(kpts_descs[1], np.float32)
+
+  return kpts_descs
 
 def get_sp_keypoint_matches(sp_keypoint_matches_id):
   global session
@@ -224,6 +273,24 @@ class SerializableKeypoint():
 if __name__ == '__main__':
   triangulate_matches()
 
+  '''
+
+  matches_filepath = '/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/images/left/1401674393991712601.jpg.keypoints.keypoint_matches'
+
+  left_kpts_filepath = '/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/images/left/1401674393991712601.jpg.keypoints'
+
+  right_kpts_filepath = '/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/images/right/1401674393991712601.jpg.keypoints'
+
+  matches = np.load(open(matches_filepath))
+  right_ke
+
+
+  #matches = pickle.load(open(matches_filepath))
+  #right_kpts = pickle.load(open(right_kpts_filepath))
+  #left_kpts = pickle.load(open(left_kpts_filepath))
+
+  triangulate(matches, left_kpts, right_kpts)
+  '''
   '''
 
   cam0 = cv2.VideoCapture(0)

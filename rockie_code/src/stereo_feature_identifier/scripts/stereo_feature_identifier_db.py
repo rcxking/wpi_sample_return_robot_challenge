@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import datetime
 
-from sqlalchemy.dialects.mysql import DATETIME, VARCHAR
+from sqlalchemy.dialects.mysql import DATETIME, VARCHAR, DOUBLE
 from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -35,16 +35,16 @@ class Graph_Nodes(Base):
   node_type = Column(VARCHAR(6500))
   sp_3d_matches_id = Column(VARCHAR(6500))
   optimal_transformation_filepath = Column(VARCHAR(6500))
-  x = Column(Double)
-  y = Column(Double)
-  z = Column(Double)
+  x = Column(DOUBLE)
+  y = Column(DOUBLE)
+  z = Column(DOUBLE)
 
 class Graph_Edges(Base):
   __tablename__='graph_edges'
   edge_id = Column(Integer, primary_key=True, autoincrement=True)
   node_1_id = Column(Integer)
   node_2_id = Column(Integer)
-  3d_match_matches_filepath = Column(VARCHAR(6500))
+  _3d_match_matches_filepath = Column(VARCHAR(6500))
   rigid_body_transform_filepath = Column(VARCHAR(6500))
 
 if __name__ == '__main__':

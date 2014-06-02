@@ -45,9 +45,6 @@ def create_and_store_features_callback(stereo_image_pair_data_id):
     query = session.query(Stereo_Image_Pair)
     stereo_image_pair = query.filter_by(stereo_image_pair_id = int(stereo_image_pair_id)).first()
 
-    #img_left_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_image_pair.left_filepath)
-    #img_right_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_image_pair.right_filepath)
-
     img_left_filepath = stereo_image_pair.left_filepath
     img_right_filepath = stereo_image_pair.right_filepath
 
@@ -57,19 +54,21 @@ def create_and_store_features_callback(stereo_image_pair_data_id):
     left_keypoints = CreateKeypointsAndDescriptors(img_left)
     right_keypoints = CreateKeypointsAndDescriptors(img_right)
     
-    left_img_keypoints_filepath = SaveKeypoints(left_keypoints, img_left_filepath)
-    right_img_keypoints_filepath = SaveKeypoints(right_keypoints, img_right_filepath)
+    if(left_keypoints[1] != None and right_keypoints[1] != None):
 
-    stereo_pair_keypoints = Stereo_Pair_Keypoints()
+        left_img_keypoints_filepath = SaveKeypoints(left_keypoints, img_left_filepath)
+        right_img_keypoints_filepath = SaveKeypoints(right_keypoints, img_right_filepath)
 
-    stereo_pair_keypoints.left_keypoints_filepath = left_img_keypoints_filepath
-    stereo_pair_keypoints.right_keypoints_filepath = right_img_keypoints_filepath
-    stereo_pair_keypoints.stereo_image_pair_id = stereo_image_pair_id
+        stereo_pair_keypoints = Stereo_Pair_Keypoints()
 
-    session.add(stereo_pair_keypoints)
-    session.commit()
-    stereo_pair_keypoint_id = stereo_pair_keypoints.stereo_pair_keypoint_id
-    pub.publish(str(stereo_pair_keypoint_id))
+        stereo_pair_keypoints.left_keypoints_filepath = left_img_keypoints_filepath
+        stereo_pair_keypoints.right_keypoints_filepath = right_img_keypoints_filepath
+        stereo_pair_keypoints.stereo_image_pair_id = stereo_image_pair_id
+
+        session.add(stereo_pair_keypoints)
+        session.commit()
+        stereo_pair_keypoint_id = stereo_pair_keypoints.stereo_pair_keypoint_id
+        pub.publish(str(stereo_pair_keypoint_id))
 
     session.close()
 
@@ -105,6 +104,7 @@ def SaveKeypoints(kp, image_filepath):
 
 def ConvertToSerializableKeypoints(kps_descs):
     kps_descs[0] = [ConvertToSerializableKeypoint(keypoint) for keypoint in kps_descs[0]]
+    kps_descs[1] = kps_descs[1].tolist()
     return kps_descs
 
 if __name__ == '__main__':

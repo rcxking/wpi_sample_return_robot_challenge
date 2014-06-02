@@ -105,7 +105,6 @@ def get_matches(kps_descs_1, kps_descs_2):
     kpts2 = kps_descs_2[0]
     des2 = kps_descs_2[1]
 
-    #matches = flann.knnMatch(des1, des2, 3)
     matches = flann.match(des1, des2)
 
     return matches
@@ -114,18 +113,22 @@ def recreate_keypoints(kp):
     return cv2.KeyPoint(x=kp.pt[0], y=kp.pt[1], _size=kp.size, _angle=kp.angle, _response=kp.response, _octave=kp.octave, _class_id=kp.class_id) 
 
 def get_left_keypoints(stereo_pair_keypoint):
-    #left_keypoints_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_pair_keypoint.left_keypoints_filepath)
     left_keypoints_filepath = "{0}".format(stereo_pair_keypoint.left_keypoints_filepath)
 
     kpts_descs = pickle.load(open(left_keypoints_filepath, "rb"))
     kpts_descs[0] = [recreate_keypoints(kp) for kp in kpts_descs[0]]
+    kpts_descs[1] = np.array(kpts_descs[1], np.float32)
+
     return kpts_descs
 
 def get_right_keypoints(stereo_pair_keypoint):
-    #right_keypoints_filepath = "{0}{1}".format(stereo_imagepath_base, stereo_pair_keypoint.right_keypoints_filepath)
     right_keypoints_filepath = "{0}".format(stereo_pair_keypoint.right_keypoints_filepath)
 
-    return pickle.load(open(right_keypoints_filepath, "rb"))
+    kpts_descs =  pickle.load(open(right_keypoints_filepath, "rb"))
+    kpts_descs[0] = [recreate_keypoints(kp) for kp in kpts_descs[0]]
+    kpts_descs[1] = np.array(kpts_descs[1], np.float32)
+
+    return kpts_descs
 
 def get_stereo_pair_keypoint(stereo_pair_keypoint_id):
     global session

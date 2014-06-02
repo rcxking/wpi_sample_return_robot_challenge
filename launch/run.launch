@@ -12,7 +12,7 @@
   <node name="stereo_historian" pkg="stereo_historian" type="stereo_historian.py" />
   <node name="stereo_feature_identifier" pkg="stereo_feature_identifier" type="stereo_feature_identifier.py" />
   <node name="stereo_feature_matcher" pkg="stereo_feature_matcher" type="stereo_feature_matcher.py" />
-  <node name="stereo_feature_triangulator" pkg="stereo_feature_triangulator" type="stereo_feature_triangulator.py" />
+  <node name="stereo_feature_triangulator" pkg="stereo_feature_triangulator" type="stereo_feature_triangulator.py" output="screen" />
 
   <!--stereo image processing, produces disparity image, point cloud data from stereo images-->
   <!--node name="stereo_image_proc" pkg="stereo_image_proc" type="stereo_image_proc" ns="my_stereo" /-->
