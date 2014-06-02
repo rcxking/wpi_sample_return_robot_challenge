@@ -90,40 +90,41 @@ def update_graph_callback(_3d_matches_data_id):
   #we should be able to just find a path through the graph to our current position, and apply the
   #transformation along the path to recover the global position
 
-[new_point_descs, new_point_positions] = _3d_matches
+  update_graph(_3d_matches)
 
-#TODO: Connect poses with wheel odometry
-new_pose_node = create_pose_node(stereo_image_pair.stereo_image_pair_id)  
-#connect_poses(new_pose_node.node_id, new_pose_node.node_id - 1)
+def update_graph(_3d_matches):
 
-all_feature_nodes = get_all_feature_nodes()
+  [new_point_descs, new_point_positions] = _3d_matches
 
-insert_new_feature_node = True
+  #TODO: Connect poses with wheel odometry
+  new_pose_node = create_pose_node(stereo_image_pair.stereo_image_pair_id)  
+  #connect_poses(new_pose_node.node_id, new_pose_node.node_id - 1)
 
-for feature_node in all_feature_nodes:
-  feature_node_3d_points = get_3d_points(feature_node.sp_3d_matches_id)
-  [feature_node_descs, feature_node_positions] = feature_node_3d_points
+  all_feature_nodes = get_all_feature_nodes()
 
-  point_matches = get_3d_point_matches(new_point_descs, feature_node_descs)
+  insert_new_feature_node = True
 
-  num_3d_matches = point_matches.shape[0]
-  num_feature_node_points = feature_node_positions.shape[0]
+  for feature_node in all_feature_nodes:
+    feature_node_3d_points = get_3d_points(feature_node.sp_3d_matches_id)
+    [feature_node_descs, feature_node_positions] = feature_node_3d_points
 
-  #Returns true if we have enough matches to connect new pose to existing feature, false otherwise
-  #if(enough_matches(point_matches, new_3d_matches, feature_node_3d_matches)):
-  if(num_3d_matches > new_connection_threshold)
-    transform = calculate_3d_transform(point_matches, new_point_positions, feature_node_positions)
+    point_matches = get_3d_point_matches(new_point_descs, feature_node_descs)
 
-    connect_pose_to_feature(new_pose_node, feature_node, transform, point_matches)
+    num_3d_matches = point_matches.shape[0]
+    num_feature_node_points = feature_node_positions.shape[0]
 
-    #don't add new feature node if num of matches is relatively large
-    #if(new_feature_not_needed(point_matches, new_3d_matches, 3d_matches):
-    if(num_3d_matches > new_feature_threshold*num_feature_node_points)
-      insert_new_feature_node = False
+    #Returns true if we have enough matches to connect new pose to existing feature, false otherwise
+    if(num_3d_matches > new_connection_threshold)
+      transform = calculate_3d_transform(point_matches, new_point_positions, feature_node_positions)
+      connect_pose_to_feature(new_pose_node, feature_node, transform, point_matches)
 
-if(insert_new_feature_node):
-  new_feature_node = add_new_feature_node()
-  connect_pose_to_feature(new_pose_node, new_feature_node)
+      #don't add new feature node if num of matches is relatively large
+      if(num_3d_matches > new_feature_threshold*num_feature_node_points)
+        insert_new_feature_node = False
+
+  if(insert_new_feature_node):
+    new_feature_node = add_new_feature_node()
+    connect_pose_to_feature(new_pose_node, new_feature_node)
 
 def add_new_feature_node(_3d_matches)
   global session
