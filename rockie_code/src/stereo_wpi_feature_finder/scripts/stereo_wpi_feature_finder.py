@@ -486,9 +486,33 @@ def update_graph():
 class SerializableKeypoint():
   pass
 
+def create_stage_1_node(path):
+  cv2.imread(path)
+
+def create_wpi_feature_nodes(folder):
+  create_stage_1_node(folder + "stage_1.png")
+  create_stage_2_node(folder + "stage_2.png")
+
+  create_two_pillars_1_node(folder + "two_pillars_1.png")
+  create_two_pillars_2_node(folder + "two_pillars_2.png")
+
+  #TODO: create a one pillar node in case we can't match both?
+  #create_one_pillar_node(folder + "stage_1.png")
+
+
 if __name__ == '__main__':
+  wpi_feature_folder = "{0}/Code/wpi-sample-return-robot-challenge/wpi_features/feature_images/".format(os.getenv("HOME"))
+  wpi_starting_platform_folder = "{0}/Code/wpi-sample-return-robot-challenge/wpi_features/platform_images/".format(os.getenv("HOME"))
+
+  if(wpi_feature_nodes_not_created()):
+    create_wpi_feature_nodes(wpi_feature_folder)
+    create_wpi_platform_node(wpi_starting_platform_folder)
+
+
   #check db for wpi feature nodes
   #if none:
+    #create 3d keypoints for wpi features
+    #create wpi features nodes from these collections
     #generate wpi feature nodes
     #add to db
     #ensure that the wpi feature node flag is set
