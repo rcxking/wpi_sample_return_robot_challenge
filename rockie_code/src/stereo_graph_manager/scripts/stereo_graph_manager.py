@@ -160,6 +160,9 @@ def update_slam_graph(_3d_matches, stereo_image_pair):
       #Returns true if we have enough matches to connect new pose to existing feature, false otherwise
       if(num_3d_matches > new_connection_threshold):
 
+	#TODO: If the error for this is higher than we would
+	#expect, we should disregard it and not add it to the
+	#graph
         transform = calculate_3d_transform(point_matches, 
             new_point_positions, 
             feature_point_positions)
