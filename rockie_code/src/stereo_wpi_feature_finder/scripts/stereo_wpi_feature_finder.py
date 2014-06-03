@@ -1,7 +1,7 @@
 #!/usr/bin/python
 '''
 This node subscribes to the stereo image historian node, and every time a stereo image
-pair is saved it will perform feature matching on it. It will then save features to the
+pair is saved it will perform wpi feature matching on it. It will then save features to the
 database
 '''
 import numpy as np
@@ -62,42 +62,13 @@ def update_graph_callback(_3d_matches_data_id):
     stereo_keypoints = get_stereo_pair_keypoint(stereo_keypoint_matches.stereo_pair_keypoint_id)
     stereo_image_pair = get_stereo_image_pair(stereo_keypoints.stereo_image_pair_id)
 
-    update_slam_graph(_3d_matches, stereo_image_pair)
+    #attempt to match new 3d points to wpi features
+    #if we get a minimum number of matches:
+      #get 3d transform
+      #
 
-  #create pose node
-  #connect pose node to previous pose node
-  #use wheel odometry to get edge transform for this new edge
 
-  #iterate through prior 3d_matches
-  #if there is a 3d_match-3d_match (> min num of matches):
-    #connect newly created pose node to found 3d_match
-
-    #if we've found a 3d_match-3d_match match that share enough nodes
-    #don't add new 3d_matches as new feature node
-    #else
-    #add new 3d_matches as new feature node to graph
-    #connect this new node to new pose node
-
-  ################For more info, look at Thrun's graphslam paper http://robots.stanford.edu/papers/thrun.graphslam.pdf############
-
-  #Every pose-feature-pose edgewise connection can be reduced to a pose-pose edge (constraint)
-  #NOTE: Don't reduce a pose-wpi-feature-node-pose edges to a pose-pose edge, this will
-  #discard global info
-
-  #We can then reduce our pose-pose/pose-feature graph to just a pose-pose graph
-  #A rigid body transformation (rotation followed by translation) defines this constraint
-
-  #The constraint error is defined as the square distance between each 3d point match after transformation
-
-  #Once this is done we can at least recover odometry (pose-pose constraints describe motion between poses)
-
-  #To recover absolute position, we first optimize our pose-pose constraints (least-squares/libg20)
-  #then, we find a wpi feature node in the graph. all pose-nodes that have an edge to this feature
-  #node(i.e. have seen the wpi feature) are given an absolute/global location.
-
-  #From these nodes, we propogate out the optimized transformations between pose-pose-nodes
-  #we should be able to just find a path through the graph to our current position, and apply the
-  #transformation along the path to recover the global position
+    #update_slam_graph(_3d_matches, stereo_image_pair)
 
 def get_stereo_image_pair(stereo_image_pair_id):
   global session
@@ -160,9 +131,6 @@ def update_slam_graph(_3d_matches, stereo_image_pair):
       #Returns true if we have enough matches to connect new pose to existing feature, false otherwise
       if(num_3d_matches > new_connection_threshold):
 
-	#TODO: If the error for this is higher than we would
-	#expect, we should disregard it and not add it to the
-	#graph
         transform = calculate_3d_transform(point_matches, 
             new_point_positions, 
             feature_point_positions)
@@ -519,5 +487,14 @@ class SerializableKeypoint():
   pass
 
 if __name__ == '__main__':
-  update_graph()
+  #check db for wpi feature nodes
+  #if none:
+    #generate wpi feature nodes
+    #add to db
+    #ensure that the wpi feature node flag is set
+
+
+
+
+  #update_graph()
 
