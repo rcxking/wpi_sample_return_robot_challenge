@@ -28,6 +28,7 @@ class Stereo_3D_Matches(Base):
   sp_3d_matches_id = Column(Integer, primary_key=True, autoincrement=True)
   sp_matches_id = Column(Integer)
   sp_3d_matches_filepath = Column(VARCHAR(6500))
+  sp_wpi_feature_name = Column(VARCHAR(6500))
 
 class Graph_Nodes(Base):
   __tablename__='graph_nodes'
