@@ -123,10 +123,50 @@ def get_3d_matches_object(_3d_matches):
 
   return obj
 
+def try_connect_nodes(feature_node, new_point_descs, new_point_positions):
+
+  feature_node_3d_points = get_3d_points(feature_node.sp_3d_matches_id)
+  feature_node_3d_points_obj = get_3d_matches_object(feature_node_3d_points)
+  [fn_descs, fn_positions] = feature_node_3d_points_obj
+
+  insert_new_feature_node = True
+
+  if(len(fn_positions) > ransac_sample_size):
+
+    feature_point_descs = np.array(fn_descs, np.float32)
+    feature_point_positions = np.array(fn_positions, np.float32)
+
+    point_matches = get_3d_point_matches(new_point_descs, feature_point_descs)
+
+    num_3d_matches = len(point_matches)
+    num_feature_node_points = feature_point_positions.shape[0]
+
+    #Returns true if we have enough matches to connect new pose to existing feature, false otherwise
+    if(num_3d_matches > new_connection_threshold):
+
+      #TODO: If the error for this is higher than we would
+      #expect, we should disregard it and not add it to the
+      #graph
+      transform = calculate_3d_transform(point_matches, 
+          new_point_positions, 
+          feature_point_positions)
+
+      connect_pose_to_feature(new_pose_node, 
+          feature_node, 
+          transform, 
+          point_matches, 
+          new_point_positions, 
+          feature_point_positions)
+
+      #don't add new feature node if num of matches is relatively large
+      if(num_3d_matches > new_feature_threshold*num_feature_node_points):
+        insert_new_feature_node = False
+
+  return insert_new_feature_node
+
 def update_slam_graph(_3d_matches, stereo_image_pair):
 
   _3d_matches_object = get_3d_matches_object(_3d_matches)
-
   [new_point_descs, new_point_positions] = _3d_matches_object
 
   new_point_descs = np.array(new_point_descs, np.float32)
@@ -136,48 +176,24 @@ def update_slam_graph(_3d_matches, stereo_image_pair):
   new_pose_node = create_pose_node(stereo_image_pair.stereo_image_pair_id)  
   #connect_poses(new_pose_node.node_id, new_pose_node.node_id - 1)
 
-  all_feature_nodes = get_all_feature_nodes()
+  all_non_wpi_feature_nodes = get_all_feature_nodes(is_wpi_feature_node=False)
+  all_wpi_feature_nodes = get_all_feature_nodes(is_wpi_feature_node=True)
 
   insert_new_feature_node = True
 
-  for feature_node in all_feature_nodes:
+  #Attempt to match against wpi feature nodes
+  for feature_node in all_wpi_feature_nodes:
+    if(try_connect_nodes(feature_node, new_point_descs, new_point_positions)):
+      #if we successfully match a wpi feature, connect and return
+      return
 
-    feature_node_3d_points = get_3d_points(feature_node.sp_3d_matches_id)
-    feature_node_3d_points_obj = get_3d_matches_object(feature_node_3d_points)
+  #Attempt to match against a previous non-wpi node
+  for feature_node in all_non_wpi_feature_nodes:
+    if(try_connect_nodes(feature_node, new_point_descs, new_point_positions)):
+      insert_new_feature_node = False
 
-    [fn_descs, fn_positions] = feature_node_3d_points_obj
-
-    if(len(fn_positions) > ransac_sample_size):
-
-      feature_point_descs = np.array(fn_descs, np.float32)
-      feature_point_positions = np.array(fn_positions, np.float32)
-
-      point_matches = get_3d_point_matches(new_point_descs, feature_point_descs)
-
-      num_3d_matches = len(point_matches)
-      num_feature_node_points = feature_point_positions.shape[0]
-
-      #Returns true if we have enough matches to connect new pose to existing feature, false otherwise
-      if(num_3d_matches > new_connection_threshold):
-
-	#TODO: If the error for this is higher than we would
-	#expect, we should disregard it and not add it to the
-	#graph
-        transform = calculate_3d_transform(point_matches, 
-            new_point_positions, 
-            feature_point_positions)
-
-        connect_pose_to_feature(new_pose_node, 
-            feature_node, 
-            transform, 
-            point_matches, 
-            new_point_positions, 
-            feature_point_positions)
-
-        #don't add new feature node if num of matches is relatively large
-        if(num_3d_matches > new_feature_threshold*num_feature_node_points):
-          insert_new_feature_node = False
-
+  #Nothing matched our incoming keypoints completely,
+  #so add this as a new node for future matching
   if(insert_new_feature_node):
     new_feature_node = add_new_feature_node(_3d_matches)
     identity_transform = get_identity_transform()
@@ -429,11 +445,16 @@ def get_3d_point_matches(descs1, descs2):
   
   return matches
 
-def get_all_feature_nodes():
+def get_all_feature_nodes(is_wpi_feature_node):
   global session
   query = session.query(Graph_Nodes)
-  all_feature_nodes = query.filter(Graph_Nodes.node_type == 'feature')
-  return all_feature_nodes
+
+  if(is_wpi_feature_node):
+    feature_nodes = query.filter(Graph_Nodes.node_type == 'feature')
+  else:
+    feature_nodes = query.filter(Graph_Nodes.node_type == 'wpi_feature')
+
+  return feature_nodes
 
 def triangulate(matches, kpts1, kpts2):
 
