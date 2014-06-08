@@ -1,8 +1,8 @@
 #!/usr/bin/python
 '''
-This node subscribes to the stereo image historian node, and every time a stereo image
-pair is saved it will perform feature matching on it. It will then save features to the
-database
+This node is a service interface to slam
+
+a user may call get_absolute_position, 
 '''
 import numpy as np
 import cv2
