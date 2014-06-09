@@ -35,10 +35,7 @@ class Graph_Nodes(Base):
   node_id = Column(Integer, primary_key=True, autoincrement=True)
   node_type = Column(VARCHAR(6500))
   sp_3d_matches_id = Column(VARCHAR(6500))
-  optimal_transformation_filepath = Column(VARCHAR(6500))
-  x = Column(DOUBLE)
-  y = Column(DOUBLE)
-  z = Column(DOUBLE)
+  global_transformation_filepath = Column(VARCHAR(6500))
 
 class Graph_Edges(Base):
   __tablename__='graph_edges'

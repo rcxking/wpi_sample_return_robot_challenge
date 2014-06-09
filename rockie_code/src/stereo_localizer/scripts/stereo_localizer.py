@@ -44,10 +44,10 @@ def get_last_position():
   #else
     #percolate transforms out (recursive). find edges connected to this wpi feature node 
     #for each edge:
-      #apply percolate_absolute_position(edge12, node1, node2)
+      #apply percolate_global_transform(edge12, node1, node2)
       #this will apply the transform to node2 from node1, and once 
       #that is done, it will find edges connected to node2, and perform
-      #percolate_absolute_position for each of those.
+      #percolate_global_transform for each of those.
       #if node2 has no edges, terminate
   
 def get_edge_transform(edge):
@@ -70,8 +70,8 @@ def get_node_by_id(node_id):
 
   return query.first()
 
-def get_connected_node_position(position, transform):
-  return np.dot(transform, position)
+def get_connected_node_frame_transformation(edge_transform, global_transform):
+  return np.dot(edge_transform, global_transform)
 
 def get_node_position(node):
   return [node.x, node.y, node.y]
@@ -85,42 +85,44 @@ def get_connected_node(node, edge):
   else:
     return get_node_by_id(node_1_id)
 
-def set_node_position(node, position):
+def set_node_global_transform(node, position):
   global session
 
-  node.x = position[0]
-  node.y = position[1]
-  node.z = position[2]
+  
 
   session.commit()
 
-def percolate_absolute_position(edge, node):
+def percolate_global_transform(edge, node):
   #node1 has x,y,z. if node2 doesn't have x,y,z, apply transform in edge to get node2 x,y,z.
   #find edges connected to node2. for each connected node, recurse
 
   connected_node = get_connected_node(node, edge)
 
-  if connected_node.x == None:
-    transform = get_edge_transform(edge)
-    node_position = get_node_position(node)
-    connected_node_position = get_connected_node_position(node_position, transform)
+  if connected_node.global_transformation == None:
+    #this is the tranform between nodes (node 1 to node 2)
+    edge_transform = get_edge_transform(edge)
 
-    set_node_position(connected_node, connected_node_position)
+    #this is the transform from wpi frame to node frame
+    node_global_transform = get_node_global_transform(node)
+
+    #T_ac = _T_ab*T_bc
+    connected_node_global_transform = get_connected_node_global_transform(edge_transform, node_global_transform)
+
+    set_node_global_transform(connected_node, connected_node_position)
 
     edges = get_node_edges(connected_node)
 
   for edge in edges:
-    percolate_absolute_position(edge, connected_node)
+    percolate_global_transform(edge, connected_node)
 
-def get_last_position():
+def get_global_transform():
   wpi_node = get_wpi_node()
   wpi_node_edges = get_node_edges(wpi_node)
 
   for edge in wpi_node_edges:
-    percolate_absolute_position(wpi_node, edge)
+    percolate_global_transform(wpi_node, edge)
 
-  current_pose_node = get_latest_pose_node_with_position()
-
+  current_pose_node = get_latest_pose_node_with_global_transform()
 
 if __name__ == '__main__':
   rospy.init_node('stereo_localizer')
