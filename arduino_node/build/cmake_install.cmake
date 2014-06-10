@@ -86,6 +86,7 @@ IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/gtest/cmake_install.cmake")
   INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rockie_arduino_pub/cmake_install.cmake")
+  INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rockie_nav/cmake_install.cmake")
   INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial/cmake_install.cmake")
   INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial_client/cmake_install.cmake")
   INCLUDE("/home/bryant/wpi_sample_return_robot_challenge/arduino_node/build/rosserial/rosserial_msgs/cmake_install.cmake")
