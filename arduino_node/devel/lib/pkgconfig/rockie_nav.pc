@@ -1,0 +1,8 @@
+prefix=/home/bryant/wpi_sample_return_robot_challenge/arduino_node/devel
+
+Name: rockie_nav
+Description: Description of rockie_nav
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/bryant/wpi_sample_return_robot_challenge/arduino_node/devel/lib 
+Requires: 
