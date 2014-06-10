@@ -451,6 +451,11 @@ def get_covariance_matrix(positions_1, positions_2, centroid_1, centroid_2):
 
   return H
 
+def save_transform(transform, filepath, new_pose_node, feature_node):
+  filepath = "{0}node_{1}_to_node_{2}_edge.transform".format(stereo_imagepath_base, new_pose_node.node_id, feature_node.node_id)
+  pickle.dump(transform, open(filepath, 'wb'))
+  return filepath
+
 def connect_pose_to_feature(new_pose_node, feature_node, transform, point_matches, pose_3d_points, feature_3d_points):
   global session
 
@@ -459,9 +464,9 @@ def connect_pose_to_feature(new_pose_node, feature_node, transform, point_matche
   edge.node_1_type = 'pose'
   edge.node_2_id = feature_node.node_id
   edge.node_2_type = 'feature'
-
-  #transform_filepath = save_transform(transform)
-  #edge.optimal_transform_filepath = transform_filepath
+  
+  transform_filepath = save_transform(transform)
+  edge.optimal_transform_filepath = transform_filepath
 
   _3d_matches_filepath = save_3d_matches(point_matches,
       pose_3d_points, 

@@ -25,6 +25,8 @@ from sqlalchemy import create_engine
 import random
 from sqlalchemy.orm import sessionmaker
 
+stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/".format(os.getenv("HOME"))
+
 engine = create_engine('mysql://root@localhost/rockie')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
@@ -85,10 +87,16 @@ def get_connected_node(node, edge):
   else:
     return get_node_by_id(node_1_id)
 
-def set_node_global_transform(node, position):
-  global session
+def save_global_transform(transform, node):
+  filepath = "{0}node_{1}_global_transform.transform".format(stereo_imagepath_base, node.node_id)
+  pickle.dump(transform, open(filepath, 'wb'))
+  return filepath
 
+def set_node_global_transform(node, transform):
+  global session
   
+  filepath = save_global_transform(transform, node)
+  node.global_transformation_filepath = filepath
 
   session.commit()
 
@@ -110,7 +118,7 @@ def percolate_global_transform(edge, node, traversed_edges):
     #T_ac = _T_ab*T_bc
     connected_node_global_transform = get_connected_node_global_transform(edge_transform, node_global_transform)
 
-    set_node_global_transform(connected_node, connected_node_position)
+    set_node_global_transform(connected_node, connected_node_global_transform)
 
     edges = get_node_edges(connected_node)
 
@@ -128,6 +136,11 @@ def get_global_transform():
     percolate_global_transform(wpi_node, edge, traversed_edges)
 
   current_pose_node = get_latest_pose_node_with_global_transform()
+
+def get_latest_pose_node_with_global_transform():
+  global session
+
+  
 
 if __name__ == '__main__':
   rospy.init_node('stereo_localizer')
