@@ -6,6 +6,7 @@
 # testing this directory and lists subdirectories to be tested as well.
 SUBDIRS(gtest)
 SUBDIRS(rockie_arduino_pub)
+SUBDIRS(rockie_nav)
 SUBDIRS(rosserial/rosserial)
 SUBDIRS(rosserial/rosserial_client)
 SUBDIRS(rosserial/rosserial_msgs)
