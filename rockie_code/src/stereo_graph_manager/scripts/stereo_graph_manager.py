@@ -49,6 +49,13 @@ ransac_iterations = 30
 
 stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/images/left/".format(os.getenv("HOME"))
 
+min_wpi_feature_matches = 4
+
+##DEBUG
+
+is_debug = True
+initial_node_set = False
+
 def update_graph_callback(_3d_matches_data_id):
   global session
   global DBSession
@@ -122,7 +129,8 @@ def get_3d_matches_object(_3d_matches):
   obj = pickle.load(open(_3d_matches.sp_3d_matches_filepath))
   return obj
 
-def try_connect_nodes_wpi_feature(feature_node, new_point_descs, new_point_positions):
+def try_connect_nodes_wpi_feature(feature_node, new_point_descs, new_point_positions, new_pose_node):
+  global min_wpi_feature_matches
 
   feature_node_3d_points = get_3d_points(feature_node.sp_3d_matches_id)
   feature_node_3d_points_obj = get_3d_matches_object(feature_node_3d_points)
@@ -154,7 +162,7 @@ def try_connect_nodes_wpi_feature(feature_node, new_point_descs, new_point_posit
           new_point_positions, 
           feature_point_positions)
 
-def try_connect_nodes(feature_node, new_point_descs, new_point_positions):
+def try_connect_nodes(feature_node, new_point_descs, new_point_positions, new_pose_node):
 
   feature_node_3d_points = get_3d_points(feature_node.sp_3d_matches_id)
   feature_node_3d_points_obj = get_3d_matches_object(feature_node_3d_points)
@@ -214,13 +222,13 @@ def update_slam_graph(_3d_matches, stereo_image_pair):
 
   #Attempt to match against wpi feature nodes
   for feature_node in all_wpi_feature_nodes:
-    if(try_connect_nodes_wpi_feature(feature_node, new_point_descs, new_point_positions)):
+    if(try_connect_nodes_wpi_feature(feature_node, new_point_descs, new_point_positions, new_pose_node)):
       #if we successfully match a wpi feature, connect and return
       return
 
   #Attempt to match against a previous non-wpi node
   for feature_node in all_non_wpi_feature_nodes:
-    if(try_connect_nodes(feature_node, new_point_descs, new_point_positions)):
+    if(try_connect_nodes(feature_node, new_point_descs, new_point_positions, new_pose_node)):
       insert_new_feature_node = False
 
   #Nothing matched our incoming keypoints completely,
@@ -388,12 +396,19 @@ def calculate_transform_error(R, t, positions_1, positions_2):
 
   return cum_error
 
+def is_none_vector(v):
+
+  if v[0] == None and v[1] == None and v[2] == None:
+    return True
+  else:
+    return False
+
 def matches_with_wpi_coordinates(matches, ransac_sample_size, positions_query, positions_train):
 
   matches_with_coords = []
 
   for match in matches:
-    if positions_query[match.queryIdx] != [None, None, None] and positions_train[match.trainIdx] != [None, None, None]:
+    if not is_none_vector(positions_query[match.queryIdx]) and not is_none_vector(positions_train[match.trainIdx]):
       matches_with_coords.append(match)
 
   random_indexes = random.sample(range(len(matches_with_coords)), ransac_sample_size)
@@ -456,6 +471,12 @@ def save_transform(transform, filepath, new_pose_node, feature_node):
   pickle.dump(transform, open(filepath, 'wb'))
   return filepath
 
+def save_global_transform(transform, node):
+  filepath = "{0}node_{1}_global_transform.transform".format(stereo_imagepath_base, node.node_id)
+  pickle.dump(transform, open(filepath, 'wb'))
+  return filepath
+
+
 def connect_pose_to_feature(new_pose_node, feature_node, transform, point_matches, pose_3d_points, feature_3d_points):
   global session
 
@@ -465,7 +486,7 @@ def connect_pose_to_feature(new_pose_node, feature_node, transform, point_matche
   edge.node_2_id = feature_node.node_id
   edge.node_2_type = 'feature'
   
-  transform_filepath = save_transform(transform)
+  transform_filepath = save_transform(transform, None, new_pose_node, feature_node)
   edge.optimal_transform_filepath = transform_filepath
 
   _3d_matches_filepath = save_3d_matches(point_matches,
@@ -506,11 +527,23 @@ def save_3d_matches(point_matches, pose_3d_points, feature_3d_points, pose_id, f
 
 def create_pose_node(stereo_image_pair_id):
   global session
+  global initial_node_set
+  global is_debug
+
   node = Graph_Nodes()
   node.stereo_image_pair_id = stereo_image_pair_id
   node.node_type = 'pose'
 
   session.add(node)
+  session.commit()
+
+  #if we're debugging, set the first node to global coordinates
+  if(is_debug and not initial_node_set):
+    initial_node_set = True
+    T = get_identity_transform()
+    filepath = save_global_transform(T, node)
+    node.global_transformation_filepath = filepath
+
   session.commit()
   return node
 
