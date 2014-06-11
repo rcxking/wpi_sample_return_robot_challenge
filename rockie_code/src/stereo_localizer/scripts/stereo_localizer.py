@@ -72,9 +72,52 @@ def get_node_by_id(node_id):
 
   return query.first()
 
-def get_connected_node_frame_transformation(edge_transform, global_transform):
-  return np.dot(edge_transform, global_transform)
+def invert_transform([R, t]):
+  R_inverted = np.transpose(R)
+  t_inverted = -np.dot(R_inverted, t)
 
+  return [R_inverted, t_inverted]
+
+#TODO: Convert to homogeneous, will be much easier :)
+def get_connected_node_global_transform(edge, root_node, connected_node):
+
+    #this is the tranform between nodes (node 1 to node 2)
+    edge_transform = get_edge_transform(edge)
+
+    #edge transform is from 1 to 2
+
+    #if the connected node is node 2, we want g_2w = g_21*g_1w
+    #where g_21 is transfrom from 2 to 1, and
+    # g_1w is transform from 1 to wpi frame
+    if edge.node_2_id = connected_node.node_id:
+
+      #this is the transform from wpi frame to node frame
+      [R_1w, t_1w] = get_node_global_transform(root_node)
+
+      [R_21, t_21] = invert_transform(edge_transform)
+
+      #R_ac = R_ab*R_bc
+      R_2w = np.dot(R_21, R_1w)
+      t_2w = np.dot(R_21, t_1w) + t_21
+
+      R = R_2w
+      t = t_2w
+
+    else:
+
+      #this is the transform from wpi frame to node frame
+      [R_2w, t_2w] = get_node_global_transform(root_node)
+
+      [R_12, t_12] = edge_transform
+
+      R_1w = np.dot(R_12, R_2w)
+      t_1w = np.dot(R_12, t_2w) + t_12
+      
+      R = R_1w
+      t = t_1w
+
+    return [R.tolist(), t.tolist()]
+ 
 def get_node_position(node):
   return [node.x, node.y, node.y]
 
@@ -92,6 +135,14 @@ def save_global_transform(transform, node):
   pickle.dump(transform, open(filepath, 'wb'))
   return filepath
 
+def get_node_global_transform(node):
+  global session
+
+  filepath = node.global_transformation_filepath
+  [R, t] = pickle.load(open(filepath, "rb"))
+
+  return [np.array(R), np.array(t)]
+
 def set_node_global_transform(node, transform):
   global session
   
@@ -100,23 +151,18 @@ def set_node_global_transform(node, transform):
 
   session.commit()
 
-def percolate_global_transform(edge, node, traversed_edges):
+def percolate_global_transform(root_node, edge, traversed_edges):
   #node1 has x,y,z. if node2 doesn't have x,y,z, apply transform in edge to get node2 x,y,z.
   #find edges connected to node2. for each connected node, recurse
   
   traversed_edges.append(edge)
 
-  connected_node = get_connected_node(node, edge)
+  connected_node = get_connected_node(root_node, edge)
 
   if connected_node.global_transformation == None:
-    #this is the tranform between nodes (node 1 to node 2)
-    edge_transform = get_edge_transform(edge)
-
-    #this is the transform from wpi frame to node frame
-    node_global_transform = get_node_global_transform(node)
 
     #T_ac = _T_ab*T_bc
-    connected_node_global_transform = get_connected_node_global_transform(edge_transform, node_global_transform)
+    connected_node_global_transform = get_connected_node_global_transform(edge_transform, root_node, connected_node)
 
     set_node_global_transform(connected_node, connected_node_global_transform)
 
@@ -124,9 +170,10 @@ def percolate_global_transform(edge, node, traversed_edges):
 
   for edge in edges:
     if edge not in traversed_edges:
-      percolate_global_transform(edge, connected_node, traversed_edges)
+      percolate_global_transform(connected_node, edge, traversed_edges)
 
 def get_global_transform():
+
   wpi_node = get_wpi_node()
   wpi_node_edges = get_node_edges(wpi_node)
 
@@ -140,7 +187,6 @@ def get_global_transform():
 def get_latest_pose_node_with_global_transform():
   global session
 
-  
 
 if __name__ == '__main__':
   rospy.init_node('stereo_localizer')

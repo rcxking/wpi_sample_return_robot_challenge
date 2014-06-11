@@ -53,9 +53,26 @@ def add_new_wpi_feature_node(_3d_matches):
   feature_node.node_type = 'wpi_feature'
   feature_node.sp_3d_matches_id = _3d_matches.sp_3d_matches_id
 
+  #this is a wpi node, so optimal global transform is identity
+
   session.add(feature_node)
   session.commit()
+
+  global_R = np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+  global_t = np.array([[0], [0], [0]])
+
+  transform = [global_R.tolist(), global_t.tolist()]
+
+  global_transform_filepath = save_transform(transform, feature_node)
+  feature_node.global_transformation_filepath = global_transform_filepath
+
+  session.commit()
   return feature_node
+
+def save_global_transform(transform, node):
+  filepath = "{0}node_{1}_global_transform.transform".format(stereo_imagepath_base, node.node_id)
+  pickle.dump(transform, open(filepath, 'wb'))
+  return filepath
 
 def create_stage_1_node(path):
   pillar_1_top = 250
