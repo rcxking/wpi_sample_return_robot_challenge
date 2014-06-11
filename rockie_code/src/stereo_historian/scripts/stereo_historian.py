@@ -11,14 +11,15 @@ from stereo_historian_db import Stereo_Image_Pair, Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import os
+import shutil
 
-#stereo_ns = 'my_stereo'
-#image_name = 'image_raw'
+stereo_ns = 'my_stereo'
+image_name = 'image_raw'
 
 stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/".format(os.getenv("HOME"))
 
-stereo_ns = 'rrbot/camera1'
-image_name = 'image_raw'
+#stereo_ns = 'rrbot/camera1'
+#image_name = 'image_raw'
 
 #Max number of seconds allowed for approx sync
 #1/framerate should be the max diff in timestamps for stereo pairs
@@ -135,6 +136,13 @@ def store_stereo_images():
     
     rospy.spin()
 if __name__ == '__main__':
+
+  try:
+    #pass
+    shutil.rmtree("{0}images".format(stereo_imagepath_base))
+  except:
+    pass
+
   try:
     os.makedirs("{0}images/left".format(stereo_imagepath_base))
     os.makedirs("{0}images/right".format(stereo_imagepath_base))

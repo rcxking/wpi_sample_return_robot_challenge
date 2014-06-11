@@ -42,6 +42,7 @@ stereo_graph_manager_topic = '/my_stereo/stereo_graph_node_updates'
 #pub = rospy.Publisher("/my_stereo/stereo_image_saves", String)
 
 def get_last_position():
+  pass
   #get first wpi feature node
 
   #if no wpi feature node:
@@ -61,12 +62,19 @@ def get_edge_transform(edge):
 
 def get_node_edges(node, previous_node):
   global session
+
   query = session.query(Graph_Edges)
-  query.filter(Graph_Edges.node_1_id == node.node_id or Graph_Edges.node_2_id == node.node_id)
+
+  query.filter(Graph_Edges.node_1_id == node.node_id or Graph_Edges.node_2_id == node.node_id) 
+
+  #don't get edge we just came from
+  query.filter(Graph_Edges.node_1_id != previous_node.node_id and Graph_Edges.node_2_id != previous_node.node_id)
   edges = query.all()
 
-  #don't return the previous node
-  return [new_edges if e.node_1_id != previous_node.node_id and e.node_2_id != previous_node.node_id for e in edges]  
+  #don't return the previous edge
+  #filtered_new_edges = remove_previous_edge(new_edges)
+  #return [new_edges if e.node_1_id is not previous_node.node_id and e.node_2_id is not previous_node.node_id for e in edges]  
+  return edges
 
 def get_node_by_id(node_id):
   global session
@@ -75,7 +83,8 @@ def get_node_by_id(node_id):
 
   return query.first()
 
-def invert_transform([R, t]):
+def invert_transform(transform):
+  [R, t] = transform
   R_inverted = np.transpose(R)
   t_inverted = -np.dot(R_inverted, t)
 
@@ -92,7 +101,7 @@ def get_connected_node_global_transform(edge, root_node, connected_node):
     #if the connected node is node 2, we want g_2w = g_21*g_1w
     #where g_21 is transfrom from 2 to 1, and
     # g_1w is transform from 1 to wpi frame
-    if edge.node_2_id = connected_node.node_id:
+    if edge.node_2_id == connected_node.node_id:
 
       #this is the transform from wpi frame to node frame
       [R_1w, t_1w] = get_node_global_transform(root_node)
@@ -202,16 +211,19 @@ def get_latest_pose_node_with_global_transform():
   #get most recent node where global transform filepath is not None
   query = session.query(Graph_Nodes)
 
-  query.filter(Graph_Nodes.global_transform_filepath != None)
+  query.filter(Graph_Nodes.global_transformation_filepath != None)
   query.filter(Graph_Nodes.node_type == 'pose')
-  query.order_by(desc(Graph_Node.node_id))
+  query.order_by(Graph_Nodes.node_id.desc())
 
   latest_pose_node = query.first()
 
-  most_recent_pose_node = query.first()
-  [R, t] = get_node_global_transform(most_recent_pose_node)
+  if latest_pose_node != None:
+    most_recent_pose_node = query.first()
+    [R, t] = get_node_global_transform(most_recent_pose_node)
 
-  return [R, t] 
+    return [R, t] 
+
+  return [None, None]
 
 def get_axis_angle(R):
   theta = np.arccos((np.trace(R) - 1)/2)
@@ -252,8 +264,11 @@ if __name__ == '__main__':
 
   while not rospy.is_shutdown():
     [R, t] = get_latest_pose_node_with_global_transform()    
-    quaternion = tf.transformations.quaternion_from_matrix(R)
-    br.sendTransform((t[0], t[1]. t[2]), quaternion, rospy.Time.now(), 'rockie', 'map')
+
+    if R != None:
+      quaternion = tf.transformations.quaternion_from_matrix(R)
+      br.sendTransform((t[0], t[1]. t[2]), quaternion, rospy.Time.now(), 'rockie', 'map')
+
     #ros_transform = get_stamped_transform(R, t)
-    r.sleep()
+    rate.sleep()
 
