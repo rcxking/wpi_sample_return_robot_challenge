@@ -24,6 +24,7 @@ import cPickle as pickle
 from sqlalchemy import create_engine
 import random
 from sqlalchemy.orm import sessionmaker
+import tf
 
 stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/".format(os.getenv("HOME"))
 
@@ -37,6 +38,8 @@ stereo_feature_identifier_topic = '/my_stereo/stereo_image_keypoint_saves'
 stereo_feature_matcher_topic = '/my_stereo/stereo_image_keypoint_matches'
 stereo_feature_triangulator_topic = '/my_stereo/stereo_image_3D_points'
 stereo_graph_manager_topic = '/my_stereo/stereo_graph_node_updates'
+
+#pub = rospy.Publisher("/my_stereo/stereo_image_saves", String)
 
 def get_last_position():
   #get first wpi feature node
@@ -118,9 +121,6 @@ def get_connected_node_global_transform(edge, root_node, connected_node):
 
     return [R.tolist(), t.tolist()]
  
-def get_node_position(node):
-  return [node.x, node.y, node.y]
-
 def get_connected_node(node, edge):
   node_1_id = edge.node_1_id
   node_2_id = edge.node_2_id
@@ -172,6 +172,14 @@ def percolate_global_transform(root_node, edge, traversed_edges):
     if edge not in traversed_edges:
       percolate_global_transform(connected_node, edge, traversed_edges)
 
+def get_wpi_node():
+  global session
+
+  query = session.query(Graph_Nodes)
+  query.filter(Graph_Nodes.global_transformation_filepath != None)
+
+  return query.first()
+
 def get_global_transform():
 
   wpi_node = get_wpi_node()
@@ -184,12 +192,68 @@ def get_global_transform():
 
   current_pose_node = get_latest_pose_node_with_global_transform()
 
+  current_global_transform = get_node_global_transform(current_pose_node)
+
+  return current_global_transform
+
 def get_latest_pose_node_with_global_transform():
   global session
 
+  #get most recent node where global transform filepath is not None
+  query = session.query(Graph_Nodes)
+
+  query.filter(Graph_Nodes.global_transform_filepath != None)
+  query.filter(Graph_Nodes.node_type == 'pose')
+  query.order_by(desc(Graph_Node.node_id))
+
+  latest_pose_node = query.first()
+
+  most_recent_pose_node = query.first()
+  [R, t] = get_node_global_transform(most_recent_pose_node)
+
+  return [R, t] 
+
+def get_axis_angle(R):
+  theta = np.arccos((np.trace(R) - 1)/2)
+
+  a = np.empty([1, 3])
+
+  a[0] = R[3,2] - R[2,3]
+  a[1] = R[1,3] - R[3,1]
+  a[2] = R[2,1] - R[2,1]
+
+  axis = np.dot((1/(2*np.sin(angle))), a)
+
+  return [axis, theta]
+
+def get_stamped_transform(R, t):
+  m = geometry_msgs.msg.TransformStamped()
+  m.header.frame_id = 'map'
+  m.child.frame_id = 'rockie'
+
+  m.transform.translation.x = t[0]
+  m.transform.translation.y = t[1]
+  m.transform.translation.z = t[2]
+
+  [axis, angle] = get_axis_angle(R) 
+
+  m.transform.rotation.x = axis[0]
+  m.transform.rotation.y = axis[1]
+  m.transform.rotation.z = axis[2]
+  m.transform.rotation.w = angle
+  
+  return m
 
 if __name__ == '__main__':
   rospy.init_node('stereo_localizer')
-  s = rospy.Service('get_last_position', , get_last_position)
-  rospy.spin()
+
+  br = tf.TransformBroadcaster()
+  rate = rospy.Rate(.2)
+
+  while not rospy.is_shutdown():
+    [R, t] = get_latest_pose_node_with_global_transform()    
+    quaternion = tf.transformations.quaternion_from_matrix(R)
+    br.sendTransform((t[0], t[1]. t[2]), quaternion, rospy.Time.now(), 'rockie', 'map')
+    #ros_transform = get_stamped_transform(R, t)
+    r.sleep()
 

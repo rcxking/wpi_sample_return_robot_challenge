@@ -392,7 +392,7 @@ def matches_with_wpi_coordinates(matches, ransac_sample_size, positions_query, p
 
   matches_with_coords = []
 
-  for match in matches
+  for match in matches:
     if positions_query[match.queryIdx] != [None, None, None] and positions_train[match.trainIdx] != [None, None, None]:
       matches_with_coords.append(match)
 
