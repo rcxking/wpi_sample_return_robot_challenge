@@ -18,7 +18,7 @@ if __name__ == '__main__':
 	while not rospy.is_shutdown():
 		try:
 			# Get the next rotation and translation:
-			(trans, rot) = listener.lookupTransform('/robot_frame', '/wpi_frame', rospy.Time(0))
+			(trans, rot) = listener.lookupTransform('/rockie', '/map', rospy.Time(0))
 
 			currentPos = numpy.array([[0], [0], [0]])
 			currentPosAhead = numpy.array([[0], [0], [1]])
@@ -28,6 +28,7 @@ if __name__ == '__main__':
 
 			# XYZ - Vector - Ignore Z
 			orientationVector = wpiCoordinatesPosAhead - wpiCoordinates
+			print("orientationVector is: ")
 			print(orientationVector)
 
 		except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):

@@ -6,6 +6,10 @@
     <param name="left/camera_info_url" value="file:///home/will/Code/wpi-sample-return-robot-challenge/camera_calibration/ost.yml" />
     <param name="right/camera_info_url" value="file:///home/will/Code/wpi-sample-return-robot-challenge/camera_calibration/ost.yml" />
     <param name="fps" value="1" />
+
+	<!-- Since Rockie does not have an integrated camera, SET LEFT TO VIDEO0 AND RIGHT TO VIDEO1 -->
+	<param name="left/device" value="/dev/video1" />
+	<param name="right/device" value="/dev/video2" />
   </node>
 
   <!--SLAM nodes-->
