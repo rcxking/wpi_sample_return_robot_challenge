@@ -56,15 +56,16 @@ class Stereo_Image_Pair(Base):
 if __name__ == '__main__':
   engine = create_engine('mysql://root@localhost/rockie')
  
-  db = MySQLdb.connect(host="localhost", # your host, usually localhost
-                       user="root", # your username
-                       passwd="", # your password
-                       db="rockie") # name of the data base
-
+  db = MySQLdb.connect(host="localhost", user="root", passwd="", db="rockie") 
 
   cur = db.cursor()
 
-  cur.execute('truncate TABLE `graph_nodes`')
+  cur.execute("DROP TABLE IF EXISTS graph_nodes")
+  cur.execute("DROP TABLE IF EXISTS graph_edges")
+  cur.execute("DROP TABLE IF EXISTS stereo_3d_matches")
+  cur.execute("DROP TABLE IF EXISTS stereo_image_pair")
+  cur.execute("DROP TABLE IF EXISTS stereo_pair_keypoint_matches")
+  cur.execute("DROP TABLE IF EXISTS stereo_pair_keypoints")
 
   #drop_tables = "USE rockie;"
   #drop_tables += " DROP TABLE graph_edges;"
