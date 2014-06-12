@@ -14,8 +14,7 @@ import rospy
 from std_msgs.msg import String
 from sensor_msgs.msg import Image as ros_image
 from cv_bridge import CvBridge, CvBridgeError
-from stereo_feature_identifier_db import Stereo_Pair_Keypoints, Stereo_Pair_Keypoint_Matches, Stereo_3D_Matches
-from stereo_historian_db import Stereo_Image_Pair, Base
+from stereo_feature_identifier_db import Stereo_Pair_Keypoints, Stereo_Pair_Keypoint_Matches, Stereo_3D_Matches, Stereo_Image_Pair, Base
 import datetime
 import cPickle as pickle
 from sqlalchemy import create_engine

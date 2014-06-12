@@ -7,19 +7,20 @@ from std_msgs.msg import String
 from sensor_msgs.msg import Image as ros_image
 from cv_bridge import CvBridge, CvBridgeError
 import datetime
-from stereo_historian_db import Stereo_Image_Pair, Base
+from stereo_feature_identifier_db import Stereo_Image_Pair, Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import os
 import shutil
+import time
 
-stereo_ns = 'my_stereo'
-image_name = 'image_raw'
+#stereo_ns = 'my_stereo'
+#image_name = 'image_raw'
 
 stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/".format(os.getenv("HOME"))
 
-#stereo_ns = 'rrbot/camera1'
-#image_name = 'image_raw'
+stereo_ns = 'rrbot/camera1'
+image_name = 'image_raw'
 
 #Max number of seconds allowed for approx sync
 #1/framerate should be the max diff in timestamps for stereo pairs
@@ -126,8 +127,6 @@ def right_callback(right_image):
     save_image(right_image, right_timestamp, "right")
 
 def store_stereo_images():
-    rospy.init_node("stereo_historian")
-
     left_img_topic = stereo_ns + '/left/' + image_name
     right_img_topic = stereo_ns + '/right/' + image_name
 
@@ -137,8 +136,11 @@ def store_stereo_images():
     rospy.spin()
 if __name__ == '__main__':
 
+  rospy.init_node('stereo_historian')
+
+  rospy.set_param('/fs_cleaning', 1)
+
   try:
-    #pass
     shutil.rmtree("{0}images".format(stereo_imagepath_base))
   except:
     pass
@@ -148,6 +150,12 @@ if __name__ == '__main__':
     os.makedirs("{0}images/right".format(stereo_imagepath_base))
   except:
     pass
+
+  rospy.set_param('/fs_cleaning', 0)
+
+  #don;t start until db cleaning is complete
+  while rospy.get_param('/db_cleaning') == 1:
+    time.sleep(1) 
 
   store_stereo_images()
 
