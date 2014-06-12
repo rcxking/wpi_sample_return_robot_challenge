@@ -7,12 +7,9 @@
  * RPI Rock Raiders
  * 5/2/14
  *
- * Last Updated: Bryant Pong: 6/12/14 - 8:43 AM
+ * Last Updated: Bryant Pong: 6/12/14 - 9:03 AM
  */
  
-// AVR Libraries:
-#include <avr/interrupt.h> // Support for interrupts
-
 // Misc. Libraries:
 #include <digitalWriteFast.h>
  
@@ -71,8 +68,12 @@ long leftEncoderTicks = 0;
 long rightEncoderTicks = 0;
 
 // Variables for the PI Velocity control loop:
-const double kp = 0.1;
+const double kpL = 0.1;
+const double kpA = 0.1;
 const double ki = 0.5;
+
+const double motorCenter = 90;
+const double motorRange = 60;
 
 // Variables to keep track of time elapsed since the PD Loop was last called:
 unsigned long timeStart = 0;
@@ -83,21 +84,22 @@ double linVelocityError = 0.0;
 double angVelocityError = 0.0;
 
 // Other variables for the PD loop:
-double deltaLinear = 0.0;
-double deltaAngular = 0.0;
+double linearCommand = 0.0;
+double angularCommand = 0.0;
 
-double currentLeftVelocity = 91.0;
-double currentRightVelocity = 91.0;
+double lefMotorCommand = 0;
+double rightMotorCommand = 0;
+double maxCommand = 0;
 
 /** END SECTION CONSTANTS AND DEFINITIONS **/
 
 /** FUNCTION AND INTERRUPT PROTOTYPES **/
 
 // Interrupt Prototypes:
-void encoder1PinChangeA(void); // Implemented, not tested
-void encoder1PinChangeB(void); // Implemented, not tested
-void encoder2PinChangeA(void); // Implemented, not tested
-void encoder2PinChangeB(void); // Implemented, not tested
+void encoder1PinChangeA(void); // Implemented, tested
+void encoder1PinChangeB(void); // Implemented, tested
+void encoder2PinChangeA(void); // Implemented, tested
+void encoder2PinChangeB(void); // Implemented, tested
 
 // PI Motor Control Loop prototype: - IN PROGRESS
 void piVelLoop(const double targetLinVel, const double targetAngVel);
@@ -114,6 +116,7 @@ void turnLeft(int duration);
 void turnRight(int duration);
 void forward(int duration);
 void backward(int duration);
+double sign(double num);
 
 // Callbacks:
 
@@ -225,8 +228,11 @@ void backward(int duration) {
 void piVelLoop(double targetLinVel, double targetAngVel) {
   
   // Let's get the number of left and right encoder ticks:
-  double lEncTicks = leftEncoderTicks;
-  double rEncTicks = rightEncoderTicks;
+  long lEncTicks = leftEncoderTicks;
+  long rEncTicks = rightEncoderTicks;
+  
+  // Reset the left and right encoder tick counts:
+  leftEncoderTicks = rightEncoderTicks = 0;  
   
   // Flag to determine if we're going forward or backward:
   boolean forward = true;
@@ -242,64 +248,52 @@ void piVelLoop(double targetLinVel, double targetAngVel) {
   Serial.println("rEncTicks");
   Serial.println(rEncTicks);
 
-  // Reset the left and right encoder tick counts:
-  leftEncoderTicks = rightEncoderTicks = 0;  
-  
   // Clock when the encoder ticks were read:
-  timeStop = millis();
+  timeStop = micros();
   
   // How long ago was the last encoder reading?
-  double timeDiff = (timeStop - timeStart) / 1000;
+  double timeDiff = (double(timeStop) - double(timeStart)) / 1000000;
   
   // How many encoder ticks per second?
   double leftEncoderTicksPerSecond = double(lEncTicks) / double(timeDiff);
   double rightEncoderTicksPerSecond = double(rEncTicks) / double(timeDiff);
   
   // Calculate the linear and angular velocities of the encoders:
-  double leftWheelAngularVel = double(leftEncoderTicksPerSecond) / double(400) / 8.3 * 2 * PI;
-  double rightWheelAngularVel = double(rightEncoderTicksPerSecond) / double(400) / 8.3 * 2 * PI;
+  double leftWheelAngularVel = double(leftEncoderTicksPerSecond) / double(800) / 8.3 * 2 * PI;
+  double rightWheelAngularVel = double(rightEncoderTicksPerSecond) / double(800) / 8.3 * 2 * PI;
   double leftWheelLinearVel = leftWheelAngularVel * 0.1525;
   double rightWheelLinearVel = rightWheelAngularVel * 0.1525;
   
-  // Now we can calculate the current linear and angular velocity of Rockie:
-  double currentLinVel;
-  if(forward) {
-    currentLinVel = (leftWheelLinearVel + rightWheelLinearVel) / 2.0;
-  } else {
-    currentLinVel = -1 * ((leftWheelLinearVel + rightWheelLinearVel) / 2.0);
-  } // End else
-  double currentAngVel = (rightWheelAngularVel - leftWheelAngularVel) / (0.5 * 0.71);
+  // Now we can calculate the current linear and angular velocity of Rockie: 
+  double currentLinVel = (leftWheelLinearVel + rightWheelLinearVel) / 2.0;
+  double currentAngVel = (rightWheelLinearVel - leftWheelLinearVel) / (0.71);
   
   // We can now calculate our error in velocities:
   linVelocityError = currentLinVel - targetLinVel;
   angVelocityError = currentAngVel - targetAngVel;
   
-  // Next we have to calculate the change in linear and angular velocity:
-  deltaLinear = kp * linVelocityError;
-  deltaAngular = kp * angVelocityError;
+  // Controller input confined to the range +-1
+  linearCommand = kpL * linVelocityError;
+  angularCommand = kpA * angVelocityError;
+
+
   
-  Serial.println("deltaLinear: ");
-  Serial.println(deltaLinear);
+  Serial.println("linearCommand: ");
+  Serial.println(linearCommand);
   /*
   Serial.println("deltaAngular: ");
   Serial.println(deltaAngular);
   */
-  
-  currentLeftVelocity = currentLeftVelocity + double(deltaLinear);
-  currentRightVelocity = currentLeftVelocity + double(deltaLinear);
+  maxCommand = abs(linearCommand) + abs(angularCommand);
+  leftMotorCommand = linearCommand - angularCommand;
+  rightMotorCommand = linearCommand + angularCommand;
+  if(maxCommand > 1){
+    leftMotorCommand/=maxCommand;
+    rightMotorCommand/=maxCommand;
+  }
+
     
-  if(currentLeftVelocity > 120) {
-    currentLeftVelocity = 120.0;
-  }
-  if(currentLeftVelocity < 60) {
-    currentLeftVelocity = 60;
-  }
-  if(currentRightVelocity > 120) {
-    currentRightVelocity = 120.0;
-  }
-  if(currentRightVelocity < 60) {
-    currentRightVelocity = 60;
-  }
+  
   
   Serial.println("currentLeftVelocity: ");
   Serial.println(currentLeftVelocity);
@@ -309,14 +303,6 @@ void piVelLoop(double targetLinVel, double targetAngVel) {
   
   leftMotor.write(currentLeftVelocity);
   rightMotor.write(currentRightVelocity);
-  
-#ifdef DEBUG
-  currentLeftVelocity + 90 * deltaAngular;
-  currentRightVelocity + 90 * deltaAngular;
-  
-  leftMotor.write(currentLeftVelocity);
-  rightMotor.write(currentRightVelocity);
-#endif
   
   // Now set our start time to be our end time:
   timeStart = timeStop;
@@ -406,9 +392,6 @@ void setup() {
   ENCODER_1_A_SET = digitalRead(ENCODER_1_PIN_A);
   ENCODER_1_B_SET = digitalRead(ENCODER_1_PIN_B);
   
-  attachInterrupt(5, encoder1PinChangeA, CHANGE); 
-  attachInterrupt(4, encoder1PinChangeB, CHANGE);
-  
   pinMode(ENCODER_2_PIN_A, INPUT);
   digitalWrite(ENCODER_2_PIN_A, HIGH);
   pinMode(ENCODER_2_PIN_B, INPUT);
@@ -417,8 +400,11 @@ void setup() {
   ENCODER_2_A_SET = digitalRead(ENCODER_2_PIN_A);
   ENCODER_2_B_SET = digitalRead(ENCODER_2_PIN_B);
   
+  timeStart = micros();
   attachInterrupt(3, encoder2PinChangeA, CHANGE);
   attachInterrupt(2, encoder2PinChangeB, CHANGE);
+  attachInterrupt(5, encoder1PinChangeA, CHANGE); 
+  attachInterrupt(4, encoder1PinChangeB, CHANGE);
   
   Serial.begin(9600);
   
@@ -520,6 +506,11 @@ void loop() {
   
   // Have the ROS Nodes update themselves:
   //nh.spinOnce();
+}
+
+double sign(double num)
+{
+  return (num > 0) ? 1 : -1;
 }
 
 /** END LOOP FUNCTION **/
