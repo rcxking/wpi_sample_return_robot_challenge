@@ -24,6 +24,8 @@ from sqlalchemy import create_engine
 import random
 from sqlalchemy.orm import sessionmaker
 import tf
+import time
+import MySQLdb
 
 stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/".format(os.getenv("HOME"))
 
@@ -32,11 +34,14 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+
 stereo_historian_topic = '/my_stereo/stereo_image_saves'
 stereo_feature_identifier_topic = '/my_stereo/stereo_image_keypoint_saves'
 stereo_feature_matcher_topic = '/my_stereo/stereo_image_keypoint_matches'
 stereo_feature_triangulator_topic = '/my_stereo/stereo_image_3D_points'
 stereo_graph_manager_topic = '/my_stereo/stereo_graph_node_updates'
+
+log = rospy.Publisher("/stereo_localizer/log", String)
 
 #pub = rospy.Publisher("/my_stereo/stereo_image_saves", String)
 
@@ -207,22 +212,54 @@ def get_global_transform():
 def get_latest_pose_node_with_global_transform():
   global session
 
+  mysql_db = MySQLdb.connect(host="localhost", user="root", passwd="", db="rockie") 
+
+  cur = mysql_db.cursor()
+ 
+  '''
+
   #get most recent node where global transform filepath is not None
-  query = session.query(Graph_Nodes)
+  query = session.query(Graph_Nodes) 
+  query = query.filter(Graph_Nodes.global_transformation_filepath != None)
+  query = query.filter("node_type='pose'")
+  query = query.order_by(Graph_Nodes.node_id.desc())
 
-  query.filter(Graph_Nodes.global_transformation_filepath != None)
-  query.filter(Graph_Nodes.node_type == 'pose')
-  query.order_by(Graph_Nodes.node_id.desc())
+  log.publish("query for latest pose node: {0}".format(query.as_scalar()))
 
-  latest_pose_node = query.first()
+  latest_pose_node = query.all()
 
-  if latest_pose_node != None:
-    most_recent_pose_node = query.first()
+  '''
+  my_query = "SELECT node_id, node_type, sp_3d_matches_id, global_transformation_filepath "
+  my_query += "FROM graph_nodes "
+  my_query += "WHERE global_transformation_filepath IS NOT NULL "
+  my_query += "AND node_type = 'pose' "
+  my_query += "ORDER BY node_id DESC"
+
+  cur.execute(my_query)
+  result = cur.fetchone()
+
+  if result != None:
+    most_recent_pose_node = graph_node_from_query_result(result) 
+    print(result[3])
+  else:
+    most_recent_pose_node = None
+
+  #log.publish("latest pose node: {0}".format(most_recent_pose_node))
+
+  if most_recent_pose_node != None:
     [R, t] = get_node_global_transform(most_recent_pose_node)
-
     return [R, t] 
 
   return [None, None]
+
+def graph_node_from_query_result(result):
+  latest_pose_node = Graph_Nodes()
+  latest_pose_node.node_id = result[0]
+  latest_pose_node.node_type = result[1]
+  latest_pose_node.sp_3d_matches_id = result[2]
+  latest_pose_node.global_transformation_filepath = result[3]
+
+  return latest_pose_node
 
 def get_axis_angle(R):
   theta = np.arccos((np.trace(R) - 1)/2)
@@ -256,11 +293,12 @@ def get_stamped_transform(R, t):
   return m
 
 if __name__ == '__main__':
+  engine = create_engine('mysql://root@localhost/rockie')
 
   rospy.init_node('stereo_localizer')
 
   while rospy.get_param("/fs_cleaning") == 1 or rospy.get_param('/db_cleaning') == 1:
-    rospy.spin()
+    time.sleep(1) 
   
   br = tf.TransformBroadcaster()
   rate = rospy.Rate(.2)
@@ -269,10 +307,12 @@ if __name__ == '__main__':
     [R, t] = get_latest_pose_node_with_global_transform()    
 
     if R != None:
+      print("found global coords, t: {0}".format(str(t)))
+      print("R: {0}".format(str(R)))
       quaternion = tf.transformations.quaternion_from_matrix(R)
       br.sendTransform((t[0], t[1]. t[2]), quaternion, rospy.Time.now(), 'rockie', 'map')
-
-    #ros_transform = get_stamped_transform(R, t)
+    else:
+      print("No global transform found")
 
     #when looping rosbag, this will go backwards and throw and error :)
     try:

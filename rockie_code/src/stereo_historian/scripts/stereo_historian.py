@@ -14,6 +14,13 @@ import os
 import shutil
 import time
 
+####################SET TO FALSE FOR ROCKIE RUN########
+is_debug = True
+####################SET TO FALSE FOR ROCKIE RUN########
+
+
+
+
 #stereo_ns = 'my_stereo'
 #image_name = 'image_raw'
 
@@ -24,7 +31,12 @@ image_name = 'image_raw'
 
 #Max number of seconds allowed for approx sync
 #1/framerate should be the max diff in timestamps for stereo pairs
-max_sync_period = .01
+
+if is_debug == True:
+  max_sync_period = .2
+else:
+  max_sync_period = .01
+
 
 left_timestamp = None
 right_timestamp = None
@@ -42,6 +54,7 @@ left_iteration = 0
 right_iteration = 0
 
 pub = rospy.Publisher("/my_stereo/stereo_image_saves", String)
+log = rospy.Publisher("/stereo_historian/log", String)
 
 def ConvertToCV2Grayscale(img):
     cv2_img = bridge.imgmsg_to_cv2(img, "bgr8")
@@ -76,6 +89,7 @@ def save_image(img, time, camera):
     global pub
 
     if left_timestamp == None or right_timestamp == None:
+        log.publish("timestamp on image is not set, not saving image")
         return
 
     total_time_left = left_timestamp.secs + left_timestamp.nsecs*math.pow(10, -9) 
@@ -84,6 +98,9 @@ def save_image(img, time, camera):
     time_diff_between_stereo_cams = math.fabs(total_time_left - total_time_right)
 
     if time_diff_between_stereo_cams > max_sync_period:
+        log.publish("stereo cameras not in sync, not saving images")
+        log.publish("left image total time: {0}".format(total_time_left))
+        log.publish("right image total time: {0}".format(total_time_right))
         return
 
     left_img = ConvertToCV2Grayscale(left_img)
@@ -91,6 +108,8 @@ def save_image(img, time, camera):
 
     left_filepath = WriteToFile(left_img, left_timestamp, 'left')
     right_filepath = WriteToFile(right_img, right_timestamp, 'right')
+
+    log.publish("saving image {0}".format(left_filepath))
 
     stereo_pair_db_id = WriteToDatabase(left_filepath, right_filepath, datetime.datetime.now())
 
@@ -109,6 +128,7 @@ def left_callback(left_image):
 
     left_timestamp = left_image.header.stamp 
     left_img = left_image
+
     save_image(left_image, left_timestamp, "left")
 
 def right_callback(right_image):
@@ -141,7 +161,8 @@ if __name__ == '__main__':
   rospy.set_param('/fs_cleaning', 1)
 
   try:
-    shutil.rmtree("{0}images".format(stereo_imagepath_base))
+    shutil.rmtree("{0}images/left".format(stereo_imagepath_base))
+    shutil.rmtree("{0}images/right".format(stereo_imagepath_base))
   except:
     pass
 
@@ -155,6 +176,7 @@ if __name__ == '__main__':
 
   #don;t start until db cleaning is complete
   while rospy.get_param('/db_cleaning') == 1:
+    log.publish("waiting for db_cleaning")  
     time.sleep(1) 
 
   store_stereo_images()
