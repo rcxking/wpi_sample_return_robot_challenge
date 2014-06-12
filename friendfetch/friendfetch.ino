@@ -1,18 +1,25 @@
 /*
  * friendfetch - Arduino motor driver code for Rockie.
+ *
+ * This code has 6 different responsibilities:
+ * 1) PI Motor 
  * 
  * RPI Rock Raiders
  * 5/2/14
  *
- * Last Updated: Bryant Pong: 5/29/14 - 9:24 PM
+ * Last Updated: Bryant Pong: 6/12/14 - 8:43 AM
  */
  
 // AVR Libraries:
 #include <avr/interrupt.h> // Support for interrupts
+
+// Misc. Libraries:
+#include <digitalWriteFast.h>
  
 // ROS Libraries
 #include <ros.h> // Core ROS Arduino Library
 #include <std_msgs/String.h> // ROS std_msgs - String message (used for debugging messages)
+#include <std_msgs/Float32.h>
 #include <nav_msgs/Odometry.h> // ROS nav_msgs - Odometry message
 #include <geometry_msgs/Twist.h> // ROS geometry_msgs - Twist message
 
@@ -23,18 +30,21 @@
 
 /*
  * Pin Mappings:
- * Left Encoder: Digital Pin 20 (Interrupt 3)
- * Right Encoder: Digital Pin 21 (Interrupt 2)
+ * Left Encoder Pin A: Digital Pin 18 (Interrupt 5)
+ * Left Encoder Pin B: Digital Pin 19 (Interrupt 4)
+ * Right Encoder Pin A: Digital Pin 20 (Interrupt 3)
+ * Right Encoder Pin B: Digital Pin 21 (Interrupt 2)
  *
  * Rockie's Main Left Motor: Digital Pin 52
  * Rockie's Main Right Motor: Digital Pin 53
  *
  * Lifter Motor:
- * 
  */
 
-const int LEFTENCODER = 20;
-const int RIGHTENCODER = 21;
+const byte ENCODER_1_PIN_A = 18;
+const byte ENCODER_1_PIN_B = 19;
+const byte ENCODER_2_PIN_A = 20;
+const byte ENCODER_2_PIN_B = 21;
 
 const int LEFTMOTOR = 52;
 const int RIGHTMOTOR = 53;
@@ -47,12 +57,18 @@ const int INPUT2 = 22;
 // Amount of time (in milliseconds) to raise/lower the scoop:
 const int SCOOPTIME = 15000;
 
+// State of Pins A and B on the left and right encoders:
+int ENCODER_1_A_SET = 0;
+int ENCODER_1_B_SET = 0;
+int ENCODER_2_A_SET = 0;
+int ENCODER_2_B_SET = 0;
+
 // Servo motor objects
 Servo leftMotor, rightMotor;
 
-// Volatile variables to hold the number of encoder ticks:
-volatile int leftEncoderTicks = 0;
-volatile int rightEncoderTicks = 0;
+// Variables to hold the number of encoder ticks:
+long leftEncoderTicks = 0;
+long rightEncoderTicks = 0;
 
 // Variables for the PI Velocity control loop:
 const double kp = 0.1;
@@ -78,8 +94,10 @@ double currentRightVelocity = 91.0;
 /** FUNCTION AND INTERRUPT PROTOTYPES **/
 
 // Interrupt Prototypes:
-void leftencoderinterrupt(); 
-void rightencoderinterrupt(); 
+void encoder1PinChangeA(void); // Implemented, not tested
+void encoder1PinChangeB(void); // Implemented, not tested
+void encoder2PinChangeA(void); // Implemented, not tested
+void encoder2PinChangeB(void); // Implemented, not tested
 
 // PI Motor Control Loop prototype: - IN PROGRESS
 void piVelLoop(const double targetLinVel, const double targetAngVel);
@@ -91,6 +109,12 @@ void lowerScoop(void); // Implemented, not tested
 void extendScoop(void); // Not implemented
 void retractScoop(void); // Not implemented
 
+// Basic functions to move the motor:
+void turnLeft(int duration);
+void turnRight(int duration);
+void forward(int duration);
+void backward(int duration);
+
 // Callbacks:
 
 // This callback is for receiving velocity commands from the SLAM navigation node:
@@ -99,7 +123,6 @@ void velCommandCallback(const geometry_msgs::Twist& nextVelocityCommand);
 /** END SECTION FUNCTION AND INTERRUPT PROTOTYPES **/
 
 /** ROS Objects **/
-// ros::Subscriber<std_msgs::String> sub("arduino", &messageCb);
 
 // The ROS Arduino Node object
 ros::NodeHandle nh;
@@ -129,14 +152,27 @@ ros::Subscriber<geometry_msgs::Twist> velCommandSubscriber("cmd_vel", &velComman
 
 /** INTERRUPTS **/
 
-// Interrupts for encoders:
-void leftencoderinterrupt(void) {
-  leftEncoderTicks++;
-} // End interrupt leftencoderinterrupt()
+// Left Encoder Interrupts:
+void encoder1PinChangeA(void) {
+  ENCODER_1_A_SET = digitalReadFast2(ENCODER_1_PIN_A) == HIGH;
+  leftEncoderTicks += (ENCODER_1_A_SET != ENCODER_1_B_SET) ? -1 : +1;
+} // End interrupt encoder1PinChangeA()
 
-void rightencoderinterrupt(void) {
-  rightEncoderTicks++;
-} // End interrupt rightencoderinterrupt()
+void encoder1PinChangeB(void) {
+  ENCODER_1_B_SET = digitalReadFast2(ENCODER_1_PIN_B) == HIGH;
+  leftEncoderTicks += (ENCODER_1_A_SET == ENCODER_1_B_SET) ? -1 : +1;
+} // End interrupt encoder1PinChangeB()
+
+// Right Encoder Interrupts:
+void encoder2PinChangeA(void) {
+  ENCODER_2_A_SET = digitalReadFast2(ENCODER_2_PIN_A) == HIGH;
+  rightEncoderTicks += (ENCODER_2_A_SET != ENCODER_2_B_SET) ? +1 : -1;
+} // End interrupt encoder2PinChangeA()
+
+void encoder2PinChangeB(void) {
+  ENCODER_2_B_SET = digitalReadFast2(ENCODER_2_PIN_B) == HIGH;
+  rightEncoderTicks += (ENCODER_2_A_SET == ENCODER_2_B_SET) ? +1 : -1;
+} // End interrupt encoder2PinChangeB()
 
 /** END SECTION INTERRUPTS **/
 
@@ -164,6 +200,26 @@ void lowerScoop(void) {
 } // End function lowerScoop();
 
 /** END SECTION SCOOP AND LIFTER FUNCTIONS **/
+
+/** MAIN MOTOR FUNCTIONS **/
+
+void turnLeft(int duration) {
+  
+} // End function turnLeft()
+
+void turnRight(int duration) {
+  
+} // End function turnRight()
+
+void forward(int duration) {
+  
+} // End function foward()
+
+void backward(int duration) {
+  
+} // End function backward()
+
+/** END SECTION MAIN MOTOR FUNCTIONS **/
 
 // PI Loop function to control motor velocity:
 void piVelLoop(double targetLinVel, double targetAngVel) {
@@ -339,18 +395,34 @@ void velCommandCallback(const geometry_msgs::Twist& nextVelocityCommand) {
 /** SETUP Function **/
 
 void setup() {
+
+  /** ENCODERS INITIALIZATION **/
   
+  pinMode(ENCODER_1_PIN_A, INPUT);
+  digitalWrite(ENCODER_1_PIN_A, HIGH);
+  pinMode(ENCODER_1_PIN_B, INPUT);
+  digitalWrite(ENCODER_1_PIN_B, HIGH);
   
-  // The Encoders are set as inputs:
-  pinMode(LEFTENCODER, INPUT);
-  pinMode(RIGHTENCODER, INPUT);
+  ENCODER_1_A_SET = digitalRead(ENCODER_1_PIN_A);
+  ENCODER_1_B_SET = digitalRead(ENCODER_1_PIN_B);
   
-  /*
-   * Attach an interrupt for the left encoder to count how many ticks
-   * the left and right encoders counted:
-   */
-  attachInterrupt(3, leftencoderinterrupt, CHANGE);
-  attachInterrupt(2, rightencoderinterrupt, CHANGE);
+  attachInterrupt(5, encoder1PinChangeA, CHANGE); 
+  attachInterrupt(4, encoder1PinChangeB, CHANGE);
+  
+  pinMode(ENCODER_2_PIN_A, INPUT);
+  digitalWrite(ENCODER_2_PIN_A, HIGH);
+  pinMode(ENCODER_2_PIN_B, INPUT);
+  digitalWrite(ENCODER_2_PIN_B, HIGH);
+  
+  ENCODER_2_A_SET = digitalRead(ENCODER_2_PIN_A);
+  ENCODER_2_B_SET = digitalRead(ENCODER_2_PIN_B);
+  
+  attachInterrupt(3, encoder2PinChangeA, CHANGE);
+  attachInterrupt(2, encoder2PinChangeB, CHANGE);
+  
+  Serial.begin(9600);
+  
+  /** END ENCODERS INITIALIZATION **/
     
   // Start the ROS Node:
   //nh.initNode();
@@ -422,7 +494,8 @@ void setup() {
 
 /** LOOP Function **/
 void loop() {
-  
+
+#ifdef DEBUG
   Serial.println("Please enter the target linear velocity");
   while(!Serial.available());
   double targetLinearVelocity = Serial.parseFloat();
@@ -436,6 +509,14 @@ void loop() {
   
   Serial.println("Now beginning PI loop:");
   piVelLoop(targetLinearVelocity, targetAngularVelocity);
+#endif
+
+  Serial.println("leftEncoderTicks");
+  Serial.println(leftEncoderTicks);
+  Serial.println("rightEncoderTicks");
+  Serial.println(rightEncoderTicks);
+  
+  delay(1000);
   
   // Have the ROS Nodes update themselves:
   //nh.spinOnce();
