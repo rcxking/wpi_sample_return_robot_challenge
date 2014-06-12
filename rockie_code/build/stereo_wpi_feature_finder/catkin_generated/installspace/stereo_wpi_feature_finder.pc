@@ -1,0 +1,8 @@
+prefix=/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install
+
+Name: stereo_wpi_feature_finder
+Description: Description of stereo_wpi_feature_finder
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install/lib 
+Requires: 

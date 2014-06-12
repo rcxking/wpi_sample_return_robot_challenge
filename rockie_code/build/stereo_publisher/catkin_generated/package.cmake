@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "stereo_publisher")
+set(stereo_publisher_MAINTAINER "will <will@todo.todo>")
+set(stereo_publisher_DEPRECATED "")
+set(stereo_publisher_VERSION "0.0.0")
+set(stereo_publisher_BUILD_DEPENDS )
+set(stereo_publisher_RUN_DEPENDS )
+set(stereo_publisher_BUILDTOOL_DEPENDS "catkin")

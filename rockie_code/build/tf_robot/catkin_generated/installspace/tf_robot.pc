@@ -1,0 +1,8 @@
+prefix=/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install
+
+Name: tf_robot
+Description: Description of tf_robot
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install/lib 
+Requires: 

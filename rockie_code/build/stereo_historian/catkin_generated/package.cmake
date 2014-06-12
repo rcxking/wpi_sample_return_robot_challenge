@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "stereo_historian")
+set(stereo_historian_MAINTAINER "will <will@todo.todo>")
+set(stereo_historian_DEPRECATED "")
+set(stereo_historian_VERSION "0.0.0")
+set(stereo_historian_BUILD_DEPENDS )
+set(stereo_historian_RUN_DEPENDS )
+set(stereo_historian_BUILDTOOL_DEPENDS "catkin")

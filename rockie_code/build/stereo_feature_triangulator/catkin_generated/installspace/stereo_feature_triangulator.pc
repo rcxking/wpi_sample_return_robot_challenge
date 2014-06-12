@@ -1,0 +1,8 @@
+prefix=/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install
+
+Name: stereo_feature_triangulator
+Description: Description of stereo_feature_triangulator
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install/lib 
+Requires: 

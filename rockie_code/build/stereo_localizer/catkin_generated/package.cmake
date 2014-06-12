@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "stereo_localizer")
+set(stereo_localizer_MAINTAINER "will <will@todo.todo>")
+set(stereo_localizer_DEPRECATED "")
+set(stereo_localizer_VERSION "0.0.0")
+set(stereo_localizer_BUILD_DEPENDS )
+set(stereo_localizer_RUN_DEPENDS )
+set(stereo_localizer_BUILDTOOL_DEPENDS "catkin")

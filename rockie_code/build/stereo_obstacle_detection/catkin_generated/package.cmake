@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "stereo_obstacle_detection")
+set(stereo_obstacle_detection_MAINTAINER "will <will@todo.todo>")
+set(stereo_obstacle_detection_DEPRECATED "")
+set(stereo_obstacle_detection_VERSION "0.0.0")
+set(stereo_obstacle_detection_BUILD_DEPENDS )
+set(stereo_obstacle_detection_RUN_DEPENDS )
+set(stereo_obstacle_detection_BUILDTOOL_DEPENDS "catkin")

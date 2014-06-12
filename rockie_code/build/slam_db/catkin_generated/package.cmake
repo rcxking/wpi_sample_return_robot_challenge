@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "slam_db")
+set(slam_db_MAINTAINER "will <will@todo.todo>")
+set(slam_db_DEPRECATED "")
+set(slam_db_VERSION "0.0.0")
+set(slam_db_BUILD_DEPENDS )
+set(slam_db_RUN_DEPENDS )
+set(slam_db_BUILDTOOL_DEPENDS "catkin")

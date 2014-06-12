@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "stereo_graph_manager")
+set(stereo_graph_manager_MAINTAINER "will <will@todo.todo>")
+set(stereo_graph_manager_DEPRECATED "")
+set(stereo_graph_manager_VERSION "0.0.0")
+set(stereo_graph_manager_BUILD_DEPENDS )
+set(stereo_graph_manager_RUN_DEPENDS )
+set(stereo_graph_manager_BUILDTOOL_DEPENDS "catkin")

@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "viso2")
+set(viso2_MAINTAINER "Stephan Wirth <stephan.wirth@uib.es>")
+set(viso2_DEPRECATED "")
+set(viso2_VERSION "0.0.1")
+set(viso2_BUILD_DEPENDS )
+set(viso2_RUN_DEPENDS "libviso2" "viso2_ros")
+set(viso2_BUILDTOOL_DEPENDS "catkin")

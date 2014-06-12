@@ -1,0 +1,8 @@
+prefix=/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install
+
+Name: viso2_ros
+Description: Description of viso2_ros
+Version: 0.0.1
+Cflags: -I/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install/include
+Libs: -L/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install/lib 
+Requires: 

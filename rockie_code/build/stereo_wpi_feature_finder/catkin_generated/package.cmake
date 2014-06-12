@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "stereo_wpi_feature_finder")
+set(stereo_wpi_feature_finder_MAINTAINER "will <will@todo.todo>")
+set(stereo_wpi_feature_finder_DEPRECATED "")
+set(stereo_wpi_feature_finder_VERSION "0.0.0")
+set(stereo_wpi_feature_finder_BUILD_DEPENDS )
+set(stereo_wpi_feature_finder_RUN_DEPENDS )
+set(stereo_wpi_feature_finder_BUILDTOOL_DEPENDS "catkin")
