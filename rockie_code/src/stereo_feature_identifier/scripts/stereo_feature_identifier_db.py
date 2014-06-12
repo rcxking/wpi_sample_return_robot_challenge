@@ -1,6 +1,6 @@
 #!/usr/bin/python
 import datetime
-
+import rospy
 from sqlalchemy.dialects.mysql import DATETIME, VARCHAR, DOUBLE
 from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, DateTime
 from sqlalchemy.ext.declarative import declarative_base
@@ -54,6 +54,9 @@ class Stereo_Image_Pair(Base):
   right_filepath = Column(VARCHAR(6500))
 
 if __name__ == '__main__':
+
+  rospy.init_node('stereo_db')
+
   engine = create_engine('mysql://root@localhost/rockie')
  
   db = MySQLdb.connect(host="localhost", user="root", passwd="", db="rockie") 
@@ -80,3 +83,6 @@ if __name__ == '__main__':
   #Base.metadata.drop_all(engine)
 
   Base.metadata.create_all(engine)
+
+  rospy.set_param("/db_cleaning", 0)
+

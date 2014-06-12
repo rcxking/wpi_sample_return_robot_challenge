@@ -17,8 +17,7 @@ import rospy
 from std_msgs.msg import String
 from sensor_msgs.msg import Image as ros_image
 from cv_bridge import CvBridge, CvBridgeError
-from stereo_feature_identifier_db import Stereo_Pair_Keypoints, Stereo_Pair_Keypoint_Matches, Stereo_3D_Matches, Graph_Nodes, Graph_Edges
-from stereo_historian_db import Stereo_Image_Pair, Base
+from stereo_feature_identifier_db import Stereo_Pair_Keypoints, Stereo_Pair_Keypoint_Matches, Stereo_3D_Matches, Graph_Nodes, Graph_Edges, Stereo_Image_Pair, Base
 import datetime
 import cPickle as pickle
 from sqlalchemy import create_engine
@@ -257,8 +256,12 @@ def get_stamped_transform(R, t):
   return m
 
 if __name__ == '__main__':
+
   rospy.init_node('stereo_localizer')
 
+  while rospy.get_param("/fs_cleaning") == 1 or rospy.get_param('/db_cleaning') == 1:
+    rospy.spin()
+  
   br = tf.TransformBroadcaster()
   rate = rospy.Rate(.2)
 
@@ -270,5 +273,10 @@ if __name__ == '__main__':
       br.sendTransform((t[0], t[1]. t[2]), quaternion, rospy.Time.now(), 'rockie', 'map')
 
     #ros_transform = get_stamped_transform(R, t)
-    rate.sleep()
+
+    #when looping rosbag, this will go backwards and throw and error :)
+    try:
+      rate.sleep()
+    except:
+      pass
 
