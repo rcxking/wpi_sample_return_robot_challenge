@@ -47,6 +47,7 @@ log = rospy.Publisher("/stereo_localizer/log", String)
 
 def get_last_position():
   pass
+
   #get first wpi feature node
 
   #if no wpi feature node:
@@ -292,6 +293,15 @@ def get_stamped_transform(R, t):
   
   return m
 
+#refer to http://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/
+def get_quaternion_from_rotation_matrix(R):
+  w = np.sqrt(1 + R[0, 0] + R[1, 1] + R[2, 2])/2
+  x = (R[2, 1] - R[1, 2])/(4*w) 
+  y = (R[0, 2] - R[2, 0])/(4*w) 
+  z = (R[1, 0] - R[0, 1])/(4*w) 
+
+  return (w, x, y, z)
+
 if __name__ == '__main__':
   engine = create_engine('mysql://root@localhost/rockie')
 
@@ -309,8 +319,9 @@ if __name__ == '__main__':
     if R != None:
       print("found global coords, t: {0}".format(str(t)))
       print("R: {0}".format(str(R)))
-      quaternion = tf.transformations.quaternion_from_matrix(R)
-      br.sendTransform((t[0], t[1]. t[2]), quaternion, rospy.Time.now(), 'rockie', 'map')
+      #quaternion = tf.transformations.quaternion_from_matrix(R)
+      quaternion = get_quaternion_from_rotation_matrix(R)
+      br.sendTransform((t[0, 1], t[0, 1], t[0, 2]), quaternion, rospy.Time.now(), 'rockie', 'map')
     else:
       print("No global transform found")
 

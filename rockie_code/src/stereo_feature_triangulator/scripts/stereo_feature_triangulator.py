@@ -45,6 +45,8 @@ camera_dist = .094
 #focal length is 579 mm
 f = 579
 
+max_vertical_discrepency = 1
+
 def drawMatches(gray1, kpts1, gray2, kpts2, matches):
 
   h1, w1 = gray1.shape[:2]
@@ -134,6 +136,7 @@ def get_keypoints_pair(spk_id):
 
 def triangulate(matches, kpts_descs1, kpts_descs2, left_image):
   global pub_vis
+  global max_vertical_discrepency
 
   kpts1 = kpts_descs1[0]
   descs1 = kpts_descs1[1]
@@ -161,7 +164,7 @@ def triangulate(matches, kpts_descs1, kpts_descs2, left_image):
     train_pt_desc = descs2[match.trainIdx, :]
 
     #should check against epipolar line    
-    if(math.fabs(query_pt.pt[1] - train_pt.pt[1]) > 10):
+    if(math.fabs(query_pt.pt[1] - train_pt.pt[1]) > max_vertical_discrepency):
       continue
 
     disparity = math.fabs(query_pt.pt[0] - train_pt.pt[0])

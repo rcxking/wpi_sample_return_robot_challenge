@@ -20,7 +20,7 @@ from sqlalchemy.orm import sessionmaker
 
 stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/".format(os.getenv("HOME"))
 
-sift = cv2.SIFT()
+sift = cv2.SIFT(160)
 
 engine = create_engine('mysql://root@localhost/rockie')
 Base.metadata.bind = engine
