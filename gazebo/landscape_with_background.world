@@ -8,11 +8,11 @@
       </camera>
     </gui>
     <scene>
-      <sky>
+      <!--sky>
         <clouds>
           <speed>1</speed>
         </clouds>
-      </sky>
+      </sky-->
       <ambient>0.4 0.4 0.4 1</ambient>
       <background>0.7 0.7 0.7 1</background>
       <shadows>1</shadows>
@@ -509,7 +509,7 @@
     </ode>
   </physics>
 </joint>
-<plugin name='husky_diff_controller' filename='/home/bdnumber1/Challenge/wpi/gazebo/libhusky_gazebo_plugins.so'>
+<plugin name='husky_diff_controller' filename='/home/will/libhusky_gazebo_plugins.so'>
   <alwaysOn>true</alwaysOn>
   <updateRate>100.0</updateRate>
   <backLeftJoint>back_left_joint</backLeftJoint>
