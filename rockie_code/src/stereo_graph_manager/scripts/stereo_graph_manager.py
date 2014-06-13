@@ -45,8 +45,8 @@ new_feature_threshold = .7
 
 #If we have at least 7 matches, make a connection
 new_connection_threshold = 15 
-ransac_sample_size = 10 
-ransac_iterations = 100
+ransac_sample_size = 4 
+ransac_iterations = 3000
 
 stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/images/left/".format(os.getenv("HOME"))
 
@@ -386,10 +386,10 @@ def calculate_3d_transform(matches, positions_1, positions_2):
       opt_rand_positions_1 = orig_rand_positions_1
       opt_rand_positions_2 = orig_rand_positions_2
       
-  '''
+  
   log.publish("rand_positions_1: {0}".format(opt_rand_positions_1))
   log.publish("rand_positions_2: {0}".format(opt_rand_positions_2))
-  '''
+  
   
   cum_t += opt_t
   log.publish("cumulative t = {0}".format(cum_t))
