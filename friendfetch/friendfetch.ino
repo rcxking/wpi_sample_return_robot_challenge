@@ -1,13 +1,15 @@
 /*
- * friendfetch - Arduino motor driver code for Rockie.
+ * friendfetch - Arduino code for Rockie.
  *
  * This code has 6 different responsibilities:
- * 1) PI Motor 
+ * 1) PI Motor Controller for Motion
+ * 2) Reading encoders via interrupts
+ * 3) 
  * 
  * RPI Rock Raiders
  * 5/2/14
  *
- * Last Updated: Bryant Pong: 6/12/14 - 9:03 AM
+ * Last Updated: Bryant Pong: 6/12/14 - 11:22 AM
  */
  
 // Misc. Libraries:
@@ -87,7 +89,7 @@ double angVelocityError = 0.0;
 double linearCommand = 0.0;
 double angularCommand = 0.0;
 
-double lefMotorCommand = 0;
+double leftMotorCommand = 0;
 double rightMotorCommand = 0;
 double maxCommand = 0;
 
@@ -268,18 +270,25 @@ void piVelLoop(double targetLinVel, double targetAngVel) {
   double currentLinVel = (leftWheelLinearVel + rightWheelLinearVel) / 2.0;
   double currentAngVel = (rightWheelLinearVel - leftWheelLinearVel) / (0.71);
   
+  Serial.println("currentLinVel: ");
+  Serial.println(currentLinVel);
+  Serial.println("currentAngVel: ");
+  Serial.println(currentAngVel);
+
   // We can now calculate our error in velocities:
   linVelocityError = currentLinVel - targetLinVel;
   angVelocityError = currentAngVel - targetAngVel;
   
   // Controller input confined to the range +-1
-  linearCommand = kpL * linVelocityError;
-  angularCommand = kpA * angVelocityError;
+  linearCommand = -kpL * linVelocityError;
+  angularCommand = -kpA * angVelocityError;
 
 
   
   Serial.println("linearCommand: ");
   Serial.println(linearCommand);
+  Serial.println("angularCommand: ");
+  Serial.println(angularCommand);
   /*
   Serial.println("deltaAngular: ");
   Serial.println(deltaAngular);
@@ -290,20 +299,12 @@ void piVelLoop(double targetLinVel, double targetAngVel) {
   if(maxCommand > 1){
     leftMotorCommand/=maxCommand;
     rightMotorCommand/=maxCommand;
-  }
+  } 
+ 
+  
+  leftMotor.write(motorCenter + motorRange * leftMotorCommand);
+  rightMotor.write(motorCenter + motorRange * rightMotorCommand);
 
-    
-  
-  
-  Serial.println("currentLeftVelocity: ");
-  Serial.println(currentLeftVelocity);
-  Serial.println("currentRightVelocity: ");
-  Serial.println(currentRightVelocity);
-  
-  
-  leftMotor.write(currentLeftVelocity);
-  rightMotor.write(currentRightVelocity);
-  
   // Now set our start time to be our end time:
   timeStart = timeStop;
 } // End PD Loop
@@ -409,6 +410,13 @@ void setup() {
   Serial.begin(9600);
   
   /** END ENCODERS INITIALIZATION **/
+
+  // Rockie should not move in the beginning:
+  leftMotor.attach(LEFTMOTOR);
+  rightMotor.attach(RIGHTMOTOR);
+
+  leftMotor.write(90);
+  rightMotor.write(90);
     
   // Start the ROS Node:
   //nh.initNode();
@@ -472,8 +480,6 @@ void setup() {
     leftMotor.write(90);
     rightMotor.write(90);   
     delay(1000);*/
-    
-    Serial.begin(9600);
 } 
 
 /** END SETUP FUNCTION **/
@@ -481,29 +487,10 @@ void setup() {
 /** LOOP Function **/
 void loop() {
 
-#ifdef DEBUG
-  Serial.println("Please enter the target linear velocity");
-  while(!Serial.available());
-  double targetLinearVelocity = Serial.parseFloat();
-  Serial.println("The new target linear velocity is: ");
-  Serial.println(targetLinearVelocity);
-  Serial.println("Now enter the target angular velocity");
-  while(!Serial.available());
-  double targetAngularVelocity = Serial.parseFloat();
-  Serial.println("The new target angular velocity is: ");
-  Serial.println(targetAngularVelocity);
-  
-  Serial.println("Now beginning PI loop:");
-  piVelLoop(targetLinearVelocity, targetAngularVelocity);
-#endif
-
-  Serial.println("leftEncoderTicks");
-  Serial.println(leftEncoderTicks);
-  Serial.println("rightEncoderTicks");
-  Serial.println(rightEncoderTicks);
-  
-  delay(1000);
-  
+  leftMotor.write(120);
+  rightMotor.write(120);
+  //piVelLoop(0, 0);
+  //delay(1000);
   // Have the ROS Nodes update themselves:
   //nh.spinOnce();
 }
