@@ -317,8 +317,11 @@ if __name__ == '__main__':
     global_transform = get_global_transform()
 
     print(global_transform)
-    quaternion = get_quaternion_from_rotation_matrix(R)
-    br.sendTransform((t[0, 1], t[0, 1], t[0, 2]), quaternion, rospy.Time.now(), 'rockie', 'map')
+
+    if global_transform != None:
+      [R, t] = global_transform
+      quaternion = get_quaternion_from_rotation_matrix(R)
+      br.sendTransform((t[0, 0], t[1, 0], t[2, 0]), quaternion, rospy.Time.now(), 'rockie', 'map')
 
     #when looping rosbag, this will go backwards and throw and error :)
     try:
