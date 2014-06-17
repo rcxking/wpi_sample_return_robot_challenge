@@ -193,16 +193,13 @@ def percolate_global_transform(root_node, edge, traversed_edges):
 
   edges = get_node_edges(connected_node, root_node)
 
-  print("connected_node id: {0}".format(connected_node.node_id))
-  print("root_node id: {0}".format(root_node.node_id))
-  print("number of node edges: {0}".format(len(edges)))
+  #print("connected_node id: {0}".format(connected_node.node_id))
+  #print("root_node id: {0}".format(root_node.node_id))
+  #print("number of node edges: {0}".format(len(edges)))
 
   for edge in edges:
     if edge not in traversed_edges:
-      print("connecting node {0} to node {1}".format(edge.node_1_id, edge.node_2_id))
       percolate_global_transform(connected_node, edge, traversed_edges)
-    else:
-      print("connecting node {0} to node {1} prevented by traversed_edges".format(edge.node_1_id, edge.node_2_id))
 
 def get_wpi_node():
   global session
@@ -218,12 +215,12 @@ def get_global_transform():
 
   if wpi_node != None:
     wpi_node_edges = get_node_edges(wpi_node, None)
-    print("number of wpi node edges: {0}".format(len(wpi_node_edges)))
+    #print("number of wpi node edges: {0}".format(len(wpi_node_edges)))
 
     traversed_edges = []
 
     for edge in wpi_node_edges:
-      print("connecting node {0} to node {1}".format(edge.node_1_id, edge.node_2_id))
+      #print("connecting node {0} to node {1}".format(edge.node_1_id, edge.node_2_id))
       percolate_global_transform(wpi_node, edge, traversed_edges)
 
     current_pose_node = get_latest_pose_node_with_global_transform()
