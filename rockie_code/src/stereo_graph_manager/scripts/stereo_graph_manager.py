@@ -514,7 +514,7 @@ def connect_pose_to_feature(new_pose_node, feature_node, transform, point_matche
   edge.node_2_type = 'feature'
   
   transform_filepath = save_transform(transform, None, new_pose_node, feature_node)
-  edge.optimal_transform_filepath = transform_filepath
+  edge.opt_transform_1_to_2_filepath = transform_filepath
 
   _3d_matches_filepath = save_3d_matches(point_matches,
       pose_3d_points, 

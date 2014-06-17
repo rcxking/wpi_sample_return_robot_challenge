@@ -20,7 +20,7 @@ from cv_bridge import CvBridge, CvBridgeError
 from stereo_feature_identifier_db import Stereo_Pair_Keypoints, Stereo_Pair_Keypoint_Matches, Stereo_3D_Matches, Graph_Nodes, Graph_Edges, Stereo_Image_Pair, Base
 import datetime
 import cPickle as pickle
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, or_, and_
 import random
 from sqlalchemy.orm import sessionmaker
 import tf
@@ -62,18 +62,26 @@ def get_last_position():
       #if node2 has no edges, terminate
   
 def get_edge_transform(edge):
-  transform_filepath = edge.rigid_body_transform_filepath 
-  return pickle.load(open(transform_filepath, "rb"))
+  transform_filepath = edge.opt_transform_1_to_2_filepath 
+  transform = pickle.load(open(transform_filepath, "rb"))
+
+  transform =  [np.array(transform[0]), np.array(transform[1])]
+  
+  if transform[1].shape != (3, 1):
+    transform[1] = np.transpose(transform[1])
+
+  return transform
 
 def get_node_edges(node, previous_node):
   global session
 
   query = session.query(Graph_Edges)
-
-  query.filter(Graph_Edges.node_1_id == node.node_id or Graph_Edges.node_2_id == node.node_id) 
+  query = query.filter(or_(Graph_Edges.node_1_id == node.node_id, Graph_Edges.node_2_id == node.node_id)) 
 
   #don't get edge we just came from
-  query.filter(Graph_Edges.node_1_id != previous_node.node_id and Graph_Edges.node_2_id != previous_node.node_id)
+  if previous_node != None:
+    query = query.filter(and_(Graph_Edges.node_1_id != previous_node.node_id, Graph_Edges.node_2_id != previous_node.node_id))
+
   edges = query.all()
 
   #don't return the previous edge
@@ -84,13 +92,14 @@ def get_node_edges(node, previous_node):
 def get_node_by_id(node_id):
   global session
   query = session.query(Graph_Nodes)
-  query.filter_by(node_id = int(node_id))
+  query = query.filter_by(node_id = int(node_id))
 
   return query.first()
 
 def invert_transform(transform):
   [R, t] = transform
   R_inverted = np.transpose(R)
+
   t_inverted = -np.dot(R_inverted, t)
 
   return [R_inverted, t_inverted]
@@ -135,11 +144,11 @@ def get_connected_node_global_transform(edge, root_node, connected_node):
 
     return [R.tolist(), t.tolist()]
  
-def get_connected_node(node, edge):
+def get_connected_node(root_node, edge):
   node_1_id = edge.node_1_id
   node_2_id = edge.node_2_id
 
-  if int(node.node_id) == int(node_1_id):
+  if int(root_node.node_id) == int(node_1_id):
     return get_node_by_id(node_2_id)
   else:
     return get_node_by_id(node_1_id)
@@ -155,7 +164,12 @@ def get_node_global_transform(node):
   filepath = node.global_transformation_filepath
   [R, t] = pickle.load(open(filepath, "rb"))
 
-  return [np.array(R), np.array(t)]
+  transform = [np.array(R), np.array(t)]
+
+  if transform[1].shape != (3, 1):
+    transform[1] = np.transpose(transform[1])
+
+  return transform
 
 def set_node_global_transform(node, transform):
   global session
@@ -170,21 +184,18 @@ def percolate_global_transform(root_node, edge, traversed_edges):
   #find edges connected to node2. for each connected node, recurse
   
   traversed_edges.append(edge)
-
   connected_node = get_connected_node(root_node, edge)
 
-  if connected_node.global_transformation == None:
+  if connected_node.global_transformation_filepath == None:
 
     #T_ac = _T_ab*T_bc
-    connected_node_global_transform = get_connected_node_global_transform(edge_transform, root_node, connected_node)
-
+    connected_node_global_transform = get_connected_node_global_transform(edge, root_node, connected_node)
     set_node_global_transform(connected_node, connected_node_global_transform)
+    edges = get_node_edges(connected_node, root_node)
 
-    edges = get_node_edges(connected_node)
-
-  for edge in edges:
-    if edge not in traversed_edges:
-      percolate_global_transform(connected_node, edge, traversed_edges)
+    for edge in edges:
+      if edge not in traversed_edges:
+        percolate_global_transform(connected_node, edge, traversed_edges)
 
 def get_wpi_node():
   global session
@@ -196,8 +207,9 @@ def get_wpi_node():
 
 def get_global_transform():
 
-  wpi_node = get_wpi_node()
-  wpi_node_edges = get_node_edges(wpi_node)
+  #wpi_node = get_wpi_node()
+  wpi_node = get_latest_pose_node_with_global_transform()
+  wpi_node_edges = get_node_edges(wpi_node, None)
 
   traversed_edges = []
 
@@ -217,19 +229,6 @@ def get_latest_pose_node_with_global_transform():
 
   cur = mysql_db.cursor()
  
-  '''
-
-  #get most recent node where global transform filepath is not None
-  query = session.query(Graph_Nodes) 
-  query = query.filter(Graph_Nodes.global_transformation_filepath != None)
-  query = query.filter("node_type='pose'")
-  query = query.order_by(Graph_Nodes.node_id.desc())
-
-  log.publish("query for latest pose node: {0}".format(query.as_scalar()))
-
-  latest_pose_node = query.all()
-
-  '''
   my_query = "SELECT node_id, node_type, sp_3d_matches_id, global_transformation_filepath "
   my_query += "FROM graph_nodes "
   my_query += "WHERE global_transformation_filepath IS NOT NULL "
@@ -241,17 +240,18 @@ def get_latest_pose_node_with_global_transform():
 
   if result != None:
     most_recent_pose_node = graph_node_from_query_result(result) 
-    print(result[3])
   else:
     most_recent_pose_node = None
 
-  #log.publish("latest pose node: {0}".format(most_recent_pose_node))
+  return most_recent_pose_node
 
+  '''
   if most_recent_pose_node != None:
     [R, t] = get_node_global_transform(most_recent_pose_node)
     return [R, t] 
 
   return [None, None]
+  '''
 
 def graph_node_from_query_result(result):
   latest_pose_node = Graph_Nodes()
@@ -307,15 +307,20 @@ if __name__ == '__main__':
 
   rospy.init_node('stereo_localizer')
 
-  while rospy.get_param("/fs_cleaning") == 1 or rospy.get_param('/db_cleaning') == 1:
-    time.sleep(1) 
+  #while rospy.get_param("/fs_cleaning") == 1 or rospy.get_param('/db_cleaning') == 1:
+  #  time.sleep(1) 
   
   br = tf.TransformBroadcaster()
   rate = rospy.Rate(.2)
 
   while not rospy.is_shutdown():
-    [R, t] = get_latest_pose_node_with_global_transform()    
+    global_transform = get_global_transform()
 
+    print(global_transform)
+
+    #[R, t] = get_latest_pose_node_with_global_transform()    
+    
+    '''
     if R != None:
       print("found global coords, t: {0}".format(str(t)))
       print("R: {0}".format(str(R)))
@@ -324,6 +329,7 @@ if __name__ == '__main__':
       br.sendTransform((t[0, 1], t[0, 1], t[0, 2]), quaternion, rospy.Time.now(), 'rockie', 'map')
     else:
       print("No global transform found")
+    ''' 
 
     #when looping rosbag, this will go backwards and throw and error :)
     try:
