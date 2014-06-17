@@ -374,8 +374,6 @@ def calculate_3d_transform(matches, positions_1, positions_2):
     R = np.dot(V, W)
 
     t = -R*centroid_1 + centroid_2
-
-    #t = centroid_1 - centroid_2
     
     error = calculate_transform_error(R, t, rand_positions_1, rand_positions_2)
 
@@ -389,9 +387,8 @@ def calculate_3d_transform(matches, positions_1, positions_2):
       opt_rand_positions_2 = orig_rand_positions_2
       
   
-  #log.publish("rand_positions_1: {0}".format(opt_rand_positions_1))
-  #log.publish("rand_positions_2: {0}".format(opt_rand_positions_2))
-  
+  log.publish("rand_positions_1: {0}".format(opt_rand_positions_1))
+  log.publish("rand_positions_2: {0}".format(opt_rand_positions_2))
   
   cum_t += (opt_centroid_2 - opt_centroid_1 )
   log.publish("cumulative t = {0}".format(cum_t))
