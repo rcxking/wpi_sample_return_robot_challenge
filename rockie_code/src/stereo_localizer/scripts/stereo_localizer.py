@@ -191,11 +191,12 @@ def percolate_global_transform(root_node, edge, traversed_edges):
     #T_ac = _T_ab*T_bc
     connected_node_global_transform = get_connected_node_global_transform(edge, root_node, connected_node)
     set_node_global_transform(connected_node, connected_node_global_transform)
-    edges = get_node_edges(connected_node, root_node)
 
-    for edge in edges:
-      if edge not in traversed_edges:
-        percolate_global_transform(connected_node, edge, traversed_edges)
+  edges = get_node_edges(connected_node, root_node)
+
+  for edge in edges:
+    if edge not in traversed_edges:
+      percolate_global_transform(connected_node, edge, traversed_edges)
 
 def get_wpi_node():
   global session
@@ -207,20 +208,21 @@ def get_wpi_node():
 
 def get_global_transform():
 
-  #wpi_node = get_wpi_node()
   wpi_node = get_latest_pose_node_with_global_transform()
-  wpi_node_edges = get_node_edges(wpi_node, None)
 
-  traversed_edges = []
+  if wpi_node != None:
+    wpi_node_edges = get_node_edges(wpi_node, None)
 
-  for edge in wpi_node_edges:
-    percolate_global_transform(wpi_node, edge, traversed_edges)
+    traversed_edges = []
 
-  current_pose_node = get_latest_pose_node_with_global_transform()
+    for edge in wpi_node_edges:
+      percolate_global_transform(wpi_node, edge, traversed_edges)
 
-  current_global_transform = get_node_global_transform(current_pose_node)
+    current_pose_node = get_latest_pose_node_with_global_transform()
 
-  return current_global_transform
+    current_global_transform = get_node_global_transform(current_pose_node)
+
+    return current_global_transform
 
 def get_latest_pose_node_with_global_transform():
   global session
@@ -232,7 +234,8 @@ def get_latest_pose_node_with_global_transform():
   my_query = "SELECT node_id, node_type, sp_3d_matches_id, global_transformation_filepath "
   my_query += "FROM graph_nodes "
   my_query += "WHERE global_transformation_filepath IS NOT NULL "
-  my_query += "AND node_type = 'pose' "
+  my_query += "AND node_id IS NOT NULL "
+  #my_query += "AND node_type = 'pose' "
   my_query += "ORDER BY node_id DESC"
 
   cur.execute(my_query)
@@ -244,14 +247,6 @@ def get_latest_pose_node_with_global_transform():
     most_recent_pose_node = None
 
   return most_recent_pose_node
-
-  '''
-  if most_recent_pose_node != None:
-    [R, t] = get_node_global_transform(most_recent_pose_node)
-    return [R, t] 
-
-  return [None, None]
-  '''
 
 def graph_node_from_query_result(result):
   latest_pose_node = Graph_Nodes()
@@ -307,8 +302,8 @@ if __name__ == '__main__':
 
   rospy.init_node('stereo_localizer')
 
-  #while rospy.get_param("/fs_cleaning") == 1 or rospy.get_param('/db_cleaning') == 1:
-  #  time.sleep(1) 
+  while rospy.get_param("/fs_cleaning") == 1 or rospy.get_param('/db_cleaning') == 1:
+    time.sleep(1) 
   
   br = tf.TransformBroadcaster()
   rate = rospy.Rate(.2)
