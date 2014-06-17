@@ -75,6 +75,8 @@ def get_edge_transform(edge):
 def get_node_edges(node, previous_node):
   global session
 
+  session.commit()
+
   query = session.query(Graph_Edges)
   query = query.filter(or_(Graph_Edges.node_1_id == node.node_id, Graph_Edges.node_2_id == node.node_id)) 
 
@@ -82,13 +84,8 @@ def get_node_edges(node, previous_node):
   if previous_node != None:
     query = query.filter(and_(Graph_Edges.node_1_id != previous_node.node_id, Graph_Edges.node_2_id != previous_node.node_id))
 
-  print(str(query.as_scalar()))
-
   edges = query.all()
 
-  #don't return the previous edge
-  #filtered_new_edges = remove_previous_edge(new_edges)
-  #return [new_edges if e.node_1_id is not previous_node.node_id and e.node_2_id is not previous_node.node_id for e in edges]  
   return edges
 
 def get_node_by_id(node_id):
@@ -196,7 +193,7 @@ def percolate_global_transform(root_node, edge, traversed_edges):
 
   edges = get_node_edges(connected_node, root_node)
 
-  print("conected_node id: {0}".format(connected_node.node_id))
+  print("connected_node id: {0}".format(connected_node.node_id))
   print("root_node id: {0}".format(root_node.node_id))
   print("number of node edges: {0}".format(len(edges)))
 
