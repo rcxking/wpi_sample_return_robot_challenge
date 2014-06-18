@@ -215,6 +215,17 @@ def try_connect_nodes(feature_node, new_point_descs, new_point_positions, new_po
 
 def update_slam_graph(_3d_matches, stereo_image_pair):
 
+  #1. get new 3d keypoints node
+  #2. get all existing nodes
+  #3. attempt to connect new node to all existing nodes
+  #4. if we've connected to a node with many similar points, 
+  # dont add new feature node, otherwise, add new feature node
+
+  #new_node = create_pose_node(_3d_matches)
+  #existing_nodes = get_all_feature_nodes()
+  #insert_new_feature_nodes = try_connect_nodes(new_node, existing_nodes)
+  #if insert_new_feature_node then insert new feature node
+
   _3d_matches_object = get_3d_matches_object(_3d_matches)
   [new_point_descs, new_point_positions] = _3d_matches_object
 
@@ -229,8 +240,10 @@ def update_slam_graph(_3d_matches, stereo_image_pair):
   #TODO: Check most recent frame against ALL prior frames.
   #for now, just check against last frame (odometry mode)
 
-  #all_non_wpi_feature_nodes = get_all_feature_nodes(is_wpi_feature_node=False)
+  all_non_wpi_feature_nodes = get_all_feature_nodes(is_wpi_feature_node=False)
   #all_wpi_feature_nodes = get_all_feature_nodes(is_wpi_feature_node=True)
+
+  '''
 
   last_feature_node = get_last_feature_node(new_pose_node)
 
@@ -241,6 +254,7 @@ def update_slam_graph(_3d_matches, stereo_image_pair):
     if(try_connect_nodes(last_feature_node, new_point_descs, new_point_positions, new_pose_node)):
       insert_new_feature_node = False
 
+  '''
 
   #TODO: Attempt to match against wpi feature nodes for global coords,
   #and other nodes for soft edges
@@ -250,12 +264,10 @@ def update_slam_graph(_3d_matches, stereo_image_pair):
       #if we successfully match a wpi feature, connect and return
       return
   '''
-  '''
   #Attempt to match against a previous non-wpi node
   for feature_node in all_non_wpi_feature_nodes:
     if(try_connect_nodes(feature_node, new_point_descs, new_point_positions, new_pose_node)):
       insert_new_feature_node = False
-  '''
 
   #Nothing matched our incoming keypoints completely,
   #so add this as a new node for future matching
@@ -584,6 +596,9 @@ def get_last_feature_node(current_node):
 
 def get_all_feature_nodes(is_wpi_feature_node):
   global session
+
+  session.commit()
+
   query = session.query(Graph_Nodes)
 
   if(is_wpi_feature_node):
