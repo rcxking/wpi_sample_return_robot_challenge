@@ -19,8 +19,6 @@ is_debug = True
 ####################SET TO FALSE FOR ROCKIE RUN########
 
 
-
-
 #stereo_ns = 'my_stereo'
 #image_name = 'image_raw'
 

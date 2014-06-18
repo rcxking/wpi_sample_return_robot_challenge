@@ -300,7 +300,7 @@ def get_quaternion_from_rotation_matrix(R):
   y = (R[0, 2] - R[2, 0])/(4*w) 
   z = (R[1, 0] - R[0, 1])/(4*w) 
 
-  return (w, x, y, z)
+  return (x, y, z, w)
 
 if __name__ == '__main__':
   engine = create_engine('mysql://root@localhost/rockie')
