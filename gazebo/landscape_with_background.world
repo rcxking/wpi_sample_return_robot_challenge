@@ -81,7 +81,7 @@
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
     <model name='husky'>
-      <pose>8.15817 -3.31395 5.248 0.01146 -0.051114 3.03412</pose>
+      <pose>8.15817 -3.31395 7.248 0.01146 -0.051114 3.03412</pose>
 
 
 <link name='base_link'>
@@ -509,7 +509,7 @@
     </ode>
   </physics>
 </joint>
-<plugin name='husky_diff_controller' filename='/home/will/libhusky_gazebo_plugins.so'>
+<plugin name='husky_diff_controller' filename='/home/will/libhusky_plugin.so'>
   <alwaysOn>true</alwaysOn>
   <updateRate>100.0</updateRate>
   <backLeftJoint>back_left_joint</backLeftJoint>

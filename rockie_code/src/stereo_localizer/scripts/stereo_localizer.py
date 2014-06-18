@@ -43,7 +43,7 @@ stereo_graph_manager_topic = '/my_stereo/stereo_graph_node_updates'
 
 log = rospy.Publisher("/stereo_localizer/log", String)
 
-#pub = rospy.Publisher("/my_stereo/stereo_image_saves", String)
+min_norm = 5
 
 def get_last_position():
   pass
@@ -161,7 +161,11 @@ def get_node_global_transform(node):
   global session
 
   filepath = node.global_transformation_filepath
-  [R, t] = pickle.load(open(filepath, "rb"))
+
+  if filepath != None:
+    [R, t] = pickle.load(open(filepath, "rb"))
+  else:
+    return None
 
   transform = [np.array(R), np.array(t)]
 
@@ -185,11 +189,13 @@ def percolate_global_transform(root_node, edge, traversed_edges):
   traversed_edges.append(edge)
   connected_node = get_connected_node(root_node, edge)
 
-  if connected_node.global_transformation_filepath == None:
+  if connected_node.global_transformation_filepath == None and root_node.global_transformation_filepath != None:
 
     #T_ac = _T_ab*T_bc
     connected_node_global_transform = get_connected_node_global_transform(edge, root_node, connected_node)
-    set_node_global_transform(connected_node, connected_node_global_transform)
+
+    if norm_is_large_enough(connected_node_global_transform):
+      set_node_global_transform(connected_node, connected_node_global_transform)
 
   edges = get_node_edges(connected_node, root_node)
 
@@ -200,6 +206,14 @@ def percolate_global_transform(root_node, edge, traversed_edges):
   for edge in edges:
     if edge not in traversed_edges:
       percolate_global_transform(connected_node, edge, traversed_edges)
+
+def norm_is_large_enough(transform):
+  t = np.array(transform[1])
+
+  if np.linalg.norm(t) > min_norm:
+    return True
+  else:
+    return False
 
 def get_wpi_node():
   global session
@@ -227,7 +241,7 @@ def get_global_transform():
 
     current_global_transform = get_node_global_transform(current_pose_node)
 
-    return current_global_transform
+    return [current_global_transform, current_pose_node]
 
 def get_latest_pose_node_with_global_transform():
   global session
@@ -314,9 +328,15 @@ if __name__ == '__main__':
   rate = rospy.Rate(1)
 
   while not rospy.is_shutdown():
-    global_transform = get_global_transform()
+    gt = get_global_transform()
 
-    print(global_transform)
+    if gt != None:
+      [global_transform, pose_node] = gt
+      print(global_transform)
+      print("node id: {0}".format(pose_node.node_id))
+    else:
+      continue
+
 
     if global_transform != None:
       [R, t] = global_transform

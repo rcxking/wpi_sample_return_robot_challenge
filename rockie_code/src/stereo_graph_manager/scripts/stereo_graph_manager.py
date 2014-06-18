@@ -183,6 +183,8 @@ def try_connect_nodes(feature_node, new_point_descs, new_point_positions, new_po
     feature_point_positions = np.array(fn_positions, np.float32)
 
     point_matches = get_3d_point_matches(new_point_descs, feature_point_descs)
+
+    log.publish("attempting to connect node {0} to node {1}".format(new_pose_node.node_id, feature_node.node_id))
     log.publish ("num point matches = {0}".format(len(point_matches)))
     #log.publish("point_matches: {0}".format(point_matches))
 
@@ -195,7 +197,12 @@ def try_connect_nodes(feature_node, new_point_descs, new_point_positions, new_po
       #TODO: If the error for this is higher than we would
       #expect, we should disregard it and not add it to the
       #graph
-      [R, t, min_error_per_point] = calculate_3d_transform(point_matches, new_point_positions, feature_point_positions)
+      result = calculate_3d_transform(point_matches, new_point_positions, feature_point_positions)
+
+      if result != None:
+        [R, t, min_error_per_point] = result
+      else:
+        return
 
       transform = [R, t]  
 
@@ -243,11 +250,12 @@ def update_slam_graph(_3d_matches, stereo_image_pair):
   all_non_wpi_feature_nodes = get_all_feature_nodes(is_wpi_feature_node=False)
   #all_wpi_feature_nodes = get_all_feature_nodes(is_wpi_feature_node=True)
 
+  log.publish("number of feature nodes: {0}".format(len(all_non_wpi_feature_nodes)))
+
+  insert_new_feature_node = True
   '''
 
   last_feature_node = get_last_feature_node(new_pose_node)
-
-  insert_new_feature_node = True
 
   if last_feature_node is not None:
     #log.publish("found previous node, attempting to connect to current node")
@@ -368,16 +376,17 @@ def calculate_3d_transform(matches, positions_1, positions_2):
       
  
   if(min_error/ransac_sample_size < min_error_per_point_threshold):
-    log.publish("rand_positions_1: {0}".format(opt_rand_positions_1))
-    log.publish("rand_positions_2: {0}".format(opt_rand_positions_2))
+    pass
+    #log.publish("rand_positions_1: {0}".format(opt_rand_positions_1))
+    #log.publish("rand_positions_2: {0}".format(opt_rand_positions_2))
 
     #cum_t += (opt_centroid_2 - opt_centroid_1 )
     #log.publish("cumulative t = {0}".format(cum_t))
-    log.publish("opt R = {0}".format(opt_R))
-    log.publish("opt t = {0}".format(opt_t))
+    #log.publish("opt R = {0}".format(opt_R))
+    #log.publish("opt t = {0}".format(opt_t))
     #log.publish("opt error/point = {0}".format(min_error/ransac_sample_size))
-    log.publish("centroid 1 = {0}".format(opt_centroid_1))
-    log.publish("centroid 2 = {0}".format(opt_centroid_2))
+    #log.publish("centroid 1 = {0}".format(opt_centroid_1))
+    #log.publish("centroid 2 = {0}".format(opt_centroid_2))
     #log.publish("centroid 2 - 1 = {0}".format(opt_centroid_2 - opt_centroid_1))
 
 
@@ -601,12 +610,12 @@ def get_all_feature_nodes(is_wpi_feature_node):
 
   query = session.query(Graph_Nodes)
 
-  if(is_wpi_feature_node):
+  if not is_wpi_feature_node:
     feature_nodes = query.filter(Graph_Nodes.node_type == 'feature')
   else:
     feature_nodes = query.filter(Graph_Nodes.node_type == 'wpi_feature')
 
-  return feature_nodes
+  return feature_nodes.all()
 
 def triangulate(matches, kpts1, kpts2):
 
