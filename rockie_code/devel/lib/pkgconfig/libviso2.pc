@@ -1,8 +1,8 @@
-prefix=/home/bryant/wpi_sample_return_robot_challenge/rockie_code/devel
+prefix=/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel
 
 Name: libviso2
 Description: Description of libviso2
 Version: 0.0.1
-Cflags: -I/home/bryant/wpi_sample_return_robot_challenge/rockie_code/src/libviso2/libviso2/src
-Libs: -L/home/bryant/wpi_sample_return_robot_challenge/rockie_code/devel/lib -lviso2
+Cflags: -I/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/libviso2/libviso2/src
+Libs: -L/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib -lviso2
 Requires: 

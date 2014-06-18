@@ -67,14 +67,14 @@ set(libviso2_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(libviso2_SOURCE_PREFIX /home/bryant/wpi_sample_return_robot_challenge/rockie_code/src/libviso2)
-  set(libviso2_DEVEL_PREFIX /home/bryant/wpi_sample_return_robot_challenge/rockie_code/devel)
+  set(libviso2_SOURCE_PREFIX /home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/libviso2)
+  set(libviso2_DEVEL_PREFIX /home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel)
   set(libviso2_INSTALL_PREFIX "")
   set(libviso2_PREFIX ${libviso2_DEVEL_PREFIX})
 else()
   set(libviso2_SOURCE_PREFIX "")
   set(libviso2_DEVEL_PREFIX "")
-  set(libviso2_INSTALL_PREFIX /home/bryant/wpi_sample_return_robot_challenge/rockie_code/install)
+  set(libviso2_INSTALL_PREFIX /home/will/Code/wpi-sample-return-robot-challenge/rockie_code/install)
   set(libviso2_PREFIX ${libviso2_INSTALL_PREFIX})
 endif()
 
@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(libviso2_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/src/libviso2/libviso2/src" STREQUAL "")
+if(NOT "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/libviso2/libviso2/src" STREQUAL "")
   set(libviso2_INCLUDE_DIRS "")
-  set(_include_dirs "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/src/libviso2/libviso2/src")
+  set(_include_dirs "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/libviso2/libviso2/src")
   foreach(idir ${_include_dirs})
     if(IS_ABSOLUTE ${idir} AND IS_DIRECTORY ${idir})
       set(include ${idir})
@@ -103,7 +103,7 @@ if(NOT "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/src/libviso2/
         message(FATAL_ERROR "Project 'libviso2' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  Ask the maintainer 'maintained by: Stephan Wirth <stephan.wirth@uib.es>' to fix it.")
       endif()
     else()
-      message(FATAL_ERROR "Project 'libviso2' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/bryant/wpi_sample_return_robot_challenge/rockie_code/src/libviso2/${idir}'.  Ask the maintainer 'maintained by: Stephan Wirth <stephan.wirth@uib.es>' to fix it.")
+      message(FATAL_ERROR "Project 'libviso2' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/libviso2/${idir}'.  Ask the maintainer 'maintained by: Stephan Wirth <stephan.wirth@uib.es>' to fix it.")
     endif()
     _list_append_unique(libviso2_INCLUDE_DIRS ${include})
   endforeach()
@@ -122,7 +122,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/bryant/wpi_sample_return_robot_challenge/rockie_code/devel/lib;/home/bryant/wpi_sample_return_robot_challenge/rockie_code/devel/lib;/opt/ros/hydro/lib)
+    foreach(path /home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib;/opt/ros/hydro/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

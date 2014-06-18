@@ -1,8 +1,8 @@
-# Install script for directory: /home/bryant/wpi_sample_return_robot_challenge/rockie_code/src/viso2_ros
+# Install script for directory: /home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/viso2_ros
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  SET(CMAKE_INSTALL_PREFIX "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install")
+  SET(CMAKE_INSTALL_PREFIX "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/install")
 ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
 STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -33,45 +33,45 @@ IF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/viso2_ros/msg" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/src/viso2_ros/msg/VisoInfo.msg")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/viso2_ros/msg" TYPE FILE FILES "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/viso2_ros/msg/VisoInfo.msg")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/viso2_ros/cmake" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/viso2_ros/catkin_generated/installspace/viso2_ros-msg-paths.cmake")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/viso2_ros/cmake" TYPE FILE FILES "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/viso2_ros/catkin_generated/installspace/viso2_ros-msg-paths.cmake")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/devel/include/viso2_ros")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/include/viso2_ros")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/common-lisp/ros" TYPE DIRECTORY FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/devel/share/common-lisp/ros/viso2_ros")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/common-lisp/ros" TYPE DIRECTORY FILES "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/share/common-lisp/ros/viso2_ros")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  execute_process(COMMAND "/usr/bin/python" -m compileall "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/devel/lib/python2.7/dist-packages/viso2_ros")
+  execute_process(COMMAND "/usr/bin/python" -m compileall "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib/python2.7/dist-packages/viso2_ros")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python2.7/dist-packages" TYPE DIRECTORY FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/devel/lib/python2.7/dist-packages/viso2_ros")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python2.7/dist-packages" TYPE DIRECTORY FILES "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib/python2.7/dist-packages/viso2_ros")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/viso2_ros/catkin_generated/installspace/viso2_ros.pc")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/viso2_ros/catkin_generated/installspace/viso2_ros.pc")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/viso2_ros/cmake" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/viso2_ros/catkin_generated/installspace/viso2_ros-msg-extras.cmake")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/viso2_ros/cmake" TYPE FILE FILES "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/viso2_ros/catkin_generated/installspace/viso2_ros-msg-extras.cmake")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/viso2_ros/cmake" TYPE FILE FILES
-    "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/viso2_ros/catkin_generated/installspace/viso2_rosConfig.cmake"
-    "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/viso2_ros/catkin_generated/installspace/viso2_rosConfig-version.cmake"
+    "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/viso2_ros/catkin_generated/installspace/viso2_rosConfig.cmake"
+    "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/viso2_ros/catkin_generated/installspace/viso2_rosConfig-version.cmake"
     )
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/viso2_ros" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/src/viso2_ros/package.xml")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/viso2_ros" TYPE FILE FILES "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/viso2_ros/package.xml")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 

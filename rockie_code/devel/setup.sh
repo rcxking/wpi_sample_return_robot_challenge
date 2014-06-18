@@ -8,7 +8,7 @@
 
 # since this file is sourced either use the provided _CATKIN_SETUP_DIR
 # or fall back to the destination set at configure time
-: ${_CATKIN_SETUP_DIR:=/home/bryant/wpi_sample_return_robot_challenge/rockie_code/devel}
+: ${_CATKIN_SETUP_DIR:=/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel}
 _SETUP_UTIL="$_CATKIN_SETUP_DIR/_setup_util.py"
 unset _CATKIN_SETUP_DIR
 

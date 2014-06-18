@@ -7,8 +7,8 @@ FILE(REMOVE_RECURSE
   "CMakeFiles/viso2.dir/libviso2/src/viso.cpp.o"
   "CMakeFiles/viso2.dir/libviso2/src/viso_mono.cpp.o"
   "CMakeFiles/viso2.dir/libviso2/src/viso_stereo.cpp.o"
-  "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/devel/lib/libviso2.pdb"
-  "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/devel/lib/libviso2.so"
+  "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib/libviso2.pdb"
+  "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel/lib/libviso2.so"
 )
 
 # Per-language clean rules from dependency scanning.

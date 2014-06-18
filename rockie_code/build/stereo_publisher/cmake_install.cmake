@@ -1,8 +1,8 @@
-# Install script for directory: /home/bryant/wpi_sample_return_robot_challenge/rockie_code/src/stereo_publisher
+# Install script for directory: /home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_publisher
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  SET(CMAKE_INSTALL_PREFIX "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install")
+  SET(CMAKE_INSTALL_PREFIX "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/install")
 ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
 STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -33,17 +33,17 @@ IF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/stereo_publisher/catkin_generated/installspace/stereo_publisher.pc")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/stereo_publisher/catkin_generated/installspace/stereo_publisher.pc")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/stereo_publisher/cmake" TYPE FILE FILES
-    "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/stereo_publisher/catkin_generated/installspace/stereo_publisherConfig.cmake"
-    "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/build/stereo_publisher/catkin_generated/installspace/stereo_publisherConfig-version.cmake"
+    "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/stereo_publisher/catkin_generated/installspace/stereo_publisherConfig.cmake"
+    "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/build/stereo_publisher/catkin_generated/installspace/stereo_publisherConfig-version.cmake"
     )
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/stereo_publisher" TYPE FILE FILES "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/src/stereo_publisher/package.xml")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/stereo_publisher" TYPE FILE FILES "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_publisher/package.xml")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 

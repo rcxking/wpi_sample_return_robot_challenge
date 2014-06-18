@@ -82,6 +82,8 @@ def get_node_edges(node, previous_node):
   if previous_node != None:
     query = query.filter(and_(Graph_Edges.node_1_id != previous_node.node_id, Graph_Edges.node_2_id != previous_node.node_id))
 
+  print(str(query.as_scalar()))
+
   edges = query.all()
 
   #don't return the previous edge
@@ -194,9 +196,16 @@ def percolate_global_transform(root_node, edge, traversed_edges):
 
   edges = get_node_edges(connected_node, root_node)
 
+  print("conected_node id: {0}".format(connected_node.node_id))
+  print("root_node id: {0}".format(root_node.node_id))
+  print("number of node edges: {0}".format(len(edges)))
+
   for edge in edges:
     if edge not in traversed_edges:
+      print("connecting node {0} to node {1}".format(edge.node_1_id, edge.node_2_id))
       percolate_global_transform(connected_node, edge, traversed_edges)
+    else:
+      print("connecting node {0} to node {1} prevented by traversed_edges".format(edge.node_1_id, edge.node_2_id))
 
 def get_wpi_node():
   global session
@@ -212,10 +221,12 @@ def get_global_transform():
 
   if wpi_node != None:
     wpi_node_edges = get_node_edges(wpi_node, None)
+    print("number of wpi node edges: {0}".format(len(wpi_node_edges)))
 
     traversed_edges = []
 
     for edge in wpi_node_edges:
+      print("connecting node {0} to node {1}".format(edge.node_1_id, edge.node_2_id))
       percolate_global_transform(wpi_node, edge, traversed_edges)
 
     current_pose_node = get_latest_pose_node_with_global_transform()
@@ -312,19 +323,6 @@ if __name__ == '__main__':
     global_transform = get_global_transform()
 
     print(global_transform)
-
-    #[R, t] = get_latest_pose_node_with_global_transform()    
-    
-    '''
-    if R != None:
-      print("found global coords, t: {0}".format(str(t)))
-      print("R: {0}".format(str(R)))
-      #quaternion = tf.transformations.quaternion_from_matrix(R)
-      quaternion = get_quaternion_from_rotation_matrix(R)
-      br.sendTransform((t[0, 1], t[0, 1], t[0, 2]), quaternion, rospy.Time.now(), 'rockie', 'map')
-    else:
-      print("No global transform found")
-    ''' 
 
     #when looping rosbag, this will go backwards and throw and error :)
     try:

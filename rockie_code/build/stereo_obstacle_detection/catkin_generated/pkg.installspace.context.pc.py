@@ -4,5 +4,5 @@ PROJECT_PKG_CONFIG_INCLUDE_DIRS = "".split(';') if "" != "" else []
 PROJECT_CATKIN_DEPENDS = "".replace(';', ' ')
 PKG_CONFIG_LIBRARIES_WITH_PREFIX = "".split(';') if "" != "" else []
 PROJECT_NAME = "stereo_obstacle_detection"
-PROJECT_SPACE_DIR = "/home/bryant/wpi_sample_return_robot_challenge/rockie_code/install"
+PROJECT_SPACE_DIR = "/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/install"
 PROJECT_VERSION = "0.0.0"
