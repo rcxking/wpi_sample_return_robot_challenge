@@ -46,8 +46,8 @@ new_feature_threshold = .7
 
 #If we have at least 7 matches, make a connection
 new_connection_threshold = 1#15 
-ransac_sample_size = 5 
-ransac_iterations = 500
+ransac_sample_size = 4 
+ransac_iterations = 2000
 
 stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/images/left/".format(os.getenv("HOME"))
 
@@ -388,17 +388,17 @@ def calculate_3d_transform(matches, positions_1, positions_2):
       opt_rand_positions_2 = orig_rand_positions_2
       
   
-  log.publish("rand_positions_1: {0}".format(opt_rand_positions_1))
-  log.publish("rand_positions_2: {0}".format(opt_rand_positions_2))
+  #log.publish("rand_positions_1: {0}".format(opt_rand_positions_1))
+  #log.publish("rand_positions_2: {0}".format(opt_rand_positions_2))
   
-  cum_t += (opt_centroid_2 - opt_centroid_1 )
-  log.publish("cumulative t = {0}".format(cum_t))
+  #cum_t += (opt_centroid_2 - opt_centroid_1 )
+  #log.publish("cumulative t = {0}".format(cum_t))
   #log.publish("opt R = {0}".format(opt_R))
   #log.publish("opt t = {0}".format(opt_t))
   log.publish("opt error/point = {0}".format(min_error/ransac_sample_size))
   #log.publish("centroid 1 = {0}".format(opt_centroid_1))
   #log.publish("centroid 2 = {0}".format(opt_centroid_2))
-  #log.publish("centroid 2 - 1 = {0}".format(opt_centroid_2 - opt_centroid_1))
+  log.publish("centroid 2 - 1 = {0}".format(opt_centroid_2 - opt_centroid_1))
 
 
   return [opt_R.tolist(), opt_t.tolist()]
