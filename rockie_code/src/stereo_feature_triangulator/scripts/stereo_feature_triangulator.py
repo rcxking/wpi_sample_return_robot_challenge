@@ -57,7 +57,7 @@ f_gazebo = img_width / (2*np.tan(hfov / 2))
 #set to f_gazebo for debugging
 f = f_gazebo
 
-max_vertical_discrepency = 10
+max_vertical_discrepency = 1
 
 def drawMatches(gray1, kpts1, gray2, kpts2, matches):
 
@@ -79,15 +79,12 @@ def drawMatches(gray1, kpts1, gray2, kpts2, matches):
     #cv2.line(vis, pt1, pt2, (int(255*random.random()), int(255*random.random()), int(255*random.random())), 1) 
     z = triangulate(match, kpts1, kpts2)
 
-    if z > 0:
-      cv2.putText(gray1, str(z), pt1, cv2.FONT_KERSHEY_SIMPLEX, 2, 255, 2)
+    if z > 0 and z != float("inf"):
+      z_str = str(z)
+      z_str = z_str[:3]
+      cv2.putText(gray1, z_str, pt1, cv2.FONT_KERSHEY_SIMPLEX, 2, 255, 2)
       cv2.circle(gray1, pt1, 5, (int(z), int(z), int(z)), -1)
 
-      #cv2.putText(vis, str(z), pt1, cv2.FONT_HERSHEY_SIMPLEX, 2, 255, 2)
-      #cv2.circle(vis, pt2, 5, (int(z), int(z), int(z)), -1)
-      #cv2.circle(vis, pt1, 5, (int(z), int(z), int(z)), -1)
-
-  #cv2.imshow('img', vis)
   cv2.imshow('img', gray1)
 
   cv2.waitKey(100)
@@ -160,7 +157,7 @@ def triangulate(matches, kpts_descs1, kpts_descs2, left_image):
   descriptor_dtype = descs1.dtype
 
   matched_descs = np.empty([0, descriptor_length], dtype=descriptor_dtype)
-  positions = np.empty([0, 3])
+  positions = np.empty([0, 3], np.float32)
 
   _3d_points = []
 
@@ -176,14 +173,14 @@ def triangulate(matches, kpts_descs1, kpts_descs2, left_image):
     train_pt_desc = descs2[match.trainIdx, :]
 
     #should check against epipolar line    
-    #if(math.fabs(query_pt.pt[1] - train_pt.pt[1]) > max_vertical_discrepency):
-    #  continue
+    if(math.fabs(query_pt.pt[1] - train_pt.pt[1]) > max_vertical_discrepency):
+      continue
 
     disparity = math.fabs(query_pt.pt[0] - train_pt.pt[0])
 
     #consider query image as origin
-    x = query_pt.pt[0]
-    y = query_pt.pt[1]
+    x = -query_pt.pt[0] + img_width/2
+    y = -query_pt.pt[1] + img_height/2
 
     #see pg 371 and 416 of O'REILLY "Learning OpenCV" 2008
     Z = (f*camera_dist)/disparity
@@ -209,8 +206,12 @@ def triangulate(matches, kpts_descs1, kpts_descs2, left_image):
   return _3d_points
 
 def draw_3d_point(left_image, pt, z):
-  cv2.circle(left_image, (int(pt[0]), int(pt[1])), 5, int(z))
-  cv2.putText(left_image, str(z), (int(pt[0]), int(pt[1])), cv2.FONT_HERSHEY_SIMPLEX, 2, 255, 2)
+
+  if z != float("inf"):
+    cv2.circle(left_image, (int(pt[0]), int(pt[1])), 5, int(z))
+    z_str = str(z)
+    z_str = z_str[:4]
+    cv2.putText(left_image, z_str, (int(pt[0]), int(pt[1])), cv2.FONT_HERSHEY_SIMPLEX, 2, 255, 2)
 
 def ConvertCV2ToROSGrayscale(img):
   global bridge

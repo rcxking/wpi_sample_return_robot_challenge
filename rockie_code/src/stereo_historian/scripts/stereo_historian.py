@@ -100,14 +100,16 @@ def save_image(img, time, camera):
         log.publish("left image total time: {0}".format(total_time_left))
         log.publish("right image total time: {0}".format(total_time_right))
         return
+    else:
+        log.publish("stereo cameras in sync, saving images")
+        log.publish("left image total time: {0}".format(total_time_left))
+        log.publish("right image total time: {0}".format(total_time_right))
 
     left_img = ConvertToCV2Grayscale(left_img)
     right_img = ConvertToCV2Grayscale(right_img)
 
     left_filepath = WriteToFile(left_img, left_timestamp, 'left')
     right_filepath = WriteToFile(right_img, right_timestamp, 'right')
-
-    log.publish("saving image {0}".format(left_filepath))
 
     stereo_pair_db_id = WriteToDatabase(left_filepath, right_filepath, datetime.datetime.now())
 

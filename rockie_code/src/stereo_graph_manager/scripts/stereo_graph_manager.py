@@ -39,21 +39,22 @@ index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
 search_params = dict(checks=50)   # or pass empty dictionary
 
 #flann = cv2.FlannBasedMatcher(index_params,search_params)
-flann = cv2.BFMatcher()
+flann = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
 
 #if we can match 70% of the 3D points, don't create a new feature node
 new_feature_threshold = .7
 
 #If we have at least 7 matches, make a connection
 new_connection_threshold = 1#15 
-ransac_sample_size = 4 
-ransac_iterations = 2000
+ransac_sample_size = 5 
+ransac_iterations = 1000
 
 stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/images/left/".format(os.getenv("HOME"))
 
 log = rospy.Publisher("/stereo_graph_manager/log", String)
 
-min_wpi_feature_matches = 4
+min_wpi_feature_matches = 3
+min_error_per_point_threshold = 1 
 
 ##DEBUG
 
@@ -64,7 +65,7 @@ def update_graph_callback(_3d_matches_data_id):
   global session
   global DBSession
   global pub
-  
+
   _3d_matches = get_3d_points(_3d_matches_data_id.data)
 
   if(_3d_matches != None):
@@ -149,6 +150,7 @@ def try_connect_nodes_wpi_feature(feature_node, new_point_descs, new_point_posit
 
     point_matches = get_3d_point_matches(new_point_descs, feature_point_descs)
 
+    
     num_3d_matches = len(point_matches)
     num_feature_node_points = feature_point_positions.shape[0]
 
@@ -176,12 +178,13 @@ def try_connect_nodes(feature_node, new_point_descs, new_point_positions, new_po
 
   if(len(fn_positions) > ransac_sample_size):
 
-    feature_point_descs = np.array(fn_descs, np.float32)
+    #feature_point_descs = np.array(fn_descs, np.float32)
+    feature_point_descs = np.array(fn_descs, np.uint8)
     feature_point_positions = np.array(fn_positions, np.float32)
 
     point_matches = get_3d_point_matches(new_point_descs, feature_point_descs)
-
     log.publish ("num point matches = {0}".format(len(point_matches)))
+    #log.publish("point_matches: {0}".format(point_matches))
 
     num_3d_matches = len(point_matches)
     num_feature_node_points = feature_point_positions.shape[0]
@@ -192,20 +195,21 @@ def try_connect_nodes(feature_node, new_point_descs, new_point_positions, new_po
       #TODO: If the error for this is higher than we would
       #expect, we should disregard it and not add it to the
       #graph
-      transform = calculate_3d_transform(point_matches, 
-          new_point_positions, 
-          feature_point_positions)
+      [R, t, min_error_per_point] = calculate_3d_transform(point_matches, new_point_positions, feature_point_positions)
 
-      connect_pose_to_feature(new_pose_node, 
-          feature_node, 
-          transform, 
-          point_matches, 
-          new_point_positions, 
-          feature_point_positions)
+      transform = [R, t]  
+
+      if(min_error_per_point < min_error_per_point_threshold):
+        connect_pose_to_feature(new_pose_node, 
+            feature_node, 
+            transform, 
+            point_matches, 
+            new_point_positions, 
+            feature_point_positions)
 
       #don't add new feature node if num of matches is relatively large
       if(num_3d_matches > new_feature_threshold*num_feature_node_points):
-        insert_new_feature_node = False
+          insert_new_feature_node = False
 
   return insert_new_feature_node
 
@@ -214,7 +218,8 @@ def update_slam_graph(_3d_matches, stereo_image_pair):
   _3d_matches_object = get_3d_matches_object(_3d_matches)
   [new_point_descs, new_point_positions] = _3d_matches_object
 
-  new_point_descs = np.array(new_point_descs, np.float32)
+  #new_point_descs = np.array(new_point_descs, np.float32)
+  new_point_descs = np.array(new_point_descs, np.uint8)
   new_point_positions = np.array(new_point_positions, np.float32)
 
   #TODO: Connect poses with wheel odometry
@@ -232,7 +237,7 @@ def update_slam_graph(_3d_matches, stereo_image_pair):
   insert_new_feature_node = True
 
   if last_feature_node is not None:
-    log.publish("found previous node, attempting to connect to current node")
+    #log.publish("found previous node, attempting to connect to current node")
     if(try_connect_nodes(last_feature_node, new_point_descs, new_point_positions, new_pose_node)):
       insert_new_feature_node = False
 
@@ -277,65 +282,24 @@ def add_new_feature_node(_3d_matches):
   session.commit()
   return feature_node
 
-def calculate_wpi_3d_transform(matches, positions_1, positions_2):
-  
-  min_error = float("inf")
-
-  opt_t = np.empty([3, 1])
-  opt_R = np.empty([3, 3])
-
-  for i in range(ransac_iterations):
-
-    #following http://en.wikipedia.org/wiki/Kabsch_algorithm
-    #also check out https://github.com/charnley/rmsd
-    ransac_matches = matches_with_wpi_coordinates(matches, ransac_sample_size, positions_1, positions_2)
-
-    [rand_positions_1, rand_positions_2] = get_rand_positions(ransac_matches, 
-        positions_1, 
-        positions_2)
-
-    rand_positions_1 = np.asmatrix(rand_positions_1)  
-    rand_positions_2 = np.asmatrix(rand_positions_2)
-
-    centroid_1 = get_centroid(rand_positions_1)
-    centroid_2 = get_centroid(rand_positions_2)
-
-    #subtract centroid from each position
-    for i in range(ransac_sample_size):
-      rand_positions_1[i, :] -= centroid_1.transpose()
-      rand_positions_2[i, :] -= centroid_2.transpose()
-  
-    A = np.dot(rand_positions_1.transpose(), rand_positions_2)
-
-    V, S, W = np.linalg.svd(A)
-
-    d = (np.linalg.det(V) * np.linalg.det(W)) < 0.0
-
-    if d:
-      S[-1] = -S[-1]
-      V[:, -1] = -V[:, -1]
-
-    R = np.dot(V, W)
-
-    t = -R*centroid_1 + centroid_2
-    
-    error = calculate_transform_error(R, t, rand_positions_1, rand_positions_2)
-
-    if(error < min_error):
-      opt_t = t
-      opt_R = R
-      min_error = error
-
-  return [opt_R.tolist(), opt_t.tolist()]
-
 #Look at github wiki  
 def calculate_3d_transform(matches, positions_1, positions_2):
   global cum_t
 
   min_error = float("inf")
 
+  centroid_1 = np.empty([3, 1])
+  centroid_2 = np.empty([3, 1])
+
   opt_t = np.empty([3, 1])
   opt_R = np.empty([3, 3])
+
+  global_centroid_1 = get_centroid(positions_1)
+  global_centroid_2 = get_centroid(positions_2)
+
+  #log.publish("global centroid 1 = {0}".format(global_centroid_1))
+  #log.publish("global centroid 2 = {0}".format(global_centroid_2))
+  #log.publish("global centroid 2 - 1 = {0}".format(global_centroid_2 - global_centroid_1))
 
   for i in range(ransac_iterations):
 
@@ -363,8 +327,11 @@ def calculate_3d_transform(matches, positions_1, positions_2):
   
     #A is the covariance matrix
     A = np.dot(rand_positions_1.transpose(), rand_positions_2)
-
-    V, S, W = np.linalg.svd(A)
+    
+    try:
+      V, S, W = np.linalg.svd(A)
+    except:
+      return
 
     d = (np.linalg.det(V) * np.linalg.det(W)) < 0.0
 
@@ -376,7 +343,7 @@ def calculate_3d_transform(matches, positions_1, positions_2):
 
     t = -R*centroid_1 + centroid_2
     
-    error = calculate_transform_error(R, t, rand_positions_1, rand_positions_2)
+    error = calculate_transform_error(R, t, orig_rand_positions_1, orig_rand_positions_2)
 
     if(error < min_error):
       opt_t = t
@@ -387,21 +354,22 @@ def calculate_3d_transform(matches, positions_1, positions_2):
       opt_rand_positions_1 = orig_rand_positions_1
       opt_rand_positions_2 = orig_rand_positions_2
       
-  
-  #log.publish("rand_positions_1: {0}".format(opt_rand_positions_1))
-  #log.publish("rand_positions_2: {0}".format(opt_rand_positions_2))
-  
-  #cum_t += (opt_centroid_2 - opt_centroid_1 )
-  #log.publish("cumulative t = {0}".format(cum_t))
-  #log.publish("opt R = {0}".format(opt_R))
-  #log.publish("opt t = {0}".format(opt_t))
-  log.publish("opt error/point = {0}".format(min_error/ransac_sample_size))
-  #log.publish("centroid 1 = {0}".format(opt_centroid_1))
-  #log.publish("centroid 2 = {0}".format(opt_centroid_2))
-  log.publish("centroid 2 - 1 = {0}".format(opt_centroid_2 - opt_centroid_1))
+ 
+  if(min_error/ransac_sample_size < min_error_per_point_threshold):
+    log.publish("rand_positions_1: {0}".format(opt_rand_positions_1))
+    log.publish("rand_positions_2: {0}".format(opt_rand_positions_2))
+
+    #cum_t += (opt_centroid_2 - opt_centroid_1 )
+    #log.publish("cumulative t = {0}".format(cum_t))
+    log.publish("opt R = {0}".format(opt_R))
+    log.publish("opt t = {0}".format(opt_t))
+    #log.publish("opt error/point = {0}".format(min_error/ransac_sample_size))
+    log.publish("centroid 1 = {0}".format(opt_centroid_1))
+    log.publish("centroid 2 = {0}".format(opt_centroid_2))
+    #log.publish("centroid 2 - 1 = {0}".format(opt_centroid_2 - opt_centroid_1))
 
 
-  return [opt_R.tolist(), opt_t.tolist()]
+  return [opt_R.tolist(), opt_t.tolist(), min_error/ransac_sample_size]
 
 def calculate_transform_error(R, t, positions_1, positions_2):
 
@@ -574,12 +542,18 @@ def create_pose_node(stereo_image_pair_id):
 
 def get_keypoints_pair(spk_id):
   global session
+
+  session.commit()
+
   query = session.query(Stereo_Pair_Keypoints)
   stereo_pair_keypoints = query.filter_by(stereo_pair_keypoint_id = int(spk_id)).first()
   return stereo_pair_keypoints
 
 def get_3d_points(_3d_matches_id):
   global session
+
+  session.commit()
+
   query = session.query(Stereo_3D_Matches)
   _3d_matches = query.filter_by(sp_3d_matches_id = _3d_matches_id).first()
   return _3d_matches
@@ -593,10 +567,18 @@ def get_3d_point_matches(descs1, descs2):
 
 def get_last_feature_node(current_node):
   global session
-  query = session.query(Graph_Nodes).filter(Graph_Nodes.node_type == 'feature')
-  query = query.order_by(Graph_Nodes.node_id.desc())
+
+  session.commit()
+
+  query = session.query(Graph_Nodes).filter(Graph_Nodes.node_id == 2)
+  #query = session.query(Graph_Nodes).filter(Graph_Nodes.node_type == 'feature')
+  #query = query.order_by(Graph_Nodes.node_id.desc())
 
   last_node = query.first()
+  
+  if(last_node != None):
+    log.publish("last_node_id: {0}".format(last_node.node_id))
+    log.publish("this_node_id: {0}".format(current_node.node_id))
 
   return last_node
 

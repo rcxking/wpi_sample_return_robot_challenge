@@ -22,7 +22,8 @@ stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/
 
 #sift = cv2.SIFT()
 #sift = cv2.SIFT(50)
-sift = cv2.SURF(1000)
+#sift = cv2.SURF(3000)
+sift = cv2.ORB()
 
 engine = create_engine('mysql://root@localhost/rockie')
 Base.metadata.bind = engine
@@ -31,8 +32,17 @@ session = DBSession()
 
 stereo_historian_topic = '/my_stereo/stereo_image_saves'
 stereo_feature_identifier_topic = '/my_stereo/stereo_image_keypoint_saves'
+stereo_feature_identifier_log_topic = '/stereo_feature_identifier/log'
+
+stereo_left_keypoints_topic = 'my_stereo/stereo_feature_identifier/left_image_keypoints'
+stereo_right_keypoints_topic = 'my_stereo/stereo_feature_identifier/right_image_keypoints'
 
 pub = rospy.Publisher(stereo_feature_identifier_topic, String)
+log = rospy.Publisher(stereo_feature_identifier_log_topic, String)
+left_keypoints_img_pub = rospy.Publisher(stereo_left_keypoints_topic, ros_image)
+right_keypoints_img_pub = rospy.Publisher(stereo_right_keypoints_topic, ros_image)
+
+bridge = CvBridge()
 
 def create_and_store_features_callback(stereo_image_pair_data_id):
     global session
@@ -54,6 +64,8 @@ def create_and_store_features_callback(stereo_image_pair_data_id):
     left_keypoints = CreateKeypointsAndDescriptors(img_left)
     right_keypoints = CreateKeypointsAndDescriptors(img_right)
     
+    debug_keypoint_images_topic(img_left, img_right, left_keypoints, right_keypoints)
+
     if(left_keypoints[1] != None and right_keypoints[1] != None):
 
         left_img_keypoints_filepath = SaveKeypoints(left_keypoints, img_left_filepath)
@@ -71,6 +83,32 @@ def create_and_store_features_callback(stereo_image_pair_data_id):
         pub.publish(str(stereo_pair_keypoint_id))
 
     session.close()
+
+def debug_keypoint_images_topic(img_left, img_right, left_keypoints, right_keypoints):
+
+  left_keypoints_img = cv2.drawKeypoints(img_left, left_keypoints[0])
+  right_keypoints_img = cv2.drawKeypoints(img_right, right_keypoints[0])
+
+  log.publish(str(left_keypoints_img.shape)) 
+
+  try:
+    pass
+    left_keypoints_img_pub.publish(ConvertCV2ToROSGrayscale(left_keypoints_img))
+    right_keypoints_img_pub.publish(ConvertCV2ToROSGrayscale(right_keypoints_img))
+  except CvBridgeError, e:
+    print e
+
+
+def ConvertCV2ToROSGrayscale(img):
+  global bridge
+
+  #color = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
+  ros_img = bridge.cv2_to_imgmsg(img, "bgr8")
+  return ros_img
+
+  #cv2_img = bridge.imgmsg_to_cv2(img, "bgr8")
+  #cv2_img_gray = cv2.cvtColor(cv2_img, cv2.COLOR_BGR2GRAY)
+  #return cv2_img_gray
 
 def find_and_store_features():
     rospy.init_node("stereo_feature_identifier")
@@ -103,6 +141,9 @@ def SaveKeypoints(kp, image_filepath):
     return filepath
 
 def ConvertToSerializableKeypoints(kps_descs):
+
+    log.publish("type of keypoint descs: {0}".format(kps_descs[1].dtype)) 
+
     kps_descs[0] = [ConvertToSerializableKeypoint(keypoint) for keypoint in kps_descs[0]]
     kps_descs[1] = kps_descs[1].tolist()
     return kps_descs

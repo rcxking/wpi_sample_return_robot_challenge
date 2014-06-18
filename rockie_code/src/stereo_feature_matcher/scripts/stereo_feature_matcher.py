@@ -18,8 +18,12 @@ import datetime
 import cPickle as pickle
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import math
+import random
 
 stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts".format(os.getenv("HOME"))
+
+bridge = CvBridge()
 
 engine = create_engine('mysql://root@localhost/rockie')
 Base.metadata.bind = engine
@@ -29,7 +33,9 @@ session = DBSession()
 stereo_historian_topic = '/my_stereo/stereo_image_saves'
 stereo_feature_identifier_topic = '/my_stereo/stereo_image_keypoint_saves'
 stereo_feature_matcher_topic = '/my_stereo/stereo_image_keypoint_matches'
+stereo_feature_matcher_debug_topic = '/my_stereo/stereo_feature_matcher/matches_img'
 
+matches_img_pub = rospy.Publisher(stereo_feature_matcher_debug_topic, ros_image)
 pub = rospy.Publisher(stereo_feature_matcher_topic, String)
 
 # FLANN parameters
@@ -38,7 +44,7 @@ index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
 search_params = dict(checks=50)   # or pass empty dictionary
 
 #flann = cv2.FlannBasedMatcher(index_params,search_params)
-flann = cv2.BFMatcher()
+flann = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
 
 def match_and_store_features_callback(stereo_pair_keypoint_data_id):
     global session
@@ -60,7 +66,13 @@ def match_and_store_features_callback(stereo_pair_keypoint_data_id):
     right_keypoints = get_right_keypoints(stereo_pair_keypoint)
 
     matches = get_matches(left_keypoints, right_keypoints)
+
+    # Sort them in the order of their distance.
+    matches = sorted(matches, key = lambda x:x.distance)
+
     matches_filepath = save_keypoint_matches(matches, stereo_pair_keypoint)
+
+    publish_debug_matches_img(left_keypoints, right_keypoints, matches, stereo_pair_keypoint)
 
     sp_matches = Stereo_Pair_Keypoint_Matches()
     sp_matches.stereo_pair_keypoint_id = stereo_pair_keypoint_data_id.data
@@ -74,6 +86,25 @@ def match_and_store_features_callback(stereo_pair_keypoint_data_id):
     pub.publish(str(stereo_pair_keypoint_matches_id))
 
     session.close()
+
+def publish_debug_matches_img(left_keypoints, right_keypoints, matches, stereo_pair_keypoint):
+    global session
+    global DBSession
+    global pub
+   
+    session = DBSession()
+
+    stereo_image_pair_id = stereo_pair_keypoint.stereo_image_pair_id 
+    query = session.query(Stereo_Image_Pair)
+    stereo_image_pair = query.filter_by(stereo_image_pair_id = int(stereo_image_pair_id)).first()
+
+    img_left_filepath = stereo_image_pair.left_filepath
+    img_right_filepath = stereo_image_pair.right_filepath
+
+    img_left = cv2.imread(img_left_filepath, 0)
+    img_right = cv2.imread(img_right_filepath, 0)
+  
+    drawMatches(img_left, left_keypoints[0], img_right, right_keypoints[0], matches)
 
 class py_match:
   pass
@@ -109,6 +140,34 @@ def get_matches(kps_descs_1, kps_descs_2):
 
     return matches
 
+def drawMatches(gray1, kpts1, gray2, kpts2, matches):
+
+  h1, w1 = gray1.shape[:2]
+  h2, w2 = gray2.shape[:2]
+  vis = np.zeros((max(h1, h2), w1+w2), np.uint8)
+  vis[:h1, :w1] = gray1
+  vis[:h2, w1:w1+w2] = gray2
+  #vis = cv2.cvtColor(vis, cv2.COLOR_GRAY2BGR)
+
+  for match in matches:
+    pt1 = (int(kpts1[match.queryIdx].pt[0]), int(kpts1[match.queryIdx].pt[1]))
+    pt2  = (int(kpts2[match.trainIdx].pt[0] + w1), int(kpts2[match.trainIdx].pt[1]))
+
+    #should check against epipolar line
+    if math.fabs(pt1[1] - pt2[1]) > 10:
+      continue
+    
+    cv2.line(vis, pt1, pt2, (int(255*random.random()), int(255*random.random()), int(255*random.random())), 1) 
+
+  matches_img_pub.publish(ConvertCV2ToROSGrayscale(vis))
+
+def ConvertCV2ToROSGrayscale(img):
+  global bridge
+
+  color = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
+  ros_img = bridge.cv2_to_imgmsg(color, "bgr8")
+  return ros_img
+
 def recreate_keypoints(kp):
     return cv2.KeyPoint(x=kp.pt[0], y=kp.pt[1], _size=kp.size, _angle=kp.angle, _response=kp.response, _octave=kp.octave, _class_id=kp.class_id) 
 
@@ -117,7 +176,8 @@ def get_left_keypoints(stereo_pair_keypoint):
 
     kpts_descs = pickle.load(open(left_keypoints_filepath, "rb"))
     kpts_descs[0] = [recreate_keypoints(kp) for kp in kpts_descs[0]]
-    kpts_descs[1] = np.array(kpts_descs[1], np.float32)
+    #kpts_descs[1] = np.array(kpts_descs[1], np.float32)
+    kpts_descs[1] = np.array(kpts_descs[1], np.uint8)
 
     return kpts_descs
 
@@ -126,7 +186,8 @@ def get_right_keypoints(stereo_pair_keypoint):
 
     kpts_descs =  pickle.load(open(right_keypoints_filepath, "rb"))
     kpts_descs[0] = [recreate_keypoints(kp) for kp in kpts_descs[0]]
-    kpts_descs[1] = np.array(kpts_descs[1], np.float32)
+    #kpts_descs[1] = np.array(kpts_descs[1], np.float32)
+    kpts_descs[1] = np.array(kpts_descs[1], np.uint8)
 
     return kpts_descs
 
