@@ -43,7 +43,7 @@ stereo_graph_manager_topic = '/my_stereo/stereo_graph_node_updates'
 
 log = rospy.Publisher("/stereo_localizer/log", String)
 
-min_norm = 5
+min_norm = 1
 
 def get_last_position():
   pass
@@ -190,6 +190,8 @@ def percolate_global_transform(root_node, edge, traversed_edges):
   connected_node = get_connected_node(root_node, edge)
 
   if connected_node.global_transformation_filepath == None and root_node.global_transformation_filepath != None:
+
+    print("attempting to create global transform from {0} to {1}".format(root_node.node_id, connected_node.node_id))
 
     #T_ac = _T_ab*T_bc
     connected_node_global_transform = get_connected_node_global_transform(edge, root_node, connected_node)
