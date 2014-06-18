@@ -38,15 +38,16 @@ FLANN_INDEX_KDTREE = 0
 index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
 search_params = dict(checks=50)   # or pass empty dictionary
 
-flann = cv2.FlannBasedMatcher(index_params,search_params)
+#flann = cv2.FlannBasedMatcher(index_params,search_params)
+flann = cv2.BFMatcher(crossCheck=True)
 
 #if we can match 70% of the 3D points, don't create a new feature node
 new_feature_threshold = .7
 
 #If we have at least 7 matches, make a connection
 new_connection_threshold = 1#15 
-ransac_sample_size = 5 
-ransac_iterations = 1000
+ransac_sample_size = 7 
+ransac_iterations = 500
 
 stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/images/left/".format(os.getenv("HOME"))
 
@@ -394,7 +395,7 @@ def calculate_3d_transform(matches, positions_1, positions_2):
   log.publish("cumulative t = {0}".format(cum_t))
   #log.publish("opt R = {0}".format(opt_R))
   #log.publish("opt t = {0}".format(opt_t))
-  #log.publish("opt error/point = {0}".format(min_error/ransac_sample_size))
+  log.publish("opt error/point = {0}".format(min_error/ransac_sample_size))
   #log.publish("centroid 1 = {0}".format(opt_centroid_1))
   #log.publish("centroid 2 = {0}".format(opt_centroid_2))
   #log.publish("centroid 2 - 1 = {0}".format(opt_centroid_2 - opt_centroid_1))

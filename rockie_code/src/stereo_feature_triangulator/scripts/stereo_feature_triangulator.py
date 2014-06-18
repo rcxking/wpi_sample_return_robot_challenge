@@ -40,12 +40,24 @@ pub_vis = rospy.Publisher(triangulator_visualization_topic, ros_image)
 bridge = CvBridge()
 
 #camera distance is 94 mm
-camera_dist = .094
+#camera_dist = .094
+
+###DEBUG gazebo cam dist is .4
+camera_dist = .4
 
 #focal length is 579 mm
 f = 579
 
-max_vertical_discrepency = 1
+hfov = 1.047
+img_height = 720
+img_width = 960
+
+f_gazebo = img_width / (2*np.tan(hfov / 2))
+
+#set to f_gazebo for debugging
+f = f_gazebo
+
+max_vertical_discrepency = 10
 
 def drawMatches(gray1, kpts1, gray2, kpts2, matches):
 
@@ -164,8 +176,8 @@ def triangulate(matches, kpts_descs1, kpts_descs2, left_image):
     train_pt_desc = descs2[match.trainIdx, :]
 
     #should check against epipolar line    
-    if(math.fabs(query_pt.pt[1] - train_pt.pt[1]) > max_vertical_discrepency):
-      continue
+    #if(math.fabs(query_pt.pt[1] - train_pt.pt[1]) > max_vertical_discrepency):
+    #  continue
 
     disparity = math.fabs(query_pt.pt[0] - train_pt.pt[0])
 

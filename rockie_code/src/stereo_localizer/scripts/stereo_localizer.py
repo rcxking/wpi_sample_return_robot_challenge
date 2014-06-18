@@ -311,7 +311,7 @@ if __name__ == '__main__':
     time.sleep(1) 
   
   br = tf.TransformBroadcaster()
-  rate = rospy.Rate(.2)
+  rate = rospy.Rate(1)
 
   while not rospy.is_shutdown():
     global_transform = get_global_transform()
