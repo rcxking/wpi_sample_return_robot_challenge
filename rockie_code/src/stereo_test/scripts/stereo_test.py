@@ -360,6 +360,7 @@ def calculate_3d_transform(matches, positions_1, positions_2):
       V[:, -1] = -V[:, -1]
 
     R = np.dot(V, W)
+    #R = np.identity(3)
 
     t = -R*centroid_1 + centroid_2
     
@@ -700,6 +701,48 @@ def update_graph():
 class SerializableKeypoint():
   pass
 
+def get_node(node_id):
+  global session
+
+  session.commit()
+
+  query = session.query(Graph_Nodes).filter(Graph_Nodes.node_id == node_id)
+
+  return query.first()
+
+def get_3d_matches_obj_by_node(node):
+  global session
+
+  _3d_matches = get_3d_points(node.sp_3d_matches_id)
+  return get_3d_matches_object(_3d_matches)
+
+def print_top_matches(matches, pos1, pos2, num_top):
+  for i in range(num_top):
+    print("pnt 1: {0} --> pnt 2: {1}".format(pos1[matches[i].queryIdx, :], pos2[matches[i].trainIdx, :]))
+    
 if __name__ == '__main__':
-  update_graph()
+
+  node_start = get_node(1)
+  node_end = get_node(40)
+
+  [node_start_descs, node_start_points] = get_3d_matches_obj_by_node(node_start)
+  [node_end_descs, node_end_points] = get_3d_matches_obj_by_node(node_end)
+
+  node_start_descs = np.matrix(node_start_descs, np.uint8)
+  node_end_descs = np.matrix(node_end_descs, np.uint8)
+  node_start_points = np.matrix(node_start_points, np.float32)
+  node_end_points = np.matrix(node_end_points, np.float32)
+
+  matches = get_3d_point_matches(node_start_descs, node_end_descs)
+  matches = sorted(matches, key = lambda x:x.distance) 
+
+  print_top_matches(matches, node_start_points, node_end_points, 10)
+
+  [R, t, err] = calculate_3d_transform(matches, node_start_points, node_end_points)
+
+  print("R: {0}".format(R))
+  print("t: {0}".format(t))
+  print("err: {0}".format(err))
+    
+  
 
