@@ -784,7 +784,7 @@ def get_axis_angle(R):
 if __name__ == '__main__':
 
   node_start = get_node(1)
-  node_end = get_node(50)
+  node_end = get_node(20)
 
   [node_start_descs, node_start_points] = get_3d_matches_obj_by_node(node_start)
   [node_end_descs, node_end_points] = get_3d_matches_obj_by_node(node_end)
