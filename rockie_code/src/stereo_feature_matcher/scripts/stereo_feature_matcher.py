@@ -96,8 +96,6 @@ def publish_debug_matches_img(left_keypoints, right_keypoints, matches, stereo_p
    
     session.commit()
 
-    #session = DBSession()
-
     stereo_image_pair_id = stereo_pair_keypoint.stereo_image_pair_id 
     query = session.query(Stereo_Image_Pair)
     stereo_image_pair = query.filter_by(stereo_image_pair_id = int(stereo_image_pair_id)).first()

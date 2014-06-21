@@ -25,7 +25,7 @@
   <node name="stereo_feature_identifier" pkg="stereo_feature_identifier" type="stereo_feature_identifier.py" output="screen" />
   <node name="stereo_feature_matcher" pkg="stereo_feature_matcher" type="stereo_feature_matcher.py" output="screen" />
   <node name="stereo_feature_triangulator" pkg="stereo_feature_triangulator" type="stereo_feature_triangulator.py" output="screen" />
-  <!--node name="stereo_graph_manager" pkg="stereo_graph_manager" type="stereo_graph_manager.py" output="screen" /-->
+  <node name="stereo_graph_manager" pkg="stereo_graph_manager" type="stereo_graph_manager.py" output="screen" />
   <!--node name="stereo_localizer" pkg="stereo_localizer" type="stereo_localizer.py" output="screen" /-->
 
   <!--stereo image processing, produces disparity image, point cloud data from stereo images-->

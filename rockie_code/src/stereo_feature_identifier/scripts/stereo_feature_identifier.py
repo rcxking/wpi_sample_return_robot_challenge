@@ -23,7 +23,7 @@ stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/
 #sift = cv2.SIFT()
 #sift = cv2.SIFT(50)
 #sift = cv2.SURF(3000)
-sift = cv2.ORB(50)
+sift = cv2.ORB(nfeatures=50, scaleFactor=1.1)
 
 engine = create_engine('mysql://root@localhost/rockie')
 Base.metadata.bind = engine

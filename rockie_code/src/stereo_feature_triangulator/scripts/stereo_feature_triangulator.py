@@ -33,9 +33,11 @@ stereo_feature_identifier_topic = '/my_stereo/stereo_image_keypoint_saves'
 stereo_feature_matcher_topic = '/my_stereo/stereo_image_keypoint_matches'
 stereo_feature_triangulator_topic = '/my_stereo/stereo_image_3D_points'
 triangulator_visualization_topic = '/my_stereo/3d_points'
+stereo_feature_triangulator_log_topic = '/stereo_feature_triangulator/log'
 
 pub = rospy.Publisher(stereo_feature_triangulator_topic, String)
 pub_vis = rospy.Publisher(triangulator_visualization_topic, ros_image)
+log = rospy.Publisher(stereo_feature_triangulator_log_topic, String)
 
 bridge = CvBridge()
 
@@ -58,36 +60,6 @@ f_gazebo = img_width / (2*np.tan(hfov / 2))
 f = f_gazebo
 
 max_vertical_discrepency = 1
-
-def drawMatches(gray1, kpts1, gray2, kpts2, matches):
-
-  h1, w1 = gray1.shape[:2]
-  h2, w2 = gray2.shape[:2]
-  vis = np.zeros((max(h1, h2), w1+w2), np.uint8)
-  vis[:h1, :w1] = gray1
-  vis[:h2, w1:w1+w2] = gray2
-  vis = cv2.cvtColor(vis, cv2.COLOR_GRAY2BGR)
-
-  for match in matches:
-    pt1 = (int(kpts1[match.queryIdx].pt[0]), int(kpts1[match.queryIdx].pt[1]))
-    pt2  = (int(kpts2[match.trainIdx].pt[0] + w1), int(kpts2[match.trainIdx].pt[1]))
-
-    #should check against epipolar line
-    if math.fabs(pt1[1] - pt2[1]) > 10:
-      continue
-    
-    #cv2.line(vis, pt1, pt2, (int(255*random.random()), int(255*random.random()), int(255*random.random())), 1) 
-    z = triangulate(match, kpts1, kpts2)
-
-    if z > 0 and z != float("inf"):
-      z_str = str(z)
-      z_str = z_str[:3]
-      cv2.putText(gray1, z_str, pt1, cv2.FONT_KERSHEY_SIMPLEX, 2, 255, 2)
-      cv2.circle(gray1, pt1, 5, (int(z), int(z), int(z)), -1)
-
-  cv2.imshow('img', gray1)
-
-  cv2.waitKey(100)
 
 def triangulate_matches_callback(sp_keypoint_matches_data_id):
   global session
@@ -162,7 +134,6 @@ def triangulate(matches, kpts_descs1, kpts_descs2, left_image):
   _3d_points = []
 
   for match in matches:  
-
     query_pt = kpts1[match.queryIdx]
     train_pt = kpts2[match.trainIdx]
 
@@ -177,6 +148,8 @@ def triangulate(matches, kpts_descs1, kpts_descs2, left_image):
       continue
 
     disparity = math.fabs(query_pt.pt[0] - train_pt.pt[0])
+
+    #log.publish("disparity = {0}".format(disparity))
 
     #consider query image as origin
     x = -query_pt.pt[0] + img_width/2
