@@ -1,6 +1,6 @@
 #!/bin/sh
 
 while [ 1 ]; do 
-  rosbag play recording.bag; 
+  rosbag play move_forward.bag; 
   sleep 1;
 done

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(slam_db)
+project(stereo_test)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -77,7 +77,7 @@ find_package(catkin REQUIRED)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES slam_db
+#  LIBRARIES stereo_test
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 )
@@ -91,19 +91,19 @@ catkin_package(
 # include_directories(include)
 
 ## Declare a cpp library
-# add_library(slam_db
-#   src/${PROJECT_NAME}/slam_db.cpp
+# add_library(stereo_test
+#   src/${PROJECT_NAME}/stereo_test.cpp
 # )
 
 ## Declare a cpp executable
-# add_executable(slam_db_node src/slam_db_node.cpp)
+# add_executable(stereo_test_node src/stereo_test_node.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-# add_dependencies(slam_db_node slam_db_generate_messages_cpp)
+# add_dependencies(stereo_test_node stereo_test_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(slam_db_node
+# target_link_libraries(stereo_test_node
 #   ${catkin_LIBRARIES}
 # )
 
@@ -122,7 +122,7 @@ catkin_package(
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS slam_db slam_db_node
+# install(TARGETS stereo_test stereo_test_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -147,7 +147,7 @@ catkin_package(
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_slam_db.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_stereo_test.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

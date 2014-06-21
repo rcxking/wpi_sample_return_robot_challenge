@@ -20,6 +20,8 @@ from sqlalchemy import create_engine
 import random
 from sqlalchemy.orm import sessionmaker
 
+cum_t = np.empty([3, 1])
+
 engine = create_engine('mysql://root@localhost/rockie')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
@@ -31,20 +33,39 @@ stereo_feature_matcher_topic = '/my_stereo/stereo_image_keypoint_matches'
 stereo_feature_triangulator_topic = '/my_stereo/stereo_image_3D_points'
 stereo_graph_manager_topic = '/my_stereo/stereo_graph_node_updates'
 
+# FLANN parameters
+FLANN_INDEX_KDTREE = 0
+index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
+search_params = dict(checks=50)   # or pass empty dictionary
+
+#flann = cv2.FlannBasedMatcher(index_params,search_params)
+flann = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+
+#if we can match 70% of the 3D points, don't create a new feature node
+new_feature_threshold = .7
+
+#If we have at least 7 matches, make a connection
+new_connection_threshold = 1#15 
+ransac_sample_size = 5 
+ransac_iterations = 500
+
 stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/images/left/".format(os.getenv("HOME"))
 
-log = rospy.Publisher("/stereo_node_creator/log", String)
+log = rospy.Publisher("/stereo_graph_manager/log", String)
 
-def create_node_callback(_3d_matches_data_id):
+min_wpi_feature_matches = 3
+min_error_per_point_threshold = 1 
+
+##DEBUG
+
+is_debug = True
+initial_node_set = False
+
+def update_graph_callback(_3d_matches_data_id):
   global session
   global DBSession
   global pub
 
-
-  add_node(_3d_matches_data_id)
-
-
-  '''
   _3d_matches = get_3d_points(_3d_matches_data_id.data)
 
   if(_3d_matches != None):
@@ -54,17 +75,41 @@ def create_node_callback(_3d_matches_data_id):
     stereo_image_pair = get_stereo_image_pair(stereo_keypoints.stereo_image_pair_id)
 
     update_slam_graph(_3d_matches, stereo_image_pair)
-  '''
-def add_node(_3d_matches):
-  global session
-  feature_node = Graph_Nodes()
-  #feature_node.node_type = 'feature'
-  feature_node.sp_3d_matches_id = _3d_matches.data
 
-  session.add(feature_node)
-  session.commit()
-  return feature_node
+  #create pose node
+  #connect pose node to previous pose node
+  #use wheel odometry to get edge transform for this new edge
 
+  #iterate through prior 3d_matches
+  #if there is a 3d_match-3d_match (> min num of matches):
+    #connect newly created pose node to found 3d_match
+
+    #if we've found a 3d_match-3d_match match that share enough nodes
+    #don't add new 3d_matches as new feature node
+    #else
+    #add new 3d_matches as new feature node to graph
+    #connect this new node to new pose node
+
+  ################For more info, look at Thrun's graphslam paper http://robots.stanford.edu/papers/thrun.graphslam.pdf############
+
+  #Every pose-feature-pose edgewise connection can be reduced to a pose-pose edge (constraint)
+  #NOTE: Don't reduce a pose-wpi-feature-node-pose edges to a pose-pose edge, this will
+  #discard global info
+
+  #We can then reduce our pose-pose/pose-feature graph to just a pose-pose graph
+  #A rigid body transformation (rotation followed by translation) defines this constraint
+
+  #The constraint error is defined as the square distance between each 3d point match after transformation
+
+  #Once this is done we can at least recover odometry (pose-pose constraints describe motion between poses)
+
+  #To recover absolute position, we first optimize our pose-pose constraints (least-squares/libg20)
+  #then, we find a wpi feature node in the graph. all pose-nodes that have an edge to this feature
+  #node(i.e. have seen the wpi feature) are given an absolute/global location.
+
+  #From these nodes, we propogate out the optimized transformations between pose-pose-nodes
+  #we should be able to just find a path through the graph to our current position, and apply the
+  #transformation along the path to recover the global position
 
 def get_stereo_image_pair(stereo_image_pair_id):
   global session
@@ -647,14 +692,14 @@ def get_sp_keypoint_matches(sp_keypoint_matches_id):
   sp_keypoint_matches = query.filter_by(sp_keypoint_matches_id = int(sp_keypoint_matches_id)).first()
   return sp_keypoint_matches
 
-def insert_nodes():
-  rospy.init_node("stereo_node_creator")
-  rospy.Subscriber(stereo_feature_triangulator_topic, String, create_node_callback)
+def update_graph():
+  rospy.init_node("stereo_graph_manager")
+  rospy.Subscriber(stereo_feature_triangulator_topic, String, update_graph_callback)
   rospy.spin()
 
 class SerializableKeypoint():
   pass
 
 if __name__ == '__main__':
-  insert_nodes()
+  update_graph()
 
