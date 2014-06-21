@@ -58,7 +58,9 @@ def match_and_store_features_callback(stereo_pair_keypoint_data_id):
     #save matches
     #publish
 
-    session = DBSession()
+    #session = DBSession()
+
+    session.commit()
 
     stereo_pair_keypoint = get_stereo_pair_keypoint(stereo_pair_keypoint_data_id.data)
 
@@ -92,7 +94,9 @@ def publish_debug_matches_img(left_keypoints, right_keypoints, matches, stereo_p
     global DBSession
     global pub
    
-    session = DBSession()
+    session.commit()
+
+    #session = DBSession()
 
     stereo_image_pair_id = stereo_pair_keypoint.stereo_image_pair_id 
     query = session.query(Stereo_Image_Pair)
