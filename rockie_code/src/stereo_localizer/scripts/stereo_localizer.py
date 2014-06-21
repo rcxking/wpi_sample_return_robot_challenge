@@ -153,7 +153,7 @@ def get_connected_node(root_node, edge):
     return get_node_by_id(node_1_id)
 
 def save_global_transform(transform, node):
-  filepath = "{0}node_{1}_global_transform.transform".format(stereo_imagepath_base, node.node_id)
+  filepath = "{0}images/left/node_{1}_global_transform.transform".format(stereo_imagepath_base, node.node_id)
   pickle.dump(transform, open(filepath, 'wb'))
   return filepath
 

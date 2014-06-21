@@ -252,7 +252,7 @@ if __name__ == '__main__':
             sys.exit(1)
 
         # environment at generation time
-        CMAKE_PREFIX_PATH = '/opt/ros/hydro'.split(';')
+        CMAKE_PREFIX_PATH = '/home/will/Code/wpi-sample-return-robot-challenge/rockie_code/devel;/opt/ros/hydro'.split(';')
         # prepend current workspace if not already part of CPP
         base_path = os.path.dirname(__file__)
         if base_path not in CMAKE_PREFIX_PATH:
