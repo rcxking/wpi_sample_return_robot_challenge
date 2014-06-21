@@ -35,7 +35,6 @@ if is_debug == True:
 else:
   max_sync_period = .01
 
-
 left_timestamp = None
 right_timestamp = None
 

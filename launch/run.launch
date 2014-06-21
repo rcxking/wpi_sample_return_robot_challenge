@@ -5,19 +5,33 @@
   <param name="fs_cleaning" value="1" type="int" />
 
   <!--camera driver node, retrieves images-->
-  <node name="uvc_camera" pkg="uvc_camera" type="uvc_stereo_node" ns="my_stereo">
+  <!--node name="uvc_camera" pkg="uvc_camera" type="uvc_stereo_node" ns="my_stereo">
     <param name="frame_id" value="camera" />
     <param name="left/camera_info_url" value="file:///home/will/Code/wpi-sample-return-robot-challenge/camera_calibration/ost.yml" />
     <param name="right/camera_info_url" value="file:///home/will/Code/wpi-sample-return-robot-challenge/camera_calibration/ost.yml" />
     <param name="fps" value="1" />
 
-	<!-- Since Rockie does not have an integrated camera, SET LEFT TO VIDEO0 AND RIGHT TO VIDEO1 -->
 	<param name="left/device" value="/dev/video1" />
 	<param name="right/device" value="/dev/video2" />
-  </node>
+  </node-->
+
+  <node 
+    name="republish_compressed_img_left" 
+    pkg="image_transport" 
+    type="republish" 
+    args="compressed in:=/rrbot/camera1/left/image_raw raw out:=/rrbot/camera1/left/image_raw" />
+
+  <node 
+    name="republish_compressed_img_right" 
+    pkg="image_transport" 
+    type="republish" 
+    args="compressed in:=/rrbot/camera1/right/image_raw raw out:=/rrbot/camera1/right/image_raw" />
+
 
   <!--SLAM nodes-->
   <!--recreate db -->
+
+
   <node name="stereo_db" pkg="stereo_feature_identifier" type="stereo_feature_identifier_db.py" output="screen" />
 
   <!--slam-->
@@ -25,7 +39,7 @@
   <node name="stereo_feature_identifier" pkg="stereo_feature_identifier" type="stereo_feature_identifier.py" output="screen" />
   <node name="stereo_feature_matcher" pkg="stereo_feature_matcher" type="stereo_feature_matcher.py" output="screen" />
   <node name="stereo_feature_triangulator" pkg="stereo_feature_triangulator" type="stereo_feature_triangulator.py" output="screen" />
-  <node name="stereo_node_creator" pkg="stereo_node_creator" type"stereo_node_creator.py" />
+  <node name="stereo_node_creator" pkg="stereo_node_creator" type="stereo_node_creator.py" />
   <!--node name="stereo_graph_manager" pkg="stereo_graph_manager" type="stereo_graph_manager.py" output="screen" /-->
   <!--node name="stereo_localizer" pkg="stereo_localizer" type="stereo_localizer.py" output="screen" /-->
 
