@@ -48,7 +48,7 @@ new_feature_threshold = .7
 #If we have at least 7 matches, make a connection
 new_connection_threshold = 1#15 
 ransac_sample_size = 6 
-ransac_iterations = 500 
+ransac_iterations = 400 
 
 stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/images/left/".format(os.getenv("HOME"))
 
@@ -438,13 +438,11 @@ def calculate_transform_error(R, t, positions_1, positions_2):
     pt_1 = pt_1.transpose()
     pt_2 = pt_2.transpose()
 
-    #transformed_pt_2 = np.dot(R, pt_2) + t
-    #cum_error += np.linalg.norm(transformed_pt_2 - pt_1)**2
-
     transformed_pt_1 = (np.dot(R, pt_1)) + t
     cum_error += np.linalg.norm((transformed_pt_1 - pt_2))**2
 
   return cum_error*angle_likelihood
+  #return cum_error
 
 def is_none_vector(v):
 
@@ -784,7 +782,7 @@ def get_axis_angle(R):
 if __name__ == '__main__':
 
   node_start = get_node(1)
-  node_end = get_node(20)
+  node_end = get_node(4)
 
   [node_start_descs, node_start_points] = get_3d_matches_obj_by_node(node_start)
   [node_end_descs, node_end_points] = get_3d_matches_obj_by_node(node_end)
@@ -797,7 +795,7 @@ if __name__ == '__main__':
   matches = get_3d_point_matches(node_start_descs, node_end_descs)
   matches = sorted(matches, key = lambda x:x.distance) 
 
-  #print_top_matches(matches, node_start_points, node_end_points, 10)
+  print_top_matches(matches, node_start_points, node_end_points, 20)
 
   #matches = [matches[0], matches[2], matches[4]]
 
@@ -830,10 +828,6 @@ if __name__ == '__main__':
     R_t_pt1 = np.dot(R_t, pt1)
     R_t_pt2 = np.dot(R_t, pt2)
 
-    #print("pt2: {0}".format(pt2))
-    #print("pt1_trans: {0}".format(R_pt1))
-    #print("pt1 {0}".format(pt1))
-    
     R_pt1_error += np.linalg.norm(R_pt1 - pt2)
     initial_error += np.linalg.norm(pt2 - pt1)
 
