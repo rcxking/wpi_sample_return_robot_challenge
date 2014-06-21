@@ -19,8 +19,9 @@ import cPickle as pickle
 from sqlalchemy import create_engine
 import random
 from sqlalchemy.orm import sessionmaker
+import calculate_rmsd
 
-cum_t = np.empty([3, 1])
+cum_t = np.zeros([3, 1])
 
 engine = create_engine('mysql://root@localhost/rockie')
 Base.metadata.bind = engine
@@ -46,8 +47,8 @@ new_feature_threshold = .7
 
 #If we have at least 7 matches, make a connection
 new_connection_threshold = 1#15 
-ransac_sample_size = 5 
-ransac_iterations = 500
+ransac_sample_size = 3 
+ransac_iterations = 1000 
 
 stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/images/left/".format(os.getenv("HOME"))
 
@@ -290,7 +291,7 @@ def update_slam_graph(_3d_matches, stereo_image_pair):
         new_point_positions)
 
 def get_identity_transform():
-  return [np.identity(3).tolist(), np.empty([1, 3]).tolist()]
+  return [np.identity(3).tolist(), np.zeros([1, 3]).tolist()]
 
 def add_new_feature_node(_3d_matches):
   global session
@@ -302,64 +303,86 @@ def add_new_feature_node(_3d_matches):
   session.commit()
   return feature_node
 
+def kabsch(P, Q):
+  #A is the covariance matrix
+  A = np.dot(np.transpose(P), Q)
+  
+  try:
+    [V, S, W_t] = np.linalg.svd(A)
+  except:
+    return
+
+  ident = np.identity(3)
+
+  W = np.transpose(W_t)
+  V_t = np.transpose(V)
+
+  d = np.sign(np.linalg.det(np.dot(W, V_t)))
+  ident[2, 2] = d
+
+  '''
+
+  d = (np.linalg.det(V) * np.linalg.det(W)) < 0.0
+
+  if d:
+    S[-1] = -S[-1]
+    V[:, -1] = -V[:, -1]
+
+  R = np.dot(V, W)
+  '''
+
+  return np.dot(W, np.dot(ident, V_t))
+
+
+def ransac_matches(matches, positions_1, positions_2):
+
+  #following http://en.wikipedia.org/wiki/Kabsch_algorithm
+  #also check out https://github.com/charnley/rmsd
+  ransac_matches = rand_sampled_matches(matches, ransac_sample_size)
+
+  [rand_positions_1, rand_positions_2] = get_rand_positions(ransac_matches, 
+      positions_1, 
+      positions_2)
+
+  rand_positions_1 = np.asmatrix(rand_positions_1)  
+  rand_positions_2 = np.asmatrix(rand_positions_2)
+
+  return [rand_positions_1, rand_positions_2]
+
+def subtract_centroid(P, centroid):
+  #subtract centroid from each position
+  P[:, 0] -= centroid[0]
+  P[:, 1] -= centroid[1]
+  P[:, 2] -= centroid[2]
+
+  return P
+  
 #Look at github wiki  
 def calculate_3d_transform(matches, positions_1, positions_2):
   global cum_t
 
   min_error = float("inf")
 
-  centroid_1 = np.empty([3, 1])
-  centroid_2 = np.empty([3, 1])
+  centroid_1 = np.zeros([3, 1])
+  centroid_2 = np.zeros([3, 1])
 
-  opt_t = np.empty([3, 1])
-  opt_R = np.empty([3, 3])
-
-  global_centroid_1 = get_centroid(positions_1)
-  global_centroid_2 = get_centroid(positions_2)
-
-  #log.publish("global centroid 1 = {0}".format(global_centroid_1))
-  #log.publish("global centroid 2 = {0}".format(global_centroid_2))
-  #log.publish("global centroid 2 - 1 = {0}".format(global_centroid_2 - global_centroid_1))
+  opt_t = np.zeros([3, 1])
+  opt_R = np.zeros([3, 3])
 
   for i in range(ransac_iterations):
-
-    #following http://en.wikipedia.org/wiki/Kabsch_algorithm
-    #also check out https://github.com/charnley/rmsd
-    ransac_matches = rand_sampled_matches(matches, ransac_sample_size)
-
-    [rand_positions_1, rand_positions_2] = get_rand_positions(ransac_matches, 
-        positions_1, 
-        positions_2)
+    [rand_positions_1, rand_positions_2] = ransac_matches(matches, positions_1, positions_2)
 
     orig_rand_positions_1 = np.copy(rand_positions_1)
     orig_rand_positions_2 = np.copy(rand_positions_2)
-
-    rand_positions_1 = np.asmatrix(rand_positions_1)  
-    rand_positions_2 = np.asmatrix(rand_positions_2)
 
     centroid_1 = get_centroid(rand_positions_1)
     centroid_2 = get_centroid(rand_positions_2)
 
     #subtract centroid from each position
-    for i in range(ransac_sample_size):
-      rand_positions_1[i, :] -= centroid_1.transpose()
-      rand_positions_2[i, :] -= centroid_2.transpose()
-  
-    #A is the covariance matrix
-    A = np.dot(rand_positions_1.transpose(), rand_positions_2)
-    
-    try:
-      V, S, W = np.linalg.svd(A)
-    except:
-      return
+    rand_positions_1 = subtract_centroid(rand_positions_1, centroid_1)
+    rand_positions_2 = subtract_centroid(rand_positions_2, centroid_2)
 
-    d = (np.linalg.det(V) * np.linalg.det(W)) < 0.0
-
-    if d:
-      S[-1] = -S[-1]
-      V[:, -1] = -V[:, -1]
-
-    R = np.dot(V, W)
+    R = kabsch(rand_positions_1, rand_positions_2)
     #R = np.identity(3)
 
     t = -R*centroid_1 + centroid_2
@@ -381,6 +404,7 @@ def calculate_3d_transform(matches, positions_1, positions_2):
     #log.publish("rand_positions_1: {0}".format(opt_rand_positions_1))
     #log.publish("rand_positions_2: {0}".format(opt_rand_positions_2))
 
+    
     #cum_t += (opt_centroid_2 - opt_centroid_1 )
     #log.publish("cumulative t = {0}".format(cum_t))
     #log.publish("opt R = {0}".format(opt_R))
@@ -389,6 +413,10 @@ def calculate_3d_transform(matches, positions_1, positions_2):
     #log.publish("centroid 1 = {0}".format(opt_centroid_1))
     #log.publish("centroid 2 = {0}".format(opt_centroid_2))
     #log.publish("centroid 2 - 1 = {0}".format(opt_centroid_2 - opt_centroid_1))
+
+
+  print("rand_positions_1: {0}".format(opt_rand_positions_1))
+  print("rand_positions_2: {0}".format(opt_rand_positions_2))
 
 
   return [opt_R.tolist(), opt_t.tolist(), min_error/ransac_sample_size]
@@ -405,8 +433,10 @@ def calculate_transform_error(R, t, positions_1, positions_2):
     pt_1 = pt_1.transpose()
     pt_2 = pt_2.transpose()
 
-    transformed_pt_1 = (np.dot(R, pt_1)) + t
+    #transformed_pt_2 = np.dot(R, pt_2) + t
+    #cum_error += np.linalg.norm(transformed_pt_2 - pt_1)**2
 
+    transformed_pt_1 = (np.dot(R, pt_1)) + t
     cum_error += np.linalg.norm((transformed_pt_1 - pt_2))**2
 
   return cum_error
@@ -436,8 +466,8 @@ def rand_sampled_matches(matches, ransac_sample_size):
 
 def get_rand_positions(ransac_matches, positions_query, positions_train):
   
-  sampled_train_positions = np.empty([0, 3])
-  sampled_query_positions = np.empty([0, 3])
+  sampled_train_positions = np.zeros([0, 3])
+  sampled_query_positions = np.zeros([0, 3])
 
   for match in ransac_matches:
     query_pt = positions_query[match.queryIdx]
@@ -449,17 +479,10 @@ def get_rand_positions(ransac_matches, positions_query, positions_train):
   return [sampled_query_positions, sampled_train_positions]
 
 def get_centroid(positions):
-  num_points = positions.shape[0]
-
-  summed_points = np.sum(positions, axis=0)
-  summed_points_average = np.divide(summed_points, num_points)
-
-  centroid_mat = np.asmatrix(summed_points_average)
-
-  return centroid_mat.transpose()
+  return np.mean(positions, axis=0).transpose()
 
 def get_covariance_matrix(positions_1, positions_2, centroid_1, centroid_2):
-  H = np.asmatrix(np.empty([3, 3]))
+  H = np.asmatrix(np.zeros([3, 3]))
 
   for i in range(len(positions_1)):
     point_1 = np.asmatrix(positions_1[i, :])
@@ -720,6 +743,41 @@ def print_top_matches(matches, pos1, pos2, num_top):
   for i in range(num_top):
     print("pnt 1: {0} --> pnt 2: {1}".format(pos1[matches[i].queryIdx, :], pos2[matches[i].trainIdx, :]))
     
+
+def match_ordered_points(matches, node_start_points, node_end_points):
+
+  P = np.zeros([0, 3], node_start_points.dtype)
+  Q = np.zeros([0, 3], node_end_points.dtype)
+  #P = []
+  #Q = []
+
+  for match in matches:
+    pnt1 = node_start_points[match.queryIdx, :]
+    pnt2 = node_end_points[match.trainIdx, :]
+
+    #P.append(np.array(pnt1))
+    #Q.append(np.array(pnt2))
+
+    P = np.vstack((P, pnt1))
+    Q = np.vstack((Q, pnt2))
+
+  return [P, Q]
+
+def get_axis_angle(R):
+  theta = np.arccos((np.trace(R) - 1)/2)
+
+  a = np.zeros([1, 3])
+
+  print(a.shape)
+
+  a[0, 0] = R[2, 1] - R[1, 2]
+  a[0, 1] = R[0, 2] - R[2, 0]
+  a[0, 2] = R[1, 0] - R[1, 0]
+
+  axis = np.dot((1/(2*np.sin(theta))), a)
+
+  return [axis, theta]
+
 if __name__ == '__main__':
 
   node_start = get_node(1)
@@ -736,13 +794,65 @@ if __name__ == '__main__':
   matches = get_3d_point_matches(node_start_descs, node_end_descs)
   matches = sorted(matches, key = lambda x:x.distance) 
 
-  print_top_matches(matches, node_start_points, node_end_points, 10)
+  #print_top_matches(matches, node_start_points, node_end_points, 10)
+
+  #matches = [matches[0], matches[2], matches[4]]
+
+  [P, Q] = match_ordered_points(matches, node_start_points, node_end_points)
+
+  Pc = get_centroid(P)
+  Qc = get_centroid(Q)
+
+  P = subtract_centroid(P, Pc)
+  Q = subtract_centroid(Q, Qc)
+
+  #R = kabsch(P, Q)
 
   [R, t, err] = calculate_3d_transform(matches, node_start_points, node_end_points)
+
+  R = np.asmatrix(R)
+  R_t = np.transpose(R)
+
+  initial_error = 0
+  R_pt1_error = 0
+  R_pt2_error = 0
+  R_t_pt1_error = 0
+  R_t_pt2_error = 0
+
+  for i in range(P.shape[0]):
+    pt1 = P[i, :].transpose()
+    pt2 = Q[i, :].transpose()
+    R_pt1 = np.dot(R, pt1)
+    R_pt2 = np.dot(R, pt2)
+    R_t_pt1 = np.dot(R_t, pt1)
+    R_t_pt2 = np.dot(R_t, pt2)
+
+    #print("pt2: {0}".format(pt2))
+    #print("pt1_trans: {0}".format(R_pt1))
+    #print("pt1 {0}".format(pt1))
+    
+    R_pt1_error += np.linalg.norm(R_pt1 - pt2)
+    initial_error += np.linalg.norm(pt2 - pt1)
+
+
+  #print("initial error: {0}".format(initial_error))
+  #print("R_pt1 error: {0}".format(R_pt1_error))
+
+
+  [axis, theta] = get_axis_angle(R)
 
   print("R: {0}".format(R))
   print("t: {0}".format(t))
   print("err: {0}".format(err))
-    
-  
+ 
+  print("Axis: {0}".format(axis))
+  print("Angle: {0}".format(theta))
+   
+  zero = np.zeros([3, 1])
 
+  origin = np.dot(R, zero) + t
+  R_t = np.transpose(R)
+  origin_2 = np.dot(R_t, np.negative(t))
+
+  print("origin 1 in 2 frame: {0}".format(origin))
+  print("origin 2 in 1 frame: {0}".format(origin_2))
