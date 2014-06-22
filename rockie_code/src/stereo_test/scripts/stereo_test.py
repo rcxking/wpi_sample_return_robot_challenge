@@ -34,7 +34,7 @@ stereo_feature_matcher_topic = '/my_stereo/stereo_image_keypoint_matches'
 stereo_feature_triangulator_topic = '/my_stereo/stereo_image_3D_points'
 stereo_graph_manager_topic = '/my_stereo/stereo_graph_node_updates'
 
-flann = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+flann = cv2.BFMatcher(cv2.NORM_HAMMING)
 
 #if we can match 70% of the 3D points, don't create a new feature node
 new_feature_threshold = .7

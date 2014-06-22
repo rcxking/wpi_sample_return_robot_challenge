@@ -25,7 +25,8 @@ node_creator_topic = '/my_stereo/new_nodes'
 pub = rospy.Publisher('my_stereo/new_edges', String)
 log = rospy.Publisher('/my_stereo/stereo_edge_creator/log', String)
 
-matcher = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+#matcher = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+matcher = cv2.BFMatcher(cv2.NORM_HAMMING)
 
 #if we can match 70% of the 3D points, don't create a new feature node
 new_feature_threshold = .7
@@ -157,6 +158,13 @@ def subtract_centroid(P, centroid):
   return P
 
 def calculate_transform_error(R, t, positions_1, positions_2):
+
+  #TODO: Incorporate Bayes rule:
+
+  # prob of R given point_correspondances = 
+  # prob of pts given R (if R is large, points are likely on one side of image?)*
+  # prob of R (large R is more unlikely than small R for keypoints) /
+  # prob of points (proportional to match strengh, inversely prop to distance)
 
   #add error to R if it is very oblique
   #(since large angles of R are unlikely)
