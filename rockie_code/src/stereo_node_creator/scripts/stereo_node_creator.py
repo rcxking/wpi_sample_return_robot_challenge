@@ -30,19 +30,21 @@ stereo_feature_identifier_topic = '/my_stereo/stereo_image_keypoint_saves'
 stereo_feature_matcher_topic = '/my_stereo/stereo_image_keypoint_matches'
 stereo_feature_triangulator_topic = '/my_stereo/stereo_image_3D_points'
 stereo_graph_manager_topic = '/my_stereo/stereo_graph_node_updates'
+stereo_node_creator_topic = '/my_stereo/new_nodes'
 
 stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/images/left/".format(os.getenv("HOME"))
 
 log = rospy.Publisher("/stereo_node_creator/log", String)
+pub = rospy.Publisher(stereo_node_creator_topic, String)
 
 def create_node_callback(_3d_matches_data_id):
   global session
   global DBSession
   global pub
 
+  node_id = add_node(_3d_matches_data_id)
 
-  add_node(_3d_matches_data_id)
-
+  pub.publish(node_id)
 
   '''
   _3d_matches = get_3d_points(_3d_matches_data_id.data)

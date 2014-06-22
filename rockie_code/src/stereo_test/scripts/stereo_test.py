@@ -34,11 +34,6 @@ stereo_feature_matcher_topic = '/my_stereo/stereo_image_keypoint_matches'
 stereo_feature_triangulator_topic = '/my_stereo/stereo_image_3D_points'
 stereo_graph_manager_topic = '/my_stereo/stereo_graph_node_updates'
 
-# FLANN parameters
-FLANN_INDEX_KDTREE = 0
-index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
-search_params = dict(checks=50)   # or pass empty dictionary
-
 #flann = cv2.FlannBasedMatcher(index_params,search_params)
 flann = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
 
@@ -771,15 +766,10 @@ def match_ordered_points(matches, node_start_points, node_end_points):
 
   P = np.zeros([0, 3], node_start_points.dtype)
   Q = np.zeros([0, 3], node_end_points.dtype)
-  #P = []
-  #Q = []
 
   for match in matches:
     pnt1 = node_start_points[match.queryIdx, :]
     pnt2 = node_end_points[match.trainIdx, :]
-
-    #P.append(np.array(pnt1))
-    #Q.append(np.array(pnt2))
 
     P = np.vstack((P, pnt1))
     Q = np.vstack((Q, pnt2))
@@ -817,8 +807,6 @@ if __name__ == '__main__':
 
   print_top_matches(matches, node_start_points, node_end_points, 10)
 
-  #matches = [matches[0], matches[2], matches[4]]
-
   [P, Q] = match_ordered_points(matches, node_start_points, node_end_points)
 
   Pc = get_centroid(P)
@@ -850,11 +838,6 @@ if __name__ == '__main__':
 
     R_pt1_error += np.linalg.norm(R_pt1 - pt2)
     initial_error += np.linalg.norm(pt2 - pt1)
-
-
-  #print("initial error: {0}".format(initial_error))
-  #print("R_pt1 error: {0}".format(R_pt1_error))
-
 
   [axis, theta] = get_axis_angle(R)
 
