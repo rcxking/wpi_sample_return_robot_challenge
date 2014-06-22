@@ -23,6 +23,7 @@ session = DBSession()
 
 node_creator_topic = '/my_stereo/new_nodes'
 pub = rospy.Publisher('my_stereo/new_edges', String)
+log = rospy.Publisher('/my_stereo/stereo_edge_creator/log', String)
 
 matcher = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
 
@@ -48,7 +49,7 @@ def create_edges_callback(node_id_data):
   all_nodes = get_all_nodes()
 
   for node in all_nodes:
-    attempt_create_edge(new_node, all_nodes)
+    attempt_create_edge(new_node, node)
 
 def get_3d_matches_object(_3d_matches):
   obj = pickle.load(open(_3d_matches.sp_3d_matches_filepath))
@@ -94,6 +95,38 @@ def match_node_points(node_1, node_2):
     return [matches, node_1_points, node_2_points]
   else:
     return None
+
+def rand_sampled_matches(matches, ransac_sample_size):
+
+  random_indexes = random.sample(range(len(matches)), ransac_sample_size)
+  return [matches[i] for i in random_indexes]
+
+def get_rand_positions(ransac_matches, positions_query, positions_train):
+  
+  sampled_train_positions = np.zeros([0, 3])
+  sampled_query_positions = np.zeros([0, 3])
+
+  for match in ransac_matches:
+    query_pt = positions_query[match.queryIdx]
+    train_pt = positions_train[match.trainIdx]
+
+    sampled_train_positions = np.vstack((sampled_train_positions, train_pt))
+    sampled_query_positions = np.vstack((sampled_query_positions, query_pt))
+
+  return [sampled_query_positions, sampled_train_positions]
+
+def get_axis_angle(R):
+  theta = np.arccos((np.trace(R) - 1)/2)
+
+  a = np.zeros([1, 3])
+
+  a[0, 0] = R[2, 1] - R[1, 2]
+  a[0, 1] = R[0, 2] - R[2, 0]
+  a[0, 2] = R[1, 0] - R[1, 0]
+
+  axis = np.dot((1/(2*np.sin(theta))), a)
+
+  return [axis, theta]
 
 def ransac_matches(matches, positions_1, positions_2):
 
@@ -293,7 +326,7 @@ def get_all_nodes():
   global session
 
   session.commit()
-  query = session.query(Graph_Nodes)
+  query = session.query(Graph_Nodes).filter(Graph_Nodes.sp_3d_matches_id != None)
   return query.all()
 
 def get_node_by_node_id(node_id):

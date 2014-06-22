@@ -42,10 +42,10 @@ def create_node_callback(_3d_matches_data_id):
   global DBSession
   global pub
 
-  node_id = add_node(_3d_matches_data_id)
+  node = add_node(_3d_matches_data_id)
   
-  if node_id is not None:
-    pub.publish(str(node_id))
+  if node is not None:
+    pub.publish(str(node.node_id))
 
   '''
   _3d_matches = get_3d_points(_3d_matches_data_id.data)
