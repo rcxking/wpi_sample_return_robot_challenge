@@ -43,7 +43,7 @@ stereo_graph_manager_topic = '/my_stereo/stereo_graph_node_updates'
 
 log = rospy.Publisher("/stereo_localizer/log", String)
 
-min_norm = 1
+min_norm = 0
 
 def get_last_position():
   pass
@@ -227,23 +227,42 @@ def get_wpi_node():
 
 def get_global_transform():
 
-  wpi_node = get_latest_pose_node_with_global_transform()
+  #wpi_node = get_latest_pose_node_with_global_transform()
+  wpi_node = get_first_node()
 
   if wpi_node != None:
     wpi_node_edges = get_node_edges(wpi_node, None)
-    #print("number of wpi node edges: {0}".format(len(wpi_node_edges)))
 
     traversed_edges = []
 
     for edge in wpi_node_edges:
-      #print("connecting node {0} to node {1}".format(edge.node_1_id, edge.node_2_id))
       percolate_global_transform(wpi_node, edge, traversed_edges)
 
     current_pose_node = get_latest_pose_node_with_global_transform()
-
     current_global_transform = get_node_global_transform(current_pose_node)
 
     return [current_global_transform, current_pose_node]
+
+def get_first_node():
+  global session
+  session.commit()
+
+  first_node =  session.query(Graph_Nodes).filter_by(node_id = 1).first()
+
+  if first_node is None:
+    return None
+
+  R = np.identity(3)
+  t = np.zeros([3, 1])
+
+  transform = [R.tolist(), t.tolist()]
+
+  filepath = save_global_transform(transform, first_node)
+  first_node.global_transformation_filepath = filepath
+
+  session.commit()
+
+  return first_node
 
 def get_latest_pose_node_with_global_transform():
   global session
@@ -256,7 +275,6 @@ def get_latest_pose_node_with_global_transform():
   my_query += "FROM graph_nodes "
   my_query += "WHERE global_transformation_filepath IS NOT NULL "
   my_query += "AND node_id IS NOT NULL "
-  #my_query += "AND node_type = 'pose' "
   my_query += "ORDER BY node_id DESC"
 
   cur.execute(my_query)
