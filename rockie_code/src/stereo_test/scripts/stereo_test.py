@@ -382,6 +382,26 @@ def calculate_3d_transform(matches, positions_1, positions_2):
     rand_positions_1 = subtract_centroid(rand_positions_1, centroid_1)
     rand_positions_2 = subtract_centroid(rand_positions_2, centroid_2)
 
+    '''
+
+    #TODO: Points further away will have a lot of error.
+    # to compensate, define a new metric = centroid_norm/variance
+    # the higher this number, the higher the expected error in the 
+    # rotation matrix. 
+    # (high centroid norm means the points are far away and less accurate, but high
+    # variance means the points are very spread out which increases accuracy)
+    centroid_norm_1 = np.norm(centroid_1)
+    centroid_norm_2 = np.norm(centroid_2)
+    max_norm = np.max(centroid_norm_1, centroid_norm_2) 
+    std_dev = np.std(A, axis=0)
+    expected_R_error = max_norm/std_dev
+    
+    #TODO: Ensure that ransac points aren't colinear 
+    #TODO: Ensure that if ransac points are co-planar, the flipped rotation
+    #matrix is not selected
+
+    '''
+
     R = kabsch(rand_positions_1, rand_positions_2)
     #R = np.identity(3)
 
@@ -781,8 +801,8 @@ def get_axis_angle(R):
 
 if __name__ == '__main__':
 
-  node_start = get_node(1)
-  node_end = get_node(4)
+  node_start = get_node(9)
+  node_end = get_node(13)
 
   [node_start_descs, node_start_points] = get_3d_matches_obj_by_node(node_start)
   [node_end_descs, node_end_points] = get_3d_matches_obj_by_node(node_end)
@@ -795,7 +815,7 @@ if __name__ == '__main__':
   matches = get_3d_point_matches(node_start_descs, node_end_descs)
   matches = sorted(matches, key = lambda x:x.distance) 
 
-  print_top_matches(matches, node_start_points, node_end_points, 20)
+  print_top_matches(matches, node_start_points, node_end_points, 10)
 
   #matches = [matches[0], matches[2], matches[4]]
 

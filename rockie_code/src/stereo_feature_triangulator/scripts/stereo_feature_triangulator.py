@@ -59,7 +59,7 @@ f_gazebo = img_width / (2*np.tan(hfov / 2))
 #set to f_gazebo for debugging
 f = f_gazebo
 
-max_vertical_discrepency = 1
+max_vertical_discrepency = 10
 
 def triangulate_matches_callback(sp_keypoint_matches_data_id):
   global session
@@ -149,7 +149,9 @@ def triangulate(matches, kpts_descs1, kpts_descs2, left_image):
 
     disparity = math.fabs(query_pt.pt[0] - train_pt.pt[0])
 
-    #log.publish("disparity = {0}".format(disparity))
+    #if the disparity is too low, ignore it - it will have too much error
+    if disparity < 10:
+      continue
 
     #consider query image as origin
     x = -query_pt.pt[0] + img_width/2
