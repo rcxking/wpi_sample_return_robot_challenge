@@ -34,7 +34,6 @@ stereo_feature_matcher_topic = '/my_stereo/stereo_image_keypoint_matches'
 stereo_feature_triangulator_topic = '/my_stereo/stereo_image_3D_points'
 stereo_graph_manager_topic = '/my_stereo/stereo_graph_node_updates'
 
-#flann = cv2.FlannBasedMatcher(index_params,search_params)
 flann = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
 
 #if we can match 70% of the 3D points, don't create a new feature node
@@ -798,8 +797,8 @@ def get_edge_transform(edge):
 
 if __name__ == '__main__':
 
-  node_start = get_node(10)
-  node_end = get_node(40)
+  node_start = get_node(1)
+  node_end = get_node(4)
 
   [node_start_descs, node_start_points] = get_3d_matches_obj_by_node(node_start)
   [node_end_descs, node_end_points] = get_3d_matches_obj_by_node(node_end)
@@ -815,11 +814,9 @@ if __name__ == '__main__':
   print_top_matches(matches, node_start_points, node_end_points, 10)
 
   [R, t, err] = calculate_3d_transform(matches, node_start_points, node_end_points)
-
-  '''
-  edge = get_edge(16, 40)
+  
+  edge = get_edge(8, 4)
   [R, t] = get_edge_transform(edge)
-  '''
 
   R = np.asmatrix(R)
   R_t = np.transpose(R)
