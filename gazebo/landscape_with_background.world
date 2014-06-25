@@ -509,7 +509,7 @@
     </ode>
   </physics>
 </joint>
-<plugin name='husky_diff_controller' filename='/home/will/libhusky_gazebo_plugins.so'>
+<plugin name='husky_diff_controller' filename='/home/will/libhusky_plugin.so'>
   <alwaysOn>true</alwaysOn>
   <updateRate>100.0</updateRate>
   <backLeftJoint>back_left_joint</backLeftJoint>

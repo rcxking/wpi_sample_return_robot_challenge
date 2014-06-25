@@ -19,7 +19,7 @@ import cPickle as pickle
 from sqlalchemy import create_engine
 import random
 from sqlalchemy.orm import sessionmaker
-import calculate_rmsd
+#import calculate_rmsd
 
 cum_t = np.zeros([3, 1])
 
@@ -47,8 +47,8 @@ new_feature_threshold = .7
 
 #If we have at least 7 matches, make a connection
 new_connection_threshold = 1#15 
-ransac_sample_size = 3 
-ransac_iterations = 1000 
+ransac_sample_size = 6 
+ransac_iterations = 500 
 
 stereo_imagepath_base = "{0}/Code/wpi-sample-return-robot-challenge/rockie_code/src/stereo_historian/scripts/images/left/".format(os.getenv("HOME"))
 
@@ -423,6 +423,11 @@ def calculate_3d_transform(matches, positions_1, positions_2):
 
 def calculate_transform_error(R, t, positions_1, positions_2):
 
+  #add error to R if it is very oblique
+  #(since large angles of R are unlikely)
+  [axis, theta] = get_axis_angle(R)
+  angle_likelihood = theta**2
+
   cum_error = 0
   num_points = positions_1.shape[0]
 
@@ -439,7 +444,7 @@ def calculate_transform_error(R, t, positions_1, positions_2):
     transformed_pt_1 = (np.dot(R, pt_1)) + t
     cum_error += np.linalg.norm((transformed_pt_1 - pt_2))**2
 
-  return cum_error
+  return cum_error*angle_likelihood
 
 def is_none_vector(v):
 
@@ -768,8 +773,6 @@ def get_axis_angle(R):
 
   a = np.zeros([1, 3])
 
-  print(a.shape)
-
   a[0, 0] = R[2, 1] - R[1, 2]
   a[0, 1] = R[0, 2] - R[2, 0]
   a[0, 2] = R[1, 0] - R[1, 0]
@@ -781,7 +784,7 @@ def get_axis_angle(R):
 if __name__ == '__main__':
 
   node_start = get_node(1)
-  node_end = get_node(40)
+  node_end = get_node(50)
 
   [node_start_descs, node_start_points] = get_3d_matches_obj_by_node(node_start)
   [node_end_descs, node_end_points] = get_3d_matches_obj_by_node(node_end)
