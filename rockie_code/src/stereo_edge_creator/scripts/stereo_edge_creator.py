@@ -57,6 +57,9 @@ def get_3d_matches_object(_3d_matches):
 def get_3d_matches_obj_by_node(node):
   global session
 
+  if node.sp_3d_matches_id is None:
+    return None
+
   _3d_matches = get_3d_points(node.sp_3d_matches_id)
   return get_3d_matches_object(_3d_matches)
 
@@ -247,7 +250,7 @@ def save_transform(transform, node_1, node_2):
   pickle.dump(transform, open(filepath, 'wb'))
   return filepath
 
-def create_edge(node_1, node_2, R, t)
+def create_edge(node_1, node_2, R, t):
   global session
 
   edge = Graph_Edges()
@@ -291,7 +294,7 @@ def get_all_nodes():
 
   session.commit()
   query = session.query(Graph_Nodes)
-  return query.first()
+  return query.all()
 
 def get_node_by_node_id(node_id):
   global session
@@ -302,7 +305,7 @@ def get_node_by_node_id(node_id):
 
 def create_edges():
   rospy.init_node("stereo_edge_creator")
-  rospy.Subscriber(node_creator_callback, String, create_edges_callback)
+  rospy.Subscriber(node_creator_topic, String, create_edges_callback)
   rospy.spin()
 
 if __name__ == '__main__':
