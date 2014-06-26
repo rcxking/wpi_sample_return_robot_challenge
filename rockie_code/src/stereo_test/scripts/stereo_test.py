@@ -315,17 +315,6 @@ def kabsch(P, Q):
   d = np.sign(np.linalg.det(np.dot(W, V_t)))
   ident[2, 2] = d
 
-  '''
-
-  d = (np.linalg.det(V) * np.linalg.det(W)) < 0.0
-
-  if d:
-    S[-1] = -S[-1]
-    V[:, -1] = -V[:, -1]
-
-  R = np.dot(V, W)
-  '''
-
   return np.dot(W, np.dot(ident, V_t))
 
 
