@@ -16,7 +16,7 @@ from cv_bridge import CvBridge, CvBridgeError
 from stereo_feature_identifier_db import Stereo_Pair_Keypoints, Stereo_Pair_Keypoint_Matches, Stereo_3D_Matches, Graph_Nodes, Graph_Edges, Stereo_Image_Pair, Base
 import datetime
 import cPickle as pickle
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, and_
 import random
 from sqlalchemy.orm import sessionmaker
 #import calculate_rmsd
@@ -778,10 +778,28 @@ def get_axis_angle(R):
 
   return [axis, theta]
 
+def get_edge(node_1_id, node_2_id):
+  global session
+
+  session.commit()
+
+  query = session.query(Graph_Edges)
+  query = query.filter(and_(Graph_Edges.node_1_id == node_1_id, Graph_Edges.node_2_id == node_2_id))
+
+  return query.first()
+
+def get_edge_transform(edge):
+  global session
+
+  filepath = edge.opt_transform_1_to_2_filepath
+
+  [R, t] = pickle.load(open(filepath))
+  return [R, t] 
+
 if __name__ == '__main__':
 
-  node_start = get_node(9)
-  node_end = get_node(13)
+  node_start = get_node(10)
+  node_end = get_node(40)
 
   [node_start_descs, node_start_points] = get_3d_matches_obj_by_node(node_start)
   [node_end_descs, node_end_points] = get_3d_matches_obj_by_node(node_end)
@@ -796,43 +814,20 @@ if __name__ == '__main__':
 
   print_top_matches(matches, node_start_points, node_end_points, 10)
 
-  [P, Q] = match_ordered_points(matches, node_start_points, node_end_points)
-
-  Pc = get_centroid(P)
-  Qc = get_centroid(Q)
-
-  P = subtract_centroid(P, Pc)
-  Q = subtract_centroid(Q, Qc)
-
-  #R = kabsch(P, Q)
-
   [R, t, err] = calculate_3d_transform(matches, node_start_points, node_end_points)
+
+  '''
+  edge = get_edge(16, 40)
+  [R, t] = get_edge_transform(edge)
+  '''
 
   R = np.asmatrix(R)
   R_t = np.transpose(R)
-
-  initial_error = 0
-  R_pt1_error = 0
-  R_pt2_error = 0
-  R_t_pt1_error = 0
-  R_t_pt2_error = 0
-
-  for i in range(P.shape[0]):
-    pt1 = P[i, :].transpose()
-    pt2 = Q[i, :].transpose()
-    R_pt1 = np.dot(R, pt1)
-    R_pt2 = np.dot(R, pt2)
-    R_t_pt1 = np.dot(R_t, pt1)
-    R_t_pt2 = np.dot(R_t, pt2)
-
-    R_pt1_error += np.linalg.norm(R_pt1 - pt2)
-    initial_error += np.linalg.norm(pt2 - pt1)
 
   [axis, theta] = get_axis_angle(R)
 
   print("R: {0}".format(R))
   print("t: {0}".format(t))
-  print("err: {0}".format(err))
  
   print("Axis: {0}".format(axis))
   print("Angle: {0}".format(theta))
@@ -845,3 +840,4 @@ if __name__ == '__main__':
 
   print("origin 1 in 2 frame: {0}".format(origin))
   print("origin 2 in 1 frame: {0}".format(origin_2))
+

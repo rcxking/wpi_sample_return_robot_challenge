@@ -32,6 +32,11 @@ new_feature_threshold = .7
 
 #If we have at least 7 matches, make a connection
 new_connection_threshold = 1#15 
+
+#previously tested good params
+#ransac_sample_size = 6 
+#ransac_iterations = 400 
+
 ransac_sample_size = 6 
 ransac_iterations = 400 
 
