@@ -40,7 +40,7 @@
   <node name="stereo_feature_matcher" pkg="stereo_feature_matcher" type="stereo_feature_matcher.py" output="screen" />
   <node name="stereo_feature_triangulator" pkg="stereo_feature_triangulator" type="stereo_feature_triangulator.py" output="screen" />
   <node name="stereo_node_creator" pkg="stereo_node_creator" type="stereo_node_creator.py" />
-  <!--node name="stereo_edge_creator" pkg="stereo_edge_creator" type="stereo_edge_creator.py" /-->
+  <node name="stereo_edge_creator" pkg="stereo_edge_creator" type="stereo_edge_creator.py" />
   <!--node name="stereo_localizer" pkg="stereo_localizer" type="stereo_localizer.py" output="screen" /-->
 
   <!--stereo image processing, produces disparity image, point cloud data from stereo images-->

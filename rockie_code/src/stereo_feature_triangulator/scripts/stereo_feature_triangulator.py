@@ -60,8 +60,7 @@ f_gazebo = img_width / (2*np.tan(hfov / 2))
 f = f_gazebo
 
 max_vertical_discrepency = 10
-min_horizontal_disparity = 0
-#min_horizontal_disparity = 10
+min_horizontal_disparity = 5
 
 def triangulate_matches_callback(sp_keypoint_matches_data_id):
   global session
